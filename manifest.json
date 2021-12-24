@@ -1,0 +1,11 @@
+{
+  "name": "Anki Redesign",
+  "package": "anki-redesign",
+  "ankiweb_id": "1771074999",
+  "author": "Shirajuki",
+  "version": "0.0.1",
+  "homepage": "https://github.com/shirajuki/anki-redesign",
+  "conflicts": ["1771074999", "1722241999"],
+  "mod": 1640303572,
+	"manifest_version": 2
+}

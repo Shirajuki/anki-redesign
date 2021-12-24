@@ -1,0 +1,5 @@
+.peko {
+  position: absolute;
+  transform: translate(-50%);
+  left: 50%;
+}
