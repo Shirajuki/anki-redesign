@@ -8,5 +8,6 @@
 
 The concept of this add-on was inspired by the following add-on and design:
 
-- [Developer Nick's Redesign](https://github.com/nickdvlpr/Redesign)
+- [Developer Nick's Redesign Add-on](https://github.com/nickdvlpr/Redesign)
 - [Yanyi Yoong's Anki Reimagine](https://www.behance.net/gallery/50253077/Anki-Reimagine)
+- [Beatify Anki Add-on](https://github.com/ShoroukAziz/Beautify-Anki)
