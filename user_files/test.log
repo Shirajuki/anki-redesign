@@ -1,0 +1,27 @@
+20211225-14:55:31 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-14:57:29 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-14:57:37 DEBUG    [__init__.py:45] Initialized anki
+20211225-14:57:37 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x00000149E3DEF0D0>
+20211225-14:57:37 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x00000149DFB4DD30>
+20211225-14:57:37 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000149E3F4DDC0>
+20211225-14:57:37 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x00000149DFB4DD30>
+20211225-14:57:37 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000149E3F4DA90>
+20211225-14:57:40 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-14:58:13 DEBUG    [__init__.py:54] <aqt.editor.Editor object at 0x00000149E3F2A8E0>
+20211225-15:01:34 DEBUG    [__init__.py:54] None
+20211225-15:01:34 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x00000149E4019820>
+20211225-15:01:34 DEBUG    [__init__.py:54] None
+20211225-15:01:34 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x00000149E40198B0>
+20211225-15:01:35 DEBUG    [__init__.py:54] <aqt.reviewer.Reviewer object at 0x00000149DFB54A90>
+20211225-15:01:35 DEBUG    [__init__.py:54] <aqt.reviewer.ReviewerBottomBar object at 0x00000149E40198B0>
+20211225-15:07:37 DEBUG    [__init__.py:46] Initialized anki
+20211225-15:07:37 DEBUG    [__init__.py:55] <aqt.toolbar.TopToolbar object at 0x000001AA3C2694C0>
+20211225-15:07:37 DEBUG    [__init__.py:55] <aqt.deckbrowser.DeckBrowser object at 0x000001AA38F7DC10>
+20211225-15:07:37 DEBUG    [__init__.py:55] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001AA3C3C1EE0>
+20211225-15:07:37 DEBUG    [__init__.py:55] <aqt.deckbrowser.DeckBrowser object at 0x000001AA38F7DC10>
+20211225-15:07:37 DEBUG    [__init__.py:55] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001AA3C3C1C70>
+20211225-15:07:40 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-15:12:13 DEBUG    [__init__.py:55] None
+20211225-15:12:13 DEBUG    [__init__.py:55] <aqt.overview.OverviewBottomBar object at 0x000001AA3C4A1CD0>
+20211225-15:12:15 DEBUG    [__init__.py:55] <aqt.reviewer.Reviewer object at 0x000001AA38F84970>
+20211225-15:12:15 DEBUG    [__init__.py:55] <aqt.reviewer.ReviewerBottomBar object at 0x000001AA3C4A1C10>
