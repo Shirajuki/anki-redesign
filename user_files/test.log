@@ -1,27 +1,413 @@
-20211225-14:55:31 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
-20211225-14:57:29 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
-20211225-14:57:37 DEBUG    [__init__.py:45] Initialized anki
-20211225-14:57:37 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x00000149E3DEF0D0>
-20211225-14:57:37 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x00000149DFB4DD30>
-20211225-14:57:37 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000149E3F4DDC0>
-20211225-14:57:37 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x00000149DFB4DD30>
-20211225-14:57:37 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000149E3F4DA90>
-20211225-14:57:40 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
-20211225-14:58:13 DEBUG    [__init__.py:54] <aqt.editor.Editor object at 0x00000149E3F2A8E0>
-20211225-15:01:34 DEBUG    [__init__.py:54] None
-20211225-15:01:34 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x00000149E4019820>
-20211225-15:01:34 DEBUG    [__init__.py:54] None
-20211225-15:01:34 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x00000149E40198B0>
-20211225-15:01:35 DEBUG    [__init__.py:54] <aqt.reviewer.Reviewer object at 0x00000149DFB54A90>
-20211225-15:01:35 DEBUG    [__init__.py:54] <aqt.reviewer.ReviewerBottomBar object at 0x00000149E40198B0>
-20211225-15:07:37 DEBUG    [__init__.py:46] Initialized anki
-20211225-15:07:37 DEBUG    [__init__.py:55] <aqt.toolbar.TopToolbar object at 0x000001AA3C2694C0>
-20211225-15:07:37 DEBUG    [__init__.py:55] <aqt.deckbrowser.DeckBrowser object at 0x000001AA38F7DC10>
-20211225-15:07:37 DEBUG    [__init__.py:55] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001AA3C3C1EE0>
-20211225-15:07:37 DEBUG    [__init__.py:55] <aqt.deckbrowser.DeckBrowser object at 0x000001AA38F7DC10>
-20211225-15:07:37 DEBUG    [__init__.py:55] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001AA3C3C1C70>
-20211225-15:07:40 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
-20211225-15:12:13 DEBUG    [__init__.py:55] None
-20211225-15:12:13 DEBUG    [__init__.py:55] <aqt.overview.OverviewBottomBar object at 0x000001AA3C4A1CD0>
-20211225-15:12:15 DEBUG    [__init__.py:55] <aqt.reviewer.Reviewer object at 0x000001AA38F84970>
-20211225-15:12:15 DEBUG    [__init__.py:55] <aqt.reviewer.ReviewerBottomBar object at 0x000001AA3C4A1C10>
+20211225-19:04:05 DEBUG    [__init__.py:60] <aqt.deckbrowser.DeckBrowser object at 0x0000012C8109C9A0>
+20211225-19:04:05 DEBUG    [__init__.py:60] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000012CFD4CB970>
+20211225-19:04:05 DEBUG    [__init__.py:60] <aqt.deckbrowser.DeckBrowser object at 0x0000012C8109C9A0>
+20211225-19:04:05 DEBUG    [__init__.py:60] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000012CFD4DBA90>
+20211225-19:04:08 DEBUG    [__init__.py:60] None
+20211225-19:04:08 DEBUG    [__init__.py:60] <aqt.overview.OverviewBottomBar object at 0x0000012C8445C850>
+20211225-19:04:22 DEBUG    [__init__.py:48] Initialized anki
+20211225-19:04:22 DEBUG    [__init__.py:62] <aqt.toolbar.TopToolbar object at 0x000002663AF51250>
+20211225-19:04:23 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:04:23 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B08CF40>
+20211225-19:04:23 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:04:23 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B08CD00>
+20211225-19:04:23 DEBUG    [__init__.py:62] <aqt.toolbar.TopToolbar object at 0x00000266375FF040>
+20211225-19:04:24 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:04:46 DEBUG    [__init__.py:62] None
+20211225-19:04:46 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000002663B179D30>
+20211225-19:06:09 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:06:09 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B08CF10>
+20211225-19:06:09 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:06:09 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000026637884340>
+20211225-19:06:10 DEBUG    [__init__.py:62] None
+20211225-19:06:10 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000002663B154130>
+20211225-19:06:10 DEBUG    [__init__.py:62] None
+20211225-19:06:10 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000002663B154D90>
+20211225-19:06:19 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:06:19 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B08CB80>
+20211225-19:06:19 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:06:19 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B0B3190>
+20211225-19:06:21 DEBUG    [__init__.py:62] None
+20211225-19:06:21 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000002663B154A00>
+20211225-19:06:21 DEBUG    [__init__.py:62] None
+20211225-19:06:21 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000002663B154CD0>
+20211225-19:06:41 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:06:41 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B145C40>
+20211225-19:06:41 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:06:41 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B0B3100>
+20211225-19:06:43 DEBUG    [__init__.py:62] None
+20211225-19:06:43 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000002663B154B20>
+20211225-19:06:43 DEBUG    [__init__.py:62] None
+20211225-19:06:43 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000002663B154310>
+20211225-19:06:46 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:06:46 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B145730>
+20211225-19:06:46 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:06:46 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B145C10>
+20211225-19:06:47 DEBUG    [__init__.py:62] None
+20211225-19:06:47 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000002663B154FD0>
+20211225-19:06:47 DEBUG    [__init__.py:62] None
+20211225-19:06:47 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000002663B154B20>
+20211225-19:06:56 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:06:56 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B145430>
+20211225-19:06:56 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:06:56 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B0BBE50>
+20211225-19:06:59 DEBUG    [__init__.py:62] None
+20211225-19:06:59 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000002663B154880>
+20211225-19:06:59 DEBUG    [__init__.py:62] None
+20211225-19:06:59 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000002663B154280>
+20211225-19:07:01 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:07:01 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B08CF10>
+20211225-19:07:01 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:07:01 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B1541F0>
+20211225-19:07:05 DEBUG    [__init__.py:62] None
+20211225-19:07:05 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000002663B154850>
+20211225-19:07:05 DEBUG    [__init__.py:62] None
+20211225-19:07:05 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000002663B154160>
+20211225-19:07:07 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:07:07 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B145E50>
+20211225-19:07:07 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:07:07 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B145C10>
+20211225-19:07:29 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:07:29 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B0B3130>
+20211225-19:07:29 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:07:29 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000026637874CA0>
+20211225-19:07:33 DEBUG    [__init__.py:62] None
+20211225-19:07:33 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000002663B154AC0>
+20211225-19:07:33 DEBUG    [__init__.py:62] None
+20211225-19:07:33 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000002663B1548B0>
+20211225-19:07:47 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:07:47 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B0B3190>
+20211225-19:07:47 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000002663786DAC0>
+20211225-19:07:47 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002663B0B3040>
+20211225-19:07:52 DEBUG    [__init__.py:62] <aqt.editor.Editor object at 0x000002663B061100>
+20211225-19:07:58 DEBUG    [__init__.py:48] Initialized anki
+20211225-19:07:58 DEBUG    [__init__.py:62] <aqt.toolbar.TopToolbar object at 0x000001E455C81130>
+20211225-19:07:58 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000001E45298DC10>
+20211225-19:07:58 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001E455DE2C40>
+20211225-19:07:59 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowser object at 0x000001E45298DC10>
+20211225-19:07:59 DEBUG    [__init__.py:62] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001E455DE2D60>
+20211225-19:07:59 DEBUG    [__init__.py:62] <aqt.toolbar.TopToolbar object at 0x000001E455DE2C40>
+20211225-19:08:00 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:08:02 DEBUG    [__init__.py:62] None
+20211225-19:08:02 DEBUG    [__init__.py:62] <aqt.overview.OverviewBottomBar object at 0x000001E455ECBFA0>
+20211225-19:11:33 DEBUG    [__init__.py:46] Initialized anki
+20211225-19:11:35 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:12:15 DEBUG    [__init__.py:46] Initialized anki
+20211225-19:12:17 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:12:33 DEBUG    [__init__.py:46] Initialized anki
+20211225-19:12:33 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x00000186AD8A2220>
+20211225-19:12:33 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x00000186A95DDAC0>
+20211225-19:12:33 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000186AD9D3FD0>
+20211225-19:12:33 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x00000186A95DDAC0>
+20211225-19:12:33 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000186AD9D3CD0>
+20211225-19:12:33 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x00000186A9392E80>
+20211225-19:12:34 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:13:05 DEBUG    [__init__.py:52] None
+20211225-19:13:05 DEBUG    [__init__.py:52] <aqt.overview.OverviewBottomBar object at 0x00000186AD988CA0>
+20211225-19:13:05 DEBUG    [__init__.py:52] None
+20211225-19:13:05 DEBUG    [__init__.py:52] <aqt.overview.OverviewBottomBar object at 0x00000186AD988E80>
+20211225-19:14:17 DEBUG    [__init__.py:46] Initialized anki
+20211225-19:14:17 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x0000024DA76B31F0>
+20211225-19:14:17 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x0000024DA769D970>
+20211225-19:14:17 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000024DAABACDF0>
+20211225-19:14:17 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x0000024DA769D970>
+20211225-19:14:17 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000024DAABACB20>
+20211225-19:14:21 DEBUG    [__init__.py:52] None
+20211225-19:14:21 DEBUG    [__init__.py:52] <aqt.overview.OverviewBottomBar object at 0x0000024DAAA50610>
+20211225-19:14:22 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:15:16 DEBUG    [__init__.py:46] Initialized anki
+20211225-19:15:17 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:15:19 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x000002DC5846CE20>
+20211225-19:15:19 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x000002DC5846CB80>
+20211225-19:15:19 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002DC5B8B4F10>
+20211225-19:15:19 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x000002DC5846CB80>
+20211225-19:15:19 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002DC5B8B4B20>
+20211225-19:15:19 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x000002DC5B8B4220>
+20211225-19:18:00 DEBUG    [__init__.py:46] Initialized anki
+20211225-19:18:00 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x00000266DF37D280>
+20211225-19:18:00 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x00000266DC08CAC0>
+20211225-19:18:00 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000266DF4CDC10>
+20211225-19:18:00 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x00000266DC08CAC0>
+20211225-19:18:00 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000266DF4CDE50>
+20211225-19:18:01 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x00000266D85A25B0>
+20211225-19:18:01 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:18:03 DEBUG    [__init__.py:52] None
+20211225-19:26:31 DEBUG    [__init__.py:46] Initialized anki
+20211225-19:26:31 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x00000219E8C55E50>
+20211225-19:26:31 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x00000219E8C3D880>
+20211225-19:26:31 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000219EC0829D0>
+20211225-19:26:31 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x00000219E8C3D880>
+20211225-19:26:31 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000219EC082C40>
+20211225-19:26:31 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x00000219E8A36340>
+20211225-19:26:32 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:28:13 DEBUG    [__init__.py:46] Initialized anki
+20211225-19:28:13 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x0000023E05364A90>
+20211225-19:28:13 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x0000023E7F06C880>
+20211225-19:28:13 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000023E054C19D0>
+20211225-19:28:13 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x0000023E7F06C880>
+20211225-19:28:13 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000023E054C1C40>
+20211225-19:28:14 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x0000023E054C1220>
+20211225-19:28:15 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:28:57 DEBUG    [__init__.py:46] Initialized anki
+20211225-19:28:59 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x000002751C0211C0>
+20211225-19:28:59 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:29:00 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x0000027518D0DA60>
+20211225-19:29:00 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002751C0029D0>
+20211225-19:29:00 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x0000027518D0DA60>
+20211225-19:29:00 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002751C002A60>
+20211225-19:29:00 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x0000027518D14D30>
+20211225-19:31:06 DEBUG    [__init__.py:46] Initialized anki
+20211225-19:31:08 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:31:09 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x000001C91F171220>
+20211225-19:31:09 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x000001C91BE5CAC0>
+20211225-19:31:09 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001C91F1F56A0>
+20211225-19:31:09 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x000001C91BE5CAC0>
+20211225-19:31:09 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001C91F1F5BB0>
+20211225-19:31:09 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x000001C91F1F51F0>
+20211225-19:31:13 DEBUG    [__init__.py:52] None
+20211225-19:31:55 DEBUG    [__init__.py:46] Initialized anki
+20211225-19:31:55 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x0000014C69B603D0>
+20211225-19:31:55 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x0000014C6685CB80>
+20211225-19:31:55 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000014C69CA9CD0>
+20211225-19:31:55 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x0000014C6685CB80>
+20211225-19:31:55 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000014C69CA9F40>
+20211225-19:31:55 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x0000014C666BA8E0>
+20211225-19:31:56 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:31:58 DEBUG    [__init__.py:52] None
+20211225-19:35:52 DEBUG    [__init__.py:46] Initialized anki
+20211225-19:35:52 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x000001F00713E1F0>
+20211225-19:35:52 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x000001F07FE9DD30>
+20211225-19:35:52 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001F007273EB0>
+20211225-19:35:52 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x000001F07FE9DD30>
+20211225-19:35:52 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001F007273C70>
+20211225-19:35:55 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:41:31 DEBUG    [__init__.py:46] Initialized anki
+20211225-19:41:31 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x00000171C7C710D0>
+20211225-19:41:31 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x00000171C495CC40>
+20211225-19:41:31 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000171C7DB2CA0>
+20211225-19:41:32 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x00000171C495CC40>
+20211225-19:41:32 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000171C7DB2E20>
+20211225-19:41:32 DEBUG    [__init__.py:52] <aqt.toolbar.TopToolbar object at 0x00000171C4821F40>
+20211225-19:41:34 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:41:35 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x00000171C495CC40>
+20211225-19:41:35 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000171C7DB0340>
+20211225-19:41:35 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x00000171C495CC40>
+20211225-19:41:35 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000171C7DB2C40>
+20211225-19:41:36 DEBUG    [__init__.py:52] None
+20211225-19:41:36 DEBUG    [__init__.py:52] <aqt.overview.OverviewBottomBar object at 0x00000171C7E97FD0>
+20211225-19:42:12 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x00000171C495CC40>
+20211225-19:42:12 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000171C7DB02B0>
+20211225-19:42:12 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x00000171C495CC40>
+20211225-19:42:12 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000171C7E70F40>
+20211225-19:42:13 DEBUG    [__init__.py:52] None
+20211225-19:42:13 DEBUG    [__init__.py:52] <aqt.overview.OverviewBottomBar object at 0x00000171C7D621C0>
+20211225-19:42:13 DEBUG    [__init__.py:52] None
+20211225-19:42:13 DEBUG    [__init__.py:52] <aqt.overview.OverviewBottomBar object at 0x00000171C7D62D90>
+20211225-19:42:15 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x00000171C495CC40>
+20211225-19:42:15 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000171C497EC40>
+20211225-19:42:15 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowser object at 0x00000171C495CC40>
+20211225-19:42:15 DEBUG    [__init__.py:52] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000171C4973C40>
+20211225-19:42:17 DEBUG    [__init__.py:52] None
+20211225-19:42:17 DEBUG    [__init__.py:52] <aqt.overview.OverviewBottomBar object at 0x00000171C7D62DF0>
+20211225-19:42:17 DEBUG    [__init__.py:52] None
+20211225-19:42:17 DEBUG    [__init__.py:52] <aqt.overview.OverviewBottomBar object at 0x00000171C7D62B50>
+20211225-19:45:46 DEBUG    [__init__.py:48] Initialized anki
+20211225-19:45:46 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000002423F2F32E0>
+20211225-19:45:46 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000002423F2DDA60>
+20211225-19:45:46 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000242426E1EB0>
+20211225-19:45:46 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000002423F2DDA60>
+20211225-19:45:46 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000242426E1BE0>
+20211225-19:45:46 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000002423B7B3490>
+20211225-19:45:48 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:45:50 DEBUG    [__init__.py:54] None
+20211225-19:45:50 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x00000242427D9880>
+20211225-19:46:09 DEBUG    [__init__.py:48] Initialized anki
+20211225-19:46:09 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000001C1A1AE2070>
+20211225-19:46:09 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000001C19E7BD940>
+20211225-19:46:09 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001C1A1C05DC0>
+20211225-19:46:09 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000001C19E7BD940>
+20211225-19:46:09 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001C1A1C05AC0>
+20211225-19:46:10 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000001C1A1C05E80>
+20211225-19:46:10 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-19:46:16 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000001C19E7BD940>
+20211225-19:46:16 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001C1A1C05EB0>
+20211225-19:46:16 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000001C19E7BD940>
+20211225-19:46:16 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001C1A1C05FA0>
+20211225-19:46:18 DEBUG    [__init__.py:54] None
+20211225-19:46:18 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000001C1A1CF9F40>
+20211225-19:56:09 DEBUG    [__init__.py:54] None
+20211225-19:56:09 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000001C1A1CF9DF0>
+20211225-20:06:09 DEBUG    [__init__.py:54] None
+20211225-20:06:09 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000001C1A1AE2400>
+20211225-20:07:34 DEBUG    [__init__.py:48] Initialized anki
+20211225-20:07:34 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000001833F420220>
+20211225-20:07:34 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000001833B15DA90>
+20211225-20:07:34 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001833F560AF0>
+20211225-20:07:34 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000001833B15DA90>
+20211225-20:07:34 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001833AEE40A0>
+20211225-20:07:35 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000001833F560F40>
+20211225-20:07:36 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-20:07:43 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000001833B15DA90>
+20211225-20:07:43 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001833F4D99D0>
+20211225-20:07:43 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000001833B15DA90>
+20211225-20:07:43 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001833F560B50>
+20211225-20:07:45 DEBUG    [__init__.py:54] None
+20211225-20:07:45 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000001833F4D99D0>
+20211225-20:17:34 DEBUG    [__init__.py:54] None
+20211225-20:17:34 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000001833B174AC0>
+20211225-20:27:34 DEBUG    [__init__.py:54] None
+20211225-20:27:34 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000001833862BA60>
+20211225-20:30:30 DEBUG    [__init__.py:48] Initialized anki
+20211225-20:30:30 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000001D73C4CD9D0>
+20211225-20:30:30 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000001D73C4AAEB0>
+20211225-20:30:30 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001D73F8F0D90>
+20211225-20:30:30 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000001D73C4AAEB0>
+20211225-20:30:30 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001D73F8F0FA0>
+20211225-20:30:30 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000001D73C343CA0>
+20211225-20:30:31 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-20:30:33 DEBUG    [__init__.py:54] None
+20211225-20:30:33 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000001D73F8AAEE0>
+20211225-20:30:33 DEBUG    [__init__.py:54] None
+20211225-20:30:33 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000001D73F8F0E80>
+20211225-20:31:14 DEBUG    [__init__.py:54] <aqt.reviewer.Reviewer object at 0x000001D73C4B2C10>
+20211225-20:31:14 DEBUG    [__init__.py:54] <aqt.reviewer.ReviewerBottomBar object at 0x000001D73F8F0E80>
+20211225-20:35:46 DEBUG    [__init__.py:48] Initialized anki
+20211225-20:35:46 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x0000024B990359A0>
+20211225-20:35:47 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x0000024B94D8E790>
+20211225-20:35:47 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000024B99252E50>
+20211225-20:35:47 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x0000024B94D8E790>
+20211225-20:35:47 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000024B94C4B100>
+20211225-20:35:47 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x0000024B99252AF0>
+20211225-20:35:48 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-20:36:46 DEBUG    [__init__.py:48] Initialized anki
+20211225-20:36:46 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x0000026324AB8F70>
+20211225-20:36:46 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x0000026324AAF670>
+20211225-20:36:46 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000026328EC8D30>
+20211225-20:36:46 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x0000026324AAF670>
+20211225-20:36:46 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000026328EC8A60>
+20211225-20:36:47 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x00000263248AB430>
+20211225-20:36:47 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-20:36:49 DEBUG    [__init__.py:54] <aqt.overview.Overview object at 0x0000026324AAF6A0>
+20211225-20:36:49 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x0000026328E3A880>
+20211225-20:38:15 DEBUG    [__init__.py:48] Initialized anki
+20211225-20:38:15 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x00000225ED894160>
+20211225-20:38:15 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x00000225ED87D820>
+20211225-20:38:15 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000225F1C73EB0>
+20211225-20:38:15 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x00000225ED87D820>
+20211225-20:38:15 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000225F1C73C10>
+20211225-20:38:15 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x00000225F1C73EB0>
+20211225-20:38:17 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-20:38:17 DEBUG    [__init__.py:54] <aqt.overview.Overview object at 0x00000225ED87D850>
+20211225-20:38:17 DEBUG    [__init__.py:112] <function overviewRenderPage at 0x00000225F1BD7310>
+20211225-20:38:17 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x00000225F1C2ADC0>
+20211225-20:40:09 DEBUG    [__init__.py:48] Initialized anki
+20211225-20:40:09 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000002B8756C0310>
+20211225-20:40:09 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000002B8713DCB80>
+20211225-20:40:09 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002B875731FD0>
+20211225-20:40:09 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000002B8713DCB80>
+20211225-20:40:09 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002B875731D00>
+20211225-20:40:09 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000002B8757312E0>
+20211225-20:40:12 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-20:40:13 DEBUG    [__init__.py:54] None
+20211225-20:40:13 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000002B8757A9C40>
+20211225-20:41:24 DEBUG    [__init__.py:48] Initialized anki
+20211225-20:41:24 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000002558B4B3400>
+20211225-20:41:24 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000002558B49DAC0>
+20211225-20:41:24 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002558F8129D0>
+20211225-20:41:25 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000002558B49DAC0>
+20211225-20:41:25 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002558F812CD0>
+20211225-20:41:25 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000002558F812220>
+20211225-20:41:26 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-20:41:28 DEBUG    [__init__.py:54] None
+20211225-20:41:28 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000002558F99BC10>
+20211225-20:50:08 DEBUG    [__init__.py:48] Initialized anki
+20211225-20:50:08 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x0000021DBFD8DF10>
+20211225-20:50:08 DEBUG    [__init__.py:55] ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'toolbar']
+20211225-20:50:08 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x0000021DBFD7DA90>
+20211225-20:50:08 DEBUG    [__init__.py:55] ['_DeckBrowser__renderPage', '__annotations__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_body', '_collapse', '_confirm_upgrade', '_delete', '_drawButtons', '_dueTree', '_export', '_handle_drag_and_drop', '_linkHandler', '_onShared', '_on_create', '_options', '_refresh_needed', '_rename', '_renderDeckTree', '_renderPage', '_renderStats', '_render_deck_node', '_scrollToOffset', '_showOptions', '_topLevelDragRow', '_v1_message_dismissed_at', '_v1_upgrade_message', 'bottom', 'drawLinks', 'mw', 'op_executed', 'refresh', 'refresh_if_needed', 'scrollPos', 'set_current_deck', 'show', 'web']
+20211225-20:50:08 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000021DC31DCFA0>
+20211225-20:50:08 DEBUG    [__init__.py:55] ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'deck_browser']
+20211225-20:50:08 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x0000021DBFD7DA90>
+20211225-20:50:08 DEBUG    [__init__.py:55] ['_DeckBrowser__renderPage', '__annotations__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_body', '_collapse', '_confirm_upgrade', '_delete', '_drawButtons', '_dueTree', '_export', '_handle_drag_and_drop', '_linkHandler', '_onShared', '_on_create', '_options', '_refresh_needed', '_rename', '_renderDeckTree', '_renderPage', '_renderStats', '_render_deck_node', '_scrollToOffset', '_showOptions', '_topLevelDragRow', '_v1_message_dismissed_at', '_v1_upgrade_message', 'bottom', 'drawLinks', 'mw', 'op_executed', 'refresh', 'refresh_if_needed', 'scrollPos', 'set_current_deck', 'show', 'web']
+20211225-20:50:08 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000021DC31DCC10>
+20211225-20:50:08 DEBUG    [__init__.py:55] ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'deck_browser']
+20211225-20:50:09 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x0000021DBFB150A0>
+20211225-20:50:09 DEBUG    [__init__.py:55] ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'toolbar']
+20211225-20:50:10 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-20:50:19 DEBUG    [__init__.py:54] None
+20211225-20:50:19 DEBUG    [__init__.py:55] ['__bool__', '__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__']
+20211225-20:50:19 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x0000021DC3139D30>
+20211225-20:50:19 DEBUG    [__init__.py:55] ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'overview']
+20211225-20:51:42 DEBUG    [__init__.py:48] Initialized anki
+20211225-20:51:42 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000001B41BF72610>
+20211225-20:51:42 DEBUG    [__init__.py:55] None
+20211225-20:51:42 DEBUG    [__init__.py:56] <class 'aqt.toolbar.TopToolbar'>
+20211225-20:51:42 DEBUG    [__init__.py:57] <method-wrapper '__str__' of TopToolbar object at 0x000001B41BF72610>
+20211225-20:51:42 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000001B41BF5BCD0>
+20211225-20:51:42 DEBUG    [__init__.py:55] None
+20211225-20:51:42 DEBUG    [__init__.py:56] <class 'aqt.deckbrowser.DeckBrowser'>
+20211225-20:51:42 DEBUG    [__init__.py:57] <method-wrapper '__str__' of DeckBrowser object at 0x000001B41BF5BCD0>
+20211225-20:51:42 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001B41F3A3FD0>
+20211225-20:51:42 DEBUG    [__init__.py:55] None
+20211225-20:51:42 DEBUG    [__init__.py:56] <class 'aqt.deckbrowser.DeckBrowserBottomBar'>
+20211225-20:51:42 DEBUG    [__init__.py:57] <method-wrapper '__str__' of DeckBrowserBottomBar object at 0x000001B41F3A3FD0>
+20211225-20:51:42 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000001B41BF5BCD0>
+20211225-20:51:42 DEBUG    [__init__.py:55] None
+20211225-20:51:42 DEBUG    [__init__.py:56] <class 'aqt.deckbrowser.DeckBrowser'>
+20211225-20:51:42 DEBUG    [__init__.py:57] <method-wrapper '__str__' of DeckBrowser object at 0x000001B41BF5BCD0>
+20211225-20:51:42 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001B41F3A3E50>
+20211225-20:51:42 DEBUG    [__init__.py:55] None
+20211225-20:51:42 DEBUG    [__init__.py:56] <class 'aqt.deckbrowser.DeckBrowserBottomBar'>
+20211225-20:51:42 DEBUG    [__init__.py:57] <method-wrapper '__str__' of DeckBrowserBottomBar object at 0x000001B41F3A3E50>
+20211225-20:51:42 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000001B41BD33850>
+20211225-20:51:42 DEBUG    [__init__.py:55] None
+20211225-20:51:42 DEBUG    [__init__.py:56] <class 'aqt.toolbar.TopToolbar'>
+20211225-20:51:42 DEBUG    [__init__.py:57] <method-wrapper '__str__' of TopToolbar object at 0x000001B41BD33850>
+20211225-20:51:44 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-20:51:53 DEBUG    [__init__.py:54] None
+20211225-20:51:53 DEBUG    [__init__.py:55] None
+20211225-20:51:53 DEBUG    [__init__.py:56] <class 'NoneType'>
+20211225-20:51:53 DEBUG    [__init__.py:57] <method-wrapper '__str__' of NoneType object at 0x00007FFEFAC98880>
+20211225-20:51:53 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000001B41F31BF10>
+20211225-20:51:53 DEBUG    [__init__.py:55] None
+20211225-20:51:53 DEBUG    [__init__.py:56] <class 'aqt.overview.OverviewBottomBar'>
+20211225-20:51:53 DEBUG    [__init__.py:57] <method-wrapper '__str__' of OverviewBottomBar object at 0x000001B41F31BF10>
+20211225-20:55:03 DEBUG    [__init__.py:48] Initialized anki
+20211225-20:55:03 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000001723E05A190>
+20211225-20:55:03 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000001723AD6F760>
+20211225-20:55:03 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001723E18A4F0>
+20211225-20:55:03 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x000001723AD6F760>
+20211225-20:55:03 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000001723E18A400>
+20211225-20:55:03 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x000001723E172B50>
+20211225-20:55:03 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-20:55:12 DEBUG    [__init__.py:48] Initialized anki
+20211225-20:55:12 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x0000024205C942B0>
+20211225-20:55:12 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x0000024205C7D970>
+20211225-20:55:12 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000242090B3E20>
+20211225-20:55:12 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x0000024205C7D970>
+20211225-20:55:12 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000242090B3B50>
+20211225-20:55:12 DEBUG    [__init__.py:54] <aqt.toolbar.TopToolbar object at 0x00000242090B3E20>
+20211225-20:55:13 DEBUG    [connectionpool.py:452] https://ankiweb.net:443 "POST /update/desktop HTTP/1.1" 200 57
+20211225-20:55:14 DEBUG    [__init__.py:54] <aqt.overview.Overview object at 0x0000024205C7D9A0>
+20211225-20:55:14 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000002420902CFA0>
+20211225-20:55:28 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x0000024205C7D970>
+20211225-20:55:28 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000242090B3A30>
+20211225-20:55:28 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x0000024205C7D970>
+20211225-20:55:28 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x00000242090B33D0>
+20211225-20:55:31 DEBUG    [__init__.py:54] <aqt.overview.Overview object at 0x0000024205C7D9A0>
+20211225-20:55:31 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000002420902CBB0>
+20211225-20:55:31 DEBUG    [__init__.py:54] <aqt.overview.Overview object at 0x0000024205C7D9A0>
+20211225-20:55:31 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000002420902CD00>
+20211225-20:55:33 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x0000024205C7D970>
+20211225-20:55:33 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000024208F75130>
+20211225-20:55:33 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x0000024205C7D970>
+20211225-20:55:33 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002420902CD90>
+20211225-20:55:34 DEBUG    [__init__.py:54] <aqt.overview.Overview object at 0x0000024205C7D9A0>
+20211225-20:55:34 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000002420902CC70>
+20211225-20:55:34 DEBUG    [__init__.py:54] <aqt.overview.Overview object at 0x0000024205C7D9A0>
+20211225-20:55:34 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x000002420902CF10>
+20211225-21:05:12 DEBUG    [__init__.py:54] <aqt.overview.Overview object at 0x0000024205C7D9A0>
+20211225-21:05:12 DEBUG    [__init__.py:54] <aqt.overview.OverviewBottomBar object at 0x0000024208FFE610>
+20211225-21:10:40 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x0000024205C7D970>
+20211225-21:10:40 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x000002420903D340>
+20211225-21:10:40 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowser object at 0x0000024205C7D970>
+20211225-21:10:40 DEBUG    [__init__.py:54] <aqt.deckbrowser.DeckBrowserBottomBar object at 0x0000024205C7DB20>

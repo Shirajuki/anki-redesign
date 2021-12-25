@@ -1,0 +1,33 @@
+body table:first-of-type {
+  width: 90%;
+  max-width: 600px;
+}
+body table:first-of-type th {
+  padding: 0 8px;
+}
+body table:first-of-type td {
+  padding: 8px;
+}
+body table:first-of-type tr.deck td {
+  border-bottom: none;
+}
+body table:first-of-type tr.deck td.opts {
+  padding-left: 20px;
+}
+body table:first-of-type tr.current {
+  background-color: transparent;
+}
+body table:first-of-type tr.current td {
+  background-color: var(--faint-border);
+}
+body table:first-of-type tr.current td:first-of-type {
+  border-radius: 10px 0 0 10px;
+}
+body table:first-of-type tr.current td:last-of-type {
+  border-radius: 0 10px 10px 0;
+}
+.peko {
+  position: absolute;
+  transform: translate(-50%);
+  left: 50%;
+}

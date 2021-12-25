@@ -1,0 +1,16 @@
+body #outer {
+  display: flex;
+  justify-content: center;
+}
+body center #header {
+  width: auto;
+  border-bottom: none;
+  border-radius: 0 0 12px 12px;
+  background-color: var(--faint-border);
+  height: 40px;
+}
+body center #header .hitem {
+  padding-left: initial;
+  padding-right: initial;
+  padding: 0 15px;
+}

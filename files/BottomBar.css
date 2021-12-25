@@ -1,0 +1,8 @@
+body #outer #header button {
+  color: var(--text-fg);
+  box-shadow: initial;
+  border: 1px solid #646464;
+  border-radius: 15px;
+  padding: 7px 21px;
+  margin: 0 10px;
+}
