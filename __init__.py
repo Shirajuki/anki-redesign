@@ -15,11 +15,12 @@ from anki.hooks import wrap
 import aqt
 import logging
 
+### Load config data here
 from aqt.webview import AnkiWebView
 config = mw.addonManager.getConfig(__name__)
 print("var is", config['myvar'])
 
-### Adding menu items
+### Adding menu items - example code
 # We're going to add a menu item below. First we want to create a function to
 # be called when the menu item is activated.
 def countCards() -> None:
@@ -36,7 +37,7 @@ qconnect(action.triggered, countCards)
 # and add it to the tools menu
 mw.form.menuTools.addAction(action)
 
-### LOGGER
+### Logger for debuging
 filename =  os.path.join(os.path.dirname(os.path.abspath(__file__)), "user_files", "test.log")
 logging.basicConfig(format='%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s', 
     datefmt='%Y%m%d-%H:%M:%S',
@@ -47,52 +48,44 @@ logger = logging.getLogger('anki-redesign')
 logger.setLevel(logging.DEBUG)
 logger.debug("Initialized anki")
 
-# Adds styling on the different contents, before the content is set
+## Adds styling on the different contents, before the content is set
 mw.addonManager.setWebExports(__name__, r"files/.*\.(css|svg|gif|png)")
 addon_package = mw.addonManager.addonFromModule(__name__)
 def on_webview_will_set_content(web_content: aqt.webview.WebContent, context: Optional[Any]) -> None:
     logger.debug(context) # Logs content being loaded, find out the instance
+    # Deckbrowser
     if isinstance(context, DeckBrowser):
         web_content.css.append(f"/_addons/{addon_package}/files/DeckBrowser.css")
+    # TopToolbar
     elif isinstance(context, TopToolbar):
         web_content.css.append(f"/_addons/{addon_package}/files/TopToolbar.css")
+    # BottomToolbar (Buttons)
     elif isinstance(context, DeckBrowserBottomBar) or isinstance(context, OverviewBottomBar):
         web_content.css.append(f"/_addons/{addon_package}/files/BottomBar.css")
+    # Overview
     elif isinstance(context, Overview):
         web_content.css.append(f"/_addons/{addon_package}/files/Overview.css")
-        mw.overview.web.eval(f"""
-            const link = document.createElement("link");
-            link.rel = 'stylesheet';
-            link.href = {"/_addons/"+addon_package+"/files/Overview.css"};
-            document.body.appendChild(link);
-        """)
+        # mw.overview.web.eval(f"""
+        #     const link = document.createElement("link");
+        #     link.rel = 'stylesheet';
+        #     link.href = {"/_addons/"+addon_package+"/files/Overview.css"};
+        #     document.body.appendChild(link);
+        # """)
 gui_hooks.webview_will_set_content.append(on_webview_will_set_content)
 
-def on_overview_will_render_content(overview, content):
-    content.table += "\n<div>my html</div>"
-    logger.debug(content)
-gui_hooks.overview_will_render_content.append(on_overview_will_render_content)
 # TopToolbar height change by adding <br> tag
 def redrawToolbar() -> None:
-    # Reload the webview content with added body
+    # Reload the webview content with added <br/> tag, making the bar larger in height
     mw.toolbar.web.setFixedHeight(60)
-    mw.toolbar.web.stdHtml(
-        mw.toolbar._body % mw.toolbar._centerLinks()+"<br>",
-        css=["css/toolbar.css"],
-        js=["js/webview.js", "js/vendor/jquery.min.js", "js/toolbar.js"],
-        context=TopToolbar(mw.toolbar),
-    )
-    mw.toolbar.web.set_bridge_command(mw.toolbar._linkHandler, TopToolbar(mw.toolbar))
+    mw.toolbar.web.eval(f"""
+        const br = document.createElement("br");
+        document.body.appendChild(br);
+    """)
     mw.toolbar.web.adjustHeightToFit()
     mw.toolbar.redraw() # Redraw the toolbar
 gui_hooks.main_window_did_init.append(redrawToolbar)
 
 ### Monkey patching
-## Adds overview css
-#def appendOverviewCss(self, _old):
-#    add = f"<link href='/_addons/{addon_package}/files/Overview.css'>"
-#    return _old(self) + add
-#Overview._renderPage = wrap(Overview._renderPage, renderPage, "around")
 ## Adds peko gif
 def deckbrowserRenderStats(self, _old):
     add = f"<br><img class='peko' src='/_addons/{addon_package}/files/test.gif'>"
