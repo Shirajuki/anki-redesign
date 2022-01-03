@@ -1,3 +1,28 @@
 body .descmid {
   text-align: center;
 }
+center > table tr:first-of-type {
+  display: flex;
+  flex-direction: column;
+}
+td table {
+  width: 50%;
+}
+td table tr:first-of-type {
+  display: table-row;
+  flex-direction: unset;
+}
+td table tr td:last-of-type {
+  text-align: right;
+}
+button#study.but {
+  color: var(--text-fg);
+  box-shadow: initial;
+  border: 1px solid var(--medium-border);
+  border-radius: 15px;
+  padding: 10px 27px;
+  cursor: pointer;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 20px;
+}
