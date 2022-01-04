@@ -1,1 +1,3 @@
-This is documentation for this add-on's configuration, in _markdown_ format.
+This is documentation for this add-on's configuration:
+
+- User customization TBA

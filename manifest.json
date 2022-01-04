@@ -5,7 +5,7 @@
   "author": "Shirajuki",
   "version": "0.0.1",
   "homepage": "https://github.com/shirajuki/anki-redesign",
-  "conflicts": ["1771074999", "1722241999"],
+  "conflicts": ["1771074999"],
   "mod": 1640303572,
-	"manifest_version": 2
+  "manifest_version": 2
 }
