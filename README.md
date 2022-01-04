@@ -4,6 +4,12 @@
 >
 > (The add-on name is subject to change)
 
+<br/>
+<div><img src="ui1.png"></div>
+<br/>
+<div><img src="ui2.png"></div>
+<br/>
+
 ### Credits
 
 The concept of this add-on was inspired by the following add-on and design:
