@@ -1,0 +1,4 @@
+:root,
+:root .isMac {
+  --focus-color: rgba(119, 204, 255, 0.7);
+}

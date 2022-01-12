@@ -26,3 +26,7 @@ button#study.but {
   width: 100%;
   margin-bottom: 20px;
 }
+button#study.but:focus {
+  transition: 0.6s;
+  border-radius: 4px;
+}

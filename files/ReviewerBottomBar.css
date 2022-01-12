@@ -1,0 +1,30 @@
+body #outer {
+  border-top: 1px solid transparent;
+}
+body.nightMode #outer {
+  border-top-color: transparent;
+}
+body button {
+  margin: 0;
+}
+body .stat {
+  padding-top: 0px;
+}
+body .stat2 {
+  padding-top: 0px;
+  font-weight: normal;
+}
+td[align="center"] {
+  position: relative;
+}
+body .stattxt,
+td[align="center"] > span {
+  position: absolute;
+  display: block;
+  left: 50%;
+  transform: translate(-50%, -8px);
+}
+body #outer button#ansbut,
+body #outer table button {
+  transform: translateY(-4px);
+}
