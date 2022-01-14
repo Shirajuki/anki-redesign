@@ -7,6 +7,8 @@ from aqt import gui_hooks
 from aqt.toolbar import TopToolbar
 from aqt.deckbrowser import DeckBrowser, DeckBrowserBottomBar
 from aqt.overview import Overview, OverviewBottomBar
+from aqt.editor import Editor
+from aqt.reviewer import Reviewer, ReviewerBottomBar
 from aqt.webview import WebContent
 import logging
 
@@ -38,6 +40,8 @@ mw.addonManager.setWebExports(__name__, r"files/.*\.(css|svg|gif|png)")
 addon_package = mw.addonManager.addonFromModule(__name__)
 def on_webview_will_set_content(web_content: WebContent, context: Optional[Any]) -> None:
     logger.debug(context) # Logs content being loaded, find out the instance
+    # Global css
+    web_content.css.append(f"/_addons/{addon_package}/files/global.css")
     # Deckbrowser
     if isinstance(context, DeckBrowser):
         web_content.css.append(f"/_addons/{addon_package}/files/DeckBrowser.css")
@@ -50,6 +54,16 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
     # Overview
     elif isinstance(context, Overview):
         web_content.css.append(f"/_addons/{addon_package}/files/Overview.css")
+    # Editor
+    elif isinstance(context, Editor):
+        web_content.css.append(f"/_addons/{addon_package}/files/Editor.css")
+    # Reviewer
+    elif isinstance(context, Reviewer):
+        web_content.css.append(f"/_addons/{addon_package}/files/Reviewer.css")
+    elif isinstance(context, ReviewerBottomBar):
+        web_content.css.append(f"/_addons/{addon_package}/files/BottomBar.css")
+        web_content.css.append(f"/_addons/{addon_package}/files/ReviewerBottomBar.css")
+    
 gui_hooks.webview_will_set_content.append(on_webview_will_set_content)
 
 # TopToolbar height change by adding <br> tag

@@ -1,9 +1,40 @@
-body #outer #header button {
+body #outer button {
   color: var(--text-fg);
-  box-shadow: initial;
-  border: 1px solid var(--medium-border);
+  border: none;
   border-radius: 15px;
-  padding: 7px 21px;
-  margin: 0 10px;
+  padding: 6px 24px;
+  margin: 0 5px;
   cursor: pointer;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  min-width: 64px;
+  background-color: var(--frame-bg);
+  transition: background 0.2s linear, color 0.3s ease-out;
+  box-shadow: rgb(0 0 0 / 20%) 0px 3px 7px -2px,
+    rgb(0 0 0 / 5%) 0px 5px 10px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+}
+body.nightMode #outer button {
+  background: initial;
+  background-color: var(--frame-bg);
+}
+
+body #outer button:focus,
+body #outer button.focus {
+  background-color: var(--primary-color);
+  color: var(--frame-bg);
+  outline: none;
+}
+body.nightMode #outer button:focus,
+body.nightMode #outer button.focus {
+  color: var(--text-fg);
+}
+
+body #outer button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+body.nightMode #outer button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }

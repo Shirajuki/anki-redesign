@@ -1,0 +1,9 @@
+body #typeans {
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+body.card {
+  width: 90%;
+  margin: 20px auto;
+  max-width: 1080px;
+}
