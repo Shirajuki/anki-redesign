@@ -3,8 +3,6 @@
   --focus-color: rgba(119, 204, 255, 0.7);
   --window-bg: #fafafa;
 }
-:root .nightMode {
-}
 body {
   background-color: var(--window-bg);
 }
