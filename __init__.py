@@ -20,7 +20,7 @@ custom_style = """
         :root,
         :root .isMac,
         :root .isWin {
-        --primary-color: %s;
+            --primary-color: %s;
         }
     </style>
     """ % (primary_color)

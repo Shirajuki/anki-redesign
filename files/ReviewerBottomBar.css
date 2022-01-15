@@ -8,6 +8,7 @@ body button {
   margin: 0;
 }
 body .stat {
+  position: relative;
   padding-top: 0px;
 }
 body .stat2 {
@@ -23,6 +24,9 @@ td[align="center"] > span {
   display: block;
   left: 50%;
   transform: translate(-50%, -8px);
+}
+body .stattxt#time {
+  transform: translate(-50%, -6px);
 }
 body #outer button#ansbut,
 body #outer table button {
