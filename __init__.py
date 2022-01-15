@@ -14,6 +14,16 @@ import logging
 
 ### Load config data here
 config = mw.addonManager.getConfig(__name__)
+primary_color = config['primary_color'] or "#0093d0";
+custom_style = """
+    <style>
+        :root,
+        :root .isMac,
+        :root .isWin {
+        --primary-color: %s;
+        }
+    </style>
+    """ % (primary_color)
 
 ### Logger for debuging
 # declare an empty logger class
@@ -42,6 +52,7 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
     logger.debug(context) # Logs content being loaded, find out the instance
     # Global css
     web_content.css.append(f"/_addons/{addon_package}/files/global.css")
+    web_content.head += custom_style
     # Deckbrowser
     if isinstance(context, DeckBrowser):
         web_content.css.append(f"/_addons/{addon_package}/files/DeckBrowser.css")

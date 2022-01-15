@@ -2,7 +2,6 @@
 :root .isMac {
   --focus-color: rgba(119, 204, 255, 0.7);
   --window-bg: #fafafa;
-  --primary-color: #0093d0;
 }
 :root .nightMode {
 }
