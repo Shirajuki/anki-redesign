@@ -1,1 +1,4 @@
-{ "primary_color": "#0093d0" }
+{
+  "addon_more_overview_stats": "true",
+  "primary_color": "#0093d0"
+}
