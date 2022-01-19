@@ -17,7 +17,11 @@ import logging
 
 ### Load config data here
 config = mw.addonManager.getConfig(__name__)
-primary_color = config['primary_color'] or "#0093d0";
+## Addon compatibility fixes
+# More Overview Stats 2.1 addon compatibility fix
+addon_more_overview_stats_fix = config['addon_more_overview_stats'].lower()
+## Customization
+primary_color = config['primary_color']
 custom_style = """
     <style>
         :root,
@@ -73,6 +77,8 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
         web_content.css.append(f"/_addons/{addon_package}/files/BottomBar.css")
     # Overview
     elif isinstance(context, Overview):
+        if (addon_more_overview_stats_fix == "true"):
+            web_content.head += "<style>center > table tr:first-of-type {display: table-row; flex-direction: unset;}</style>"
         web_content.css.append(f"/_addons/{addon_package}/files/Overview.css")
     # Editor
     elif isinstance(context, Editor):
