@@ -1,7 +1,22 @@
 :root,
-:root .isMac {
-  --focus-color: rgba(119, 204, 255, 0.7);
+:root .isWin,
+:root .isMac,
+:root .isLin {
+  --focus-color: rgba(81, 135, 169, 0.7);
+}
+/* Force LIGHT MODE Background */
+:root body:not(.nightMode),
+:root body.isWin:not(.nightMode),
+:root body.isMac:not(.nightMode),
+:root body.isLin:not(.nightMode) {
   --window-bg: #fafafa;
+}
+/* Force DARK MODE Background */
+:root body.nightMode,
+:root body.isWin.nightMode,
+:root body.isMac.nightMode,
+:root body.isLin.nightMode {
+  --window-bg: #2f2f31;
 }
 body {
   background-color: var(--window-bg);
