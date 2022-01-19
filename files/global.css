@@ -10,6 +10,40 @@
 :root body.isMac:not(.nightMode),
 :root body.isLin:not(.nightMode) {
   --window-bg: #fafafa;
+  /* Force variable styling on legacy versions */
+  --legacy-text-fg: black;
+  --legacy-frame-bg: white;
+  --legacy-border: #aaa;
+  --legacy-medium-border: #b6b6b6;
+  --legacy-faint-border: #e7e7e7;
+  --legacy-link: #00a;
+  --legacy-review-count: #0a0;
+  --legacy-new-count: #00a;
+  --legacy-learn-count: #c35617;
+  --legacy-zero-count: #ddd;
+  --legacy-slightly-grey-text: #333;
+  --legacy-highlight-bg: #77ccff;
+  --legacy-highlight-fg: black;
+  --legacy-disabled: #777;
+  --legacy-flag1-fg: #e25252;
+  --legacy-flag2-fg: #ffb347;
+  --legacy-flag3-fg: #54c414;
+  --legacy-flag4-fg: #578cff;
+  --legacy-flag5-fg: #ff82ee;
+  --legacy-flag6-fg: #00d1b5;
+  --legacy-flag7-fg: #9649dd;
+  --legacy-flag1-bg: #ff9b9b;
+  --legacy-flag2-bg: #ffb347;
+  --legacy-flag3-bg: #93e066;
+  --legacy-flag4-bg: #9dbcff;
+  --legacy-flag5-bg: #f5a8eb;
+  --legacy-flag6-bg: #7edbd7;
+  --legacy-flag7-bg: #cca3f1;
+  --legacy-buried-fg: #aaaa33;
+  --legacy-suspended-fg: #dd0;
+  --legacy-suspended-bg: #ffffb2;
+  --legacy-marked-bg: #cce;
+  --legacy-tooltip-bg: #fcfcfc;
 }
 /* Force DARK MODE Background */
 :root body.nightMode,
@@ -17,7 +51,45 @@
 :root body.isMac.nightMode,
 :root body.isLin.nightMode {
   --window-bg: #2f2f31;
+  /* Force variable styling on legacy versions */
+  --legacy-text-fg: white;
+  --legacy-frame-bg: #3a3a3a;
+  --legacy-border: #777;
+  --legacy-medium-border: #444;
+  --legacy-faint-border: #29292b;
+  --legacy-link: #77ccff;
+  --legacy-review-count: #5ccc00;
+  --legacy-new-count: #77ccff;
+  --legacy-learn-count: #ff935b;
+  --legacy-zero-count: #444;
+  --legacy-slightly-grey-text: #ccc;
+  --legacy-highlight-bg: #77ccff;
+  --legacy-highlight-fg: white;
+  --legacy-disabled: #777;
+  --legacy-flag1-fg: #ff7b7b;
+  --legacy-flag2-fg: #f5aa41;
+  --legacy-flag3-fg: #86ce5d;
+  --legacy-flag4-fg: #6f9dff;
+  --legacy-flag5-fg: #f097e4;
+  --legacy-flag6-fg: #5ccfca;
+  --legacy-flag7-fg: #9f63d3;
+  --legacy-flag1-bg: #aa5555;
+  --legacy-flag2-bg: #ac653a;
+  --legacy-flag3-bg: #559238;
+  --legacy-flag4-bg: #506aa3;
+  --legacy-flag5-bg: #975d8f;
+  --legacy-flag6-bg: #399185;
+  --legacy-flag7-bg: #624b77;
+  --legacy-buried-fg: #777733;
+  --legacy-suspended-fg: #ffffb2;
+  --legacy-suspended-bg: #aaaa33;
+  --legacy-marked-bg: #77c;
+  --legacy-tooltip-bg: #272727;
 }
+
 body {
   background-color: var(--window-bg);
+}
+html {
+  font-size: 12px;
 }

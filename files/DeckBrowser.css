@@ -18,7 +18,7 @@ body table:first-of-type tr.current {
   background-color: transparent;
 }
 body table:first-of-type tr.current td {
-  background-color: var(--faint-border);
+  background-color: var(--faint-border, var(--legacy-faint-border));
 }
 body table:first-of-type tr.current td:first-of-type {
   border-radius: 10px 0 0 10px;

@@ -10,6 +10,7 @@ body button {
 body .stat {
   position: relative;
   padding-top: 0px;
+  min-width: 120px;
 }
 body .stat2 {
   padding-top: 0px;
