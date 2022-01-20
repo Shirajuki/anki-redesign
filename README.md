@@ -5,22 +5,37 @@
 Note: This add-on doesn't overwrite the original Anki code views that much, meaning that most add-ons should properly work with Anki-redesign enabled. However, if there is any add-on found to not be working properly, feel free to make an [issue](https://github.com/Shirajuki/anki-redesign/issues) and I'll try to add support for it!
 (List of tested addons and manual fixes for them to work can be seen on the [project github wiki](https://github.com/Shirajuki/anki-redesign/wiki/Compatible-Add-ons-for-Anki-2.1).)
 
-Planned updates / todos (since 09.01.2022):
-- Minor design fixes for a cleaner design
-- Fix light-mode design and better contrasts
-- Adds a primary color of choice and more lightweight user defined customizations through config file
-- Manually test for backwards compatibility for older Anki versions
+Note2: If the addon is not updating try open anki while holding shift to turn off all add ons, then update and restart. :)
+
+**Manually tested on the following Anki versions:**
+- 2.1.49
+- 2.1.22
+
+**Planned updates / todos (since 20.01.2022):**
+- [x] Minor design fixes for a cleaner design (v0.0.2)
+- [x] Fix light-mode design and better contrasts (v0.0.2)
+- [x] Adds a primary color of choice and more lightweight user defined customizations through config file (v0.0.3)
+- [x] Fix bug where deck timer appears on top of the show answer button (v0.0.3)
+- [x] Addon said not be working on Anki version 2.1.22, manually fix this (v0.0.3)
+- [x] Fix problem with darkmode Mac Computers (v0.0.3)
+- [ ] Adds more lightweight modern styling for other views / dialogs
+- [ ] Adds user customization on all styling views through the user_files folder (user custom CSS injection)
+- [ ] Manually test for backwards compatibility on older Anki versions. (v2.1.22 tested)
 
 <br/>
-<div><img src="ui1.png"></div>
-<br/>
-<div><img src="ui2.png"></div>
+<div><img src="./screenshots/ui-half.png"></div>
 <br/>
 
-### Credits
+**Credits:**
 
-The concept of this add-on was inspired by the following add-on and design:
+The concept of this add-on was inspired by the following add-on and designs:
 
 - [Developer Nick's Redesign Add-on](https://github.com/nickdvlpr/Redesign)
 - [Yanyi Yoong's Anki Reimagine](https://www.behance.net/gallery/50253077/Anki-Reimagine)
 - [Beatify Anki Add-on](https://github.com/ShoroukAziz/Beautify-Anki)
+
+**Changelog:**
+- 20-01-2022: Adds styling edits, timer and styling bugfixes, add-on now compatible with legacy versions (v0.0.3)
+- 14-01-2022: Adds second update, more styling fixes (v0.0.2)
+- 07-01-2022: Styling on Overview and DeckBrowser update (v0.0.1)
+- 04-01-2022: Initial Release
