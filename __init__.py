@@ -1,13 +1,18 @@
 import os
-from typing import Any, Optional
+from .utils import *
+from typing import Any, List, Optional
 from PyQt5.QtWidgets import QWidget
 # import the main window object (mw) from aqt
 from aqt import DialogManager, mw
 from aqt import gui_hooks
 from aqt.addcards import AddCards
-from aqt.browser.browser import Browser
+# Browser import legacy check (2.1.22)
+if module_exists("aqt.browser.browser"):
+    from aqt.browser.browser import Browser
+else:
+    from aqt.browser import Browser
 # QT page views
-from aqt.toolbar import TopToolbar
+from aqt.toolbar import Toolbar, TopToolbar
 from aqt.deckbrowser import DeckBrowser, DeckBrowserBottomBar
 from aqt.overview import Overview, OverviewBottomBar
 from aqt.editor import Editor
@@ -77,7 +82,7 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
         web_content.css.append(f"/_addons/{addon_package}/files/BottomBar.css")
     # Overview
     elif isinstance(context, Overview):
-        if (addon_more_overview_stats_fix == "true"):
+        if addon_more_overview_stats_fix == "true":
             web_content.head += "<style>center > table tr:first-of-type {display: table-row; flex-direction: unset;}</style>"
         web_content.css.append(f"/_addons/{addon_package}/files/Overview.css")
     # Editor
@@ -89,41 +94,34 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
     elif isinstance(context, ReviewerBottomBar):
         web_content.css.append(f"/_addons/{addon_package}/files/BottomBar.css")
         web_content.css.append(f"/_addons/{addon_package}/files/ReviewerBottomBar.css")
-    
 gui_hooks.webview_will_set_content.append(on_webview_will_set_content)
 
 # TopToolbar height change by adding <br> tag
 def redrawToolbar() -> None:
     # Reload the webview content with added <br/> tag, making the bar larger in height
     mw.toolbar.web.setFixedHeight(60)
-    mw.toolbar.web.eval(f"""
+    mw.toolbar.web.eval("""
         const br = document.createElement("br");
         document.body.appendChild(br);
     """)
     mw.toolbar.web.adjustHeightToFit()
     mw.toolbar.redraw() # Redraw the toolbar
-gui_hooks.main_window_did_init.append(redrawToolbar)
-
-# Other styling webviews
-def on_inject_style_into_page(web: AnkiWebView):
-    page = os.path.basename(web.page().url().path())
-    logger.debug(page)
-    # Statistics
-    if page == "graphs.html":
-        web.eval("""
-            div = document.createElement("div");
-            div.innerHTML = 'hello';
-            document.body.appendChild(div);
-        """
-        )
-gui_hooks.webview_did_inject_style_into_page.append(on_inject_style_into_page)
-
-# Browser
-def on_browser_will_show(browser: Browser):
-    logger.debug(browser)
-gui_hooks.browser_will_show.append(on_browser_will_show)
+def redrawToolbarLegacy(links: List[str], _: Toolbar) -> None:
+    inject_br = """
+        <script>
+            const br = document.createElement("br");
+            document.body.appendChild(br);
+        </script>
+    """
+    mw.toolbar.web.setFixedHeight(60)
+    links.append(inject_br)
+if attribute_exists(gui_hooks, "main_window_did_init"):
+    gui_hooks.main_window_did_init.append(redrawToolbar)
+elif attribute_exists(gui_hooks, "top_toolbar_did_init_links"):
+    gui_hooks.top_toolbar_did_init_links.append(redrawToolbarLegacy)
 
 # Dialog window styling
+# TODO: Add CSS styling to different dialog windows
 def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name: str, dialog_instance: QWidget):
     logger.debug(dialog_name)
     # AddCards
@@ -159,5 +157,12 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
         pass
     # sync_log
     elif dialog_name == "sync_log":
-        pass    
-gui_hooks.dialog_manager_did_open_dialog.append(on_dialog_manager_did_open_dialog)
+        pass
+if attribute_exists(gui_hooks, "dialog_manager_did_open_dialog"):
+    gui_hooks.dialog_manager_did_open_dialog.append(on_dialog_manager_did_open_dialog)
+
+# TODO: Add legacy hooks *_will_show for each legacy Dialog windows
+# Browser
+def on_browser_will_show(browser: Browser):
+    logger.debug(browser)
+gui_hooks.browser_will_show.append(on_browser_will_show)
