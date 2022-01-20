@@ -94,6 +94,8 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
     elif isinstance(context, ReviewerBottomBar):
         web_content.css.append(f"/_addons/{addon_package}/files/BottomBar.css")
         web_content.css.append(f"/_addons/{addon_package}/files/ReviewerBottomBar.css")
+        # Button padding bottom
+        web_content.body += "<div style='height: 9px; opacity: 0; pointer-events: none;'></div>"
 gui_hooks.webview_will_set_content.append(on_webview_will_set_content)
 
 # TopToolbar height change by adding <br> tag
