@@ -6,6 +6,5 @@
   "version": "0.0.3",
   "homepage": "https://github.com/shirajuki/anki-redesign",
   "conflicts": ["308574457"],
-  "mod": 1640303572,
   "manifest_version": 2
 }
