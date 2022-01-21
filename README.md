@@ -9,6 +9,7 @@ Note2: If the addon is not updating try open anki while holding shift to turn of
 
 **Manually tested on the following Anki versions:**
 - 2.1.49
+- 2.1.26
 - 2.1.22
 
 **Planned updates / todos (since 20.01.2022):**
@@ -18,6 +19,7 @@ Note2: If the addon is not updating try open anki while holding shift to turn of
 - [x] Fix bug where deck timer appears on top of the show answer button (v0.0.3)
 - [x] Addon said not be working on Anki version 2.1.22, manually fix this (v0.0.3)
 - [x] Fix problem with darkmode Mac Computers (v0.0.3)
+- [x] Removes unfinished styling on dialog windows - AddCards (v0.0.4)
 - [ ] Adds more lightweight modern styling for other views / dialogs
 - [ ] Adds user customization on all styling views through the user_files folder (user custom CSS injection)
 - [ ] Manually test for backwards compatibility on older Anki versions. (v2.1.22 tested)
@@ -35,6 +37,7 @@ The concept of this add-on was inspired by the following add-on and designs:
 - [Beatify Anki Add-on](https://github.com/ShoroukAziz/Beautify-Anki)
 
 **Changelog:**
+- 21-01-2022: Adds a very small update, removes unfinished styling on AddCard window (v0.0.4)
 - 20-01-2022: Adds styling edits, timer and styling bugfixes, add-on now compatible with legacy versions (v0.0.3)
 - 14-01-2022: Adds second update, more styling fixes (v0.0.2)
 - 07-01-2022: Styling on Overview and DeckBrowser update (v0.0.1)
