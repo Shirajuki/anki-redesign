@@ -128,10 +128,10 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
     logger.debug(dialog_name)
     # AddCards
     if dialog_name == "AddCards":
-        context: AddCards = dialog_manager._dialogs[dialog_name][1]
-        logger.debug(context)
-        logger.debug(context.styleSheet())
-        context.setStyleSheet(open(addcards_css_path, encoding='utf-8').read())
+        #context: AddCards = dialog_manager._dialogs[dialog_name][1]
+        #logger.debug(context)
+        #logger.debug(context.styleSheet())
+        #context.setStyleSheet(open(addcards_css_path, encoding='utf-8').read())
         pass
     # Addons popup
     elif dialog_name == "AddonsDialog":
@@ -165,6 +165,6 @@ if attribute_exists(gui_hooks, "dialog_manager_did_open_dialog"):
 
 # TODO: Add legacy hooks *_will_show for each legacy Dialog windows
 # Browser
-def on_browser_will_show(browser: Browser):
-    logger.debug(browser)
-gui_hooks.browser_will_show.append(on_browser_will_show)
+#def on_browser_will_show(browser: Browser):
+#    logger.debug(browser)
+#gui_hooks.browser_will_show.append(on_browser_will_show)
