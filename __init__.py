@@ -52,13 +52,39 @@ custom_style = """
 ### Init script/file path
 this_script_dir = os.path.dirname(__file__)
 files_dir = os.path.join(this_script_dir, 'files')
-addcards_css_path = os.path.join(files_dir, 'QAddCards.css')
-browser_css_path = os.path.join(files_dir, 'QBrowser.css')
-newdeckstats_css_path = os.path.join(files_dir, 'QNewDeckStats.css')
-editcurrent_css_path = os.path.join(files_dir, 'QEditCurrent.css')
-about_css_path = os.path.join(files_dir, 'QAbout.css')
-preferences_css_path = os.path.join(files_dir, 'QPreferences.css')
-addonsdialog_css_path = os.path.join(files_dir, 'QAddonsDialog.cs')
+user_files_dir = os.path.join(this_script_dir, 'user_files')
+css_files_dir = {
+  'BottomBar': "files",
+  'DeckBrowser': "files",
+  'Editor': "files",
+  'global': "files",
+  'Overview.': "files", 
+  'QAbout': files_dir,
+  'QAddCards': files_dir,
+  'QAddonsDialog': files_dir,
+  'QBrowser': files_dir,
+  'QEditCurrent': files_dir,
+  'QNewDeckStats': files_dir,
+  'QPreferences': files_dir,
+  'Reviewer': "files",
+  'ReviewerBottomBar': "files",
+  'TopToolbar': "files",
+}
+for file in os.listdir(user_files_dir):
+  file = file.replace(".css", "")
+  if css_files_dir.get(file, "") != "":
+    if file.startswith("Q"):
+        css_files_dir[file] = user_files_dir
+    else:
+        css_files_dir[file] = "user_files"
+
+addcards_css_path = os.path.join(css_files_dir["QAddCards"], 'QAddCards.css')
+browser_css_path = os.path.join(css_files_dir["QBrowser"], 'QBrowser.css')
+newdeckstats_css_path = os.path.join(css_files_dir["QNewDeckStats"], 'QNewDeckStats.css')
+editcurrent_css_path = os.path.join(css_files_dir["QEditCurrent"], 'QEditCurrent.css')
+about_css_path = os.path.join(css_files_dir["QAbout"], 'QAbout.css')
+preferences_css_path = os.path.join(css_files_dir["QPreferences"], 'QPreferences.css')
+addonsdialog_css_path = os.path.join(css_files_dir["QAddonsDialog"], 'QAddonsDialog.cs')
 
 ### Logger for debuging
 # declare an empty logger class
@@ -79,38 +105,38 @@ if 'ANKI_REDESIGN_DEBUG_LOGGING' in os.environ:
 else:
     logger = EmptyLogger()
 
-
+logger.debug(css_files_dir)
 ## Adds styling on the different webview contents, before the content is set
-mw.addonManager.setWebExports(__name__, r"files/.*\.(css|svg|gif|png)")
+mw.addonManager.setWebExports(__name__, r"files/.*\.(css|svg|gif|png)|user_files/.*\.(css|svg|gif|png)")
 addon_package = mw.addonManager.addonFromModule(__name__)
 def on_webview_will_set_content(web_content: WebContent, context: Optional[Any]) -> None:
     logger.debug(context) # Logs content being loaded, find out the instance
     # Global css
-    web_content.css.append(f"/_addons/{addon_package}/files/global.css")
+    web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['global']}/global.css")
     web_content.head += custom_style
     # Deckbrowser
     if isinstance(context, DeckBrowser):
-        web_content.css.append(f"/_addons/{addon_package}/files/DeckBrowser.css")
+        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['DeckBrowser']}/DeckBrowser.css")
     # TopToolbar
     elif isinstance(context, TopToolbar):
-        web_content.css.append(f"/_addons/{addon_package}/files/TopToolbar.css")
+        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['TopToolbar']}/TopToolbar.css")
     # BottomToolbar (Buttons)
     elif isinstance(context, DeckBrowserBottomBar) or isinstance(context, OverviewBottomBar):
-        web_content.css.append(f"/_addons/{addon_package}/files/BottomBar.css")
+        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['BottomBar']}/BottomBar.css")
     # Overview
     elif isinstance(context, Overview):
         if addon_more_overview_stats_fix == "true":
             web_content.head += "<style>center > table tr:first-of-type {display: table-row; flex-direction: unset;}</style>"
-        web_content.css.append(f"/_addons/{addon_package}/files/Overview.css")
+        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['Overview']}/Overview.css")
     # Editor
     elif isinstance(context, Editor):
-        web_content.css.append(f"/_addons/{addon_package}/files/Editor.css")
+        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['Editor']}/Editor.css")
     # Reviewer
     elif isinstance(context, Reviewer):
-        web_content.css.append(f"/_addons/{addon_package}/files/Reviewer.css")
+        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['Reviewer']}/Reviewer.css")
     elif isinstance(context, ReviewerBottomBar):
-        web_content.css.append(f"/_addons/{addon_package}/files/BottomBar.css")
-        web_content.css.append(f"/_addons/{addon_package}/files/ReviewerBottomBar.css")
+        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['BottomBar']}/BottomBar.css")
+        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['ReviewerBottomBar']}/ReviewerBottomBar.css")
         # Button padding bottom
         web_content.body += "<div style='height: 9px; opacity: 0; pointer-events: none;'></div>"
 gui_hooks.webview_will_set_content.append(on_webview_will_set_content)
