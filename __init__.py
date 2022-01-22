@@ -52,13 +52,13 @@ custom_style = """
 ### Init script/file path
 this_script_dir = os.path.dirname(__file__)
 files_dir = os.path.join(this_script_dir, 'files')
-addcards_css_path = os.path.join(files_dir, 'AddCards.css')
-browser_css_path = os.path.join(files_dir, 'Browser.css')
-newdeckstats_css_path = os.path.join(files_dir, 'NewDeckStats.css')
-editcurrent_css_path = os.path.join(files_dir, 'EditCurrent.css')
-about_css_path = os.path.join(files_dir, 'About.css')
-preferences_css_path = os.path.join(files_dir, 'Preferences.css')
-addonsdialog_css_path = os.path.join(files_dir, 'AddonsDialog.cs')
+addcards_css_path = os.path.join(files_dir, 'QAddCards.css')
+browser_css_path = os.path.join(files_dir, 'QBrowser.css')
+newdeckstats_css_path = os.path.join(files_dir, 'QNewDeckStats.css')
+editcurrent_css_path = os.path.join(files_dir, 'QEditCurrent.css')
+about_css_path = os.path.join(files_dir, 'QAbout.css')
+preferences_css_path = os.path.join(files_dir, 'QPreferences.css')
+addonsdialog_css_path = os.path.join(files_dir, 'QAddonsDialog.cs')
 
 ### Logger for debuging
 # declare an empty logger class
@@ -182,10 +182,10 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
     elif dialog_name == "sync_log":
         pass
 
-# TODO: Add legacy hooks *_will_show for each legacy Dialog windows
 if attribute_exists(gui_hooks, "dialog_manager_did_open_dialog"):
     gui_hooks.dialog_manager_did_open_dialog.append(on_dialog_manager_did_open_dialog)
 else:
+    # Sad monkey patch, instead of hooks :c
     def monkeySetupDialogGC(obj: Any) -> None:
         obj.finished.connect(lambda: mw.gcWindow(obj))
         logger.debug(obj)
@@ -202,7 +202,8 @@ else:
         elif isinstance(obj, ClosableQDialog):
             obj.setStyleSheet(open(about_css_path, encoding='utf-8').read())
         # Preferences
-    mw.setupDialogGC = monkeySetupDialogGC
+        ## Haven't found a solution for preferences yet
+    mw.setupDialogGC = monkeySetupDialogGC # Should be rare enough for other addons to also use this I hope
     # Addons popup
     if attribute_exists(gui_hooks, "addons_dialog_will_show"):
         def on_addons_dialog_will_show(dialog: AddonsDialog):
