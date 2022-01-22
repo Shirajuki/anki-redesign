@@ -6,5 +6,10 @@ def module_exists(module_name):
     else:
         return True
 
+def module_has_attribute(module_name, attribute):
+    if module_exists(module_name):
+        return hasattr(__import__(module_name), attribute)
+    return False
+
 def attribute_exists(object, attribute):
     return attribute in object.__dict__

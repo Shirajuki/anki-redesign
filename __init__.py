@@ -5,12 +5,23 @@ from PyQt5.QtWidgets import QWidget
 # import the main window object (mw) from aqt
 from aqt import DialogManager, mw
 from aqt import gui_hooks
-from aqt.addcards import AddCards
+## QT dialog windows
 # Browser import legacy check (2.1.22)
 if module_exists("aqt.browser.browser"):
     from aqt.browser.browser import Browser
 else:
     from aqt.browser import Browser
+if module_has_attribute("aqt.stats", "NewDeckStats"):
+    from aqt.stats import NewDeckStats
+else:
+    from aqt.stats import DeckStats
+from aqt.addcards import AddCards
+from aqt.editcurrent import EditCurrent
+from aqt.about import ClosableQDialog
+from aqt.preferences import Preferences
+from aqt.addons import AddonsDialog
+#from aqt.filtered_deck import FilteredDeckConfigDialog
+
 # QT page views
 from aqt.toolbar import Toolbar, TopToolbar
 from aqt.deckbrowser import DeckBrowser, DeckBrowserBottomBar
@@ -42,6 +53,12 @@ custom_style = """
 this_script_dir = os.path.dirname(__file__)
 files_dir = os.path.join(this_script_dir, 'files')
 addcards_css_path = os.path.join(files_dir, 'AddCards.css')
+browser_css_path = os.path.join(files_dir, 'Browser.css')
+newdeckstats_css_path = os.path.join(files_dir, 'NewDeckStats.css')
+editcurrent_css_path = os.path.join(files_dir, 'EditCurrent.css')
+about_css_path = os.path.join(files_dir, 'About.css')
+preferences_css_path = os.path.join(files_dir, 'Preferences.css')
+addonsdialog_css_path = os.path.join(files_dir, 'AddonsDialog.cs')
 
 ### Logger for debuging
 # declare an empty logger class
@@ -128,43 +145,72 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
     logger.debug(dialog_name)
     # AddCards
     if dialog_name == "AddCards":
-        #context: AddCards = dialog_manager._dialogs[dialog_name][1]
-        #logger.debug(context)
-        #logger.debug(context.styleSheet())
-        #context.setStyleSheet(open(addcards_css_path, encoding='utf-8').read())
-        pass
+        context: AddCards = dialog_manager._dialogs[dialog_name][1]
+        logger.debug(context)
+        logger.debug(context.styleSheet())
+        context.setStyleSheet(open(addcards_css_path, encoding='utf-8').read())
     # Addons popup
     elif dialog_name == "AddonsDialog":
-        pass
+        context: AddonsDialog = dialog_manager._dialogs[dialog_name][1]
+        context.setStyleSheet(open(addonsdialog_css_path, encoding='utf-8').read())
     # Browser
     elif dialog_name == "Browser":
+        context: Browser = dialog_manager._dialogs[dialog_name][1]
+        context.setStyleSheet(open(browser_css_path, encoding='utf-8').read())
         pass
     # EditCurrent
     elif dialog_name == "EditCurrent":
-        pass
+        context: EditCurrent = dialog_manager._dialogs[dialog_name][1]
+        context.setStyleSheet(open(editcurrent_css_path, encoding='utf-8').read())
     # FilteredDeckConfigDialog
-    elif dialog_name == "FilteredDeckConfigDialog":
-        pass
-    # DeckStats
-    elif dialog_name == "DeckStats":
-        pass
+    # elif dialog_name == "FilteredDeckConfigDialog":
+    #    context: FilteredDeckConfigDialog = dialog_manager._dialogs[dialog_name][1]
+    #    context.setStyleSheet(open(filtereddeckconfigdialog_css_path, encoding='utf-8').read())
     # Statistics / NewDeckStats
     elif dialog_name == "NewDeckStats":
-        pass
+        context: NewDeckStats = dialog_manager._dialogs[dialog_name][1]
+        context.setStyleSheet(open(newdeckstats_css_path, encoding='utf-8').read())
     # About
     elif dialog_name == "About":
-        pass
+        context: ClosableQDialog = dialog_manager._dialogs[dialog_name][1]
+        context.setStyleSheet(open(about_css_path, encoding='utf-8').read())
     # Preferences
     elif dialog_name == "Preferences":
-        pass
-    # sync_log
+        context: Preferences = dialog_manager._dialogs[dialog_name][1]
+        context.setStyleSheet(open(preferences_css_path, encoding='utf-8').read())
+    # sync_log ???
     elif dialog_name == "sync_log":
         pass
-if attribute_exists(gui_hooks, "dialog_manager_did_open_dialog"):
-    gui_hooks.dialog_manager_did_open_dialog.append(on_dialog_manager_did_open_dialog)
 
 # TODO: Add legacy hooks *_will_show for each legacy Dialog windows
-# Browser
-#def on_browser_will_show(browser: Browser):
-#    logger.debug(browser)
-#gui_hooks.browser_will_show.append(on_browser_will_show)
+if attribute_exists(gui_hooks, "dialog_manager_did_open_dialog"):
+    gui_hooks.dialog_manager_did_open_dialog.append(on_dialog_manager_did_open_dialog)
+else:
+    def monkeySetupDialogGC(obj: Any) -> None:
+        obj.finished.connect(lambda: mw.gcWindow(obj))
+        logger.debug(obj)
+        # AddCards
+        if isinstance(obj, AddCards):
+            obj.setStyleSheet(open(addcards_css_path, encoding='utf-8').read())
+        # EditCurrent
+        elif isinstance(obj, EditCurrent):
+            obj.setStyleSheet(open(editcurrent_css_path, encoding='utf-8').read())
+        # Statistics / DeckStats
+        elif isinstance(obj, DeckStats):
+            obj.setStyleSheet(open(newdeckstats_css_path, encoding='utf-8').read())
+        # About
+        elif isinstance(obj, ClosableQDialog):
+            obj.setStyleSheet(open(about_css_path, encoding='utf-8').read())
+        # Preferences
+    mw.setupDialogGC = monkeySetupDialogGC
+    # Addons popup
+    if attribute_exists(gui_hooks, "addons_dialog_will_show"):
+        def on_addons_dialog_will_show(dialog: AddonsDialog):
+            logger.debug(dialog)
+        gui_hooks.addons_dialog_will_show.append(on_addons_dialog_will_show)
+    # Browser
+    if attribute_exists(gui_hooks, "browser_will_show"):
+        def on_browser_will_show(browser: Browser):
+            logger.debug(browser)
+        gui_hooks.browser_will_show.append(on_browser_will_show)
+
