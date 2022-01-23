@@ -58,7 +58,7 @@ css_files_dir = {
   'DeckBrowser': "files",
   'Editor': "files",
   'global': "files",
-  'Overview.': "files", 
+  'Overview': "files", 
   'QAbout': files_dir,
   'QAddCards': files_dir,
   'QAddonsDialog': files_dir,
