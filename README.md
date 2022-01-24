@@ -5,7 +5,9 @@
 Note: This add-on doesn't overwrite the original Anki code views that much, meaning that most add-ons should properly work with Anki-redesign enabled. However, if there is any add-on found to not be working properly, feel free to make an [issue](https://github.com/Shirajuki/anki-redesign/issues) and I'll try to add support for it!
 (List of tested addons and manual fixes for them to work can be seen on the [project github wiki](https://github.com/Shirajuki/anki-redesign/wiki/Compatible-Add-ons-for-Anki-2.1).)
 
-Note2: If the addon is not updating try open anki while holding shift to turn off all add ons, then update and restart. :)
+Note2: **This addon also works as a theming addon**, as it enables the possibility of user customization on almost all Anki views/windows through the injection of CSS and QT CSS on the different components.
+
+Note3: If the addon is not updating try open anki while holding shift to turn off all addons, then update and restart. :)
 
 **Manually tested on the following Anki versions:**
 - 2.1.49
@@ -20,8 +22,8 @@ Note2: If the addon is not updating try open anki while holding shift to turn of
 - [x] Addon said not be working on Anki version 2.1.22, manually fix this (v0.0.3)
 - [x] Fix problem with darkmode Mac Computers (v0.0.3)
 - [x] Removes unfinished styling on dialog windows - AddCards (v0.0.4)
+- [x] Adds user customization on all styling views through the user_files folder (user custom CSS injection) (v0.0.5)
 - [ ] Adds more lightweight modern styling for other views / dialogs
-- [ ] Adds user customization on all styling views through the user_files folder (user custom CSS injection)
 - [ ] Manually test for backwards compatibility on older Anki versions. (v2.1.22 tested)
 
 <br/>
@@ -37,6 +39,7 @@ The concept of this add-on was inspired by the following add-on and designs:
 - [Beatify Anki Add-on](https://github.com/ShoroukAziz/Beautify-Anki)
 
 **Changelog:**
+- 24-01-2022: Add full user customization styling through the folder user_files. User theming is now possible! (v0.0.5)
 - 21-01-2022: Adds a very small update, removes unfinished styling on AddCard window (v0.0.4)
 - 20-01-2022: Adds styling edits, timer and styling bugfixes, add-on now compatible with legacy versions (v0.0.3)
 - 14-01-2022: Adds second update, more styling fixes (v0.0.2)
