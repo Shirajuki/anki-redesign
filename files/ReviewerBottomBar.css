@@ -1,8 +1,15 @@
+body {
+  overflow: hidden;
+}
 body #outer {
   border-top: 1px solid transparent;
 }
 body.nightMode #outer {
   border-top-color: transparent;
+}
+body #outer table#innertable {
+  padding: 6px;
+  transform: translateY(8px);
 }
 body button {
   margin: 0;
