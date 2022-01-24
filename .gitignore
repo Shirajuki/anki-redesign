@@ -1,4 +1,4 @@
-user_files/*
+user_files/*.css
 user_files/*.log
 meta.json
 *.ankiaddon
