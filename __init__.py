@@ -20,7 +20,8 @@ from aqt.editcurrent import EditCurrent
 from aqt.about import ClosableQDialog
 from aqt.preferences import Preferences
 from aqt.addons import AddonsDialog
-#from aqt.filtered_deck import FilteredDeckConfigDialog
+if module_exists("aqt.filtered_deck"):
+    from aqt.filtered_deck import FilteredDeckConfigDialog
 
 # QT page views
 from aqt.toolbar import Toolbar, TopToolbar
@@ -50,41 +51,36 @@ custom_style = """
     """ % (primary_color)
 
 ### Init script/file path
+mw.addonManager.setWebExports(__name__, r"files/.*\.(css|svg|gif|png)|user_files/.*\.(css|svg|gif|png)")
+addon_package = mw.addonManager.addonFromModule(__name__)
+
 this_script_dir = os.path.dirname(__file__)
 files_dir = os.path.join(this_script_dir, 'files')
 user_files_dir = os.path.join(this_script_dir, 'user_files')
 css_files_dir = {
-  'BottomBar': "files",
-  'DeckBrowser': "files",
-  'Editor': "files",
-  'global': "files",
-  'Overview': "files", 
-  'QAbout': files_dir,
-  'QAddCards': files_dir,
-  'QAddonsDialog': files_dir,
-  'QBrowser': files_dir,
-  'QEditCurrent': files_dir,
-  'QNewDeckStats': files_dir,
-  'QPreferences': files_dir,
-  'Reviewer': "files",
-  'ReviewerBottomBar': "files",
-  'TopToolbar': "files",
+  'BottomBar': f"/_addons/{addon_package}/files/BottomBar.css",
+  'DeckBrowser': f"/_addons/{addon_package}/files/DeckBrowser.css",
+  'Editor': f"/_addons/{addon_package}/files/Editor.css",
+  'global': f"/_addons/{addon_package}/files/global.css",
+  'Overview': f"/_addons/{addon_package}/files/Overview.css", 
+  'QAbout': os.path.join(files_dir, 'QAbout.css'),
+  'QAddCards': os.path.join(files_dir, 'QAddCards.css'),
+  'QAddonsDialog': os.path.join(files_dir, 'QAddonsDialog.css'),
+  'QBrowser': os.path.join(files_dir, 'QBrowser.css'),
+  'QEditCurrent': os.path.join(files_dir, 'QEditCurrent.css'),
+  'QNewDeckStats': os.path.join(files_dir, 'QNewDeckStats.css'),
+  'QPreferences': os.path.join(files_dir, 'QPreferences.css'),
+  'Reviewer': f"/_addons/{addon_package}/files/Reviewer.css",
+  'ReviewerBottomBar': f"/_addons/{addon_package}/files/ReviewerBottomBar.css",
+  'TopToolbar': f"/_addons/{addon_package}/files/TopToolbar.css",
 }
 for file in os.listdir(user_files_dir):
   file = file.replace(".css", "")
   if css_files_dir.get(file, "") != "":
     if file.startswith("Q"):
-        css_files_dir[file] = user_files_dir
+        css_files_dir[file] = os.path.join(user_files_dir, file+'.css')
     else:
-        css_files_dir[file] = "user_files"
-
-addcards_css_path = os.path.join(css_files_dir["QAddCards"], 'QAddCards.css')
-browser_css_path = os.path.join(css_files_dir["QBrowser"], 'QBrowser.css')
-newdeckstats_css_path = os.path.join(css_files_dir["QNewDeckStats"], 'QNewDeckStats.css')
-editcurrent_css_path = os.path.join(css_files_dir["QEditCurrent"], 'QEditCurrent.css')
-about_css_path = os.path.join(css_files_dir["QAbout"], 'QAbout.css')
-preferences_css_path = os.path.join(css_files_dir["QPreferences"], 'QPreferences.css')
-addonsdialog_css_path = os.path.join(css_files_dir["QAddonsDialog"], 'QAddonsDialog.cs')
+        css_files_dir[file] = f"/_addons/{addon_package}/user_files/{file}.css"
 
 ### Logger for debuging
 # declare an empty logger class
@@ -107,36 +103,34 @@ else:
 
 logger.debug(css_files_dir)
 ## Adds styling on the different webview contents, before the content is set
-mw.addonManager.setWebExports(__name__, r"files/.*\.(css|svg|gif|png)|user_files/.*\.(css|svg|gif|png)")
-addon_package = mw.addonManager.addonFromModule(__name__)
 def on_webview_will_set_content(web_content: WebContent, context: Optional[Any]) -> None:
     logger.debug(context) # Logs content being loaded, find out the instance
     # Global css
-    web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['global']}/global.css")
+    web_content.css.append(css_files_dir['global'])
     web_content.head += custom_style
     # Deckbrowser
     if isinstance(context, DeckBrowser):
-        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['DeckBrowser']}/DeckBrowser.css")
+        web_content.css.append(css_files_dir['DeckBrowser'])
     # TopToolbar
     elif isinstance(context, TopToolbar):
-        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['TopToolbar']}/TopToolbar.css")
+        web_content.css.append(css_files_dir['TopToolbar'])
     # BottomToolbar (Buttons)
     elif isinstance(context, DeckBrowserBottomBar) or isinstance(context, OverviewBottomBar):
-        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['BottomBar']}/BottomBar.css")
+        web_content.css.append(css_files_dir['BottomBar'])
     # Overview
     elif isinstance(context, Overview):
         if addon_more_overview_stats_fix == "true":
             web_content.head += "<style>center > table tr:first-of-type {display: table-row; flex-direction: unset;}</style>"
-        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['Overview']}/Overview.css")
+        web_content.css.append(css_files_dir['Overview'])
     # Editor
     elif isinstance(context, Editor):
-        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['Editor']}/Editor.css")
+        web_content.css.append(css_files_dir['Editor'])
     # Reviewer
     elif isinstance(context, Reviewer):
-        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['Reviewer']}/Reviewer.css")
+        web_content.css.append(css_files_dir['Reviewer'])
     elif isinstance(context, ReviewerBottomBar):
-        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['BottomBar']}/BottomBar.css")
-        web_content.css.append(f"/_addons/{addon_package}/{css_files_dir['ReviewerBottomBar']}/ReviewerBottomBar.css")
+        web_content.css.append(css_files_dir['BottomBar'])
+        web_content.css.append(css_files_dir['ReviewerBottomBar'])
         # Button padding bottom
         web_content.body += "<div style='height: 9px; opacity: 0; pointer-events: none;'></div>"
         web_content.body += "<div id='padFix' style='height: 30px; opacity: 0; pointer-events: none;'><script>const e = document.getElementById('padFix');e.parentElement.removeChild(e);</script></div>"
@@ -176,37 +170,37 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
         context: AddCards = dialog_manager._dialogs[dialog_name][1]
         logger.debug(context)
         logger.debug(context.styleSheet())
-        context.setStyleSheet(open(addcards_css_path, encoding='utf-8').read())
+        context.setStyleSheet(open(css_files_dir['QAddCards'], encoding='utf-8').read())
     # Addons popup
     elif dialog_name == "AddonsDialog":
         context: AddonsDialog = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(open(addonsdialog_css_path, encoding='utf-8').read())
+        context.setStyleSheet(open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
     # Browser
     elif dialog_name == "Browser":
         context: Browser = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(open(browser_css_path, encoding='utf-8').read())
+        context.setStyleSheet(open(css_files_dir['QBrowser'], encoding='utf-8').read())
         pass
     # EditCurrent
     elif dialog_name == "EditCurrent":
         context: EditCurrent = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(open(editcurrent_css_path, encoding='utf-8').read())
-    # FilteredDeckConfigDialog
-    # elif dialog_name == "FilteredDeckConfigDialog":
-    #    context: FilteredDeckConfigDialog = dialog_manager._dialogs[dialog_name][1]
-    #    context.setStyleSheet(open(filtereddeckconfigdialog_css_path, encoding='utf-8').read())
+        context.setStyleSheet(open(css_files_dir['QEditCurrent'], encoding='utf-8').read())
+    # FilteredDeckConfigDialog - fix
+    elif module_exists("aqt.filtered_deck") and dialog_name == "FilteredDeckConfigDialog":
+        context: FilteredDeckConfigDialog = dialog_manager._dialogs[dialog_name][1]
+        context.setStyleSheet(open(css_files_dir['QFilteredDeckConfigDialog'], encoding='utf-8').read())
     # Statistics / NewDeckStats
     elif dialog_name == "NewDeckStats":
         context: NewDeckStats = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(open(newdeckstats_css_path, encoding='utf-8').read())
+        context.setStyleSheet(open(css_files_dir['QNewDeckStats'], encoding='utf-8').read())
     # About
     elif dialog_name == "About":
         context: ClosableQDialog = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(open(about_css_path, encoding='utf-8').read())
+        context.setStyleSheet(open(css_files_dir['QAbout'], encoding='utf-8').read())
     # Preferences
     elif dialog_name == "Preferences":
         context: Preferences = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(open(preferences_css_path, encoding='utf-8').read())
-    # sync_log ???
+        context.setStyleSheet(open(css_files_dir['QPreferences'], encoding='utf-8').read())
+    # sync_log nani kore???
     elif dialog_name == "sync_log":
         pass
 
@@ -219,27 +213,30 @@ else:
         logger.debug(obj)
         # AddCards
         if isinstance(obj, AddCards):
-            obj.setStyleSheet(open(addcards_css_path, encoding='utf-8').read())
+            obj.setStyleSheet(open(css_files_dir['QAddCards'], encoding='utf-8').read())
         # EditCurrent
         elif isinstance(obj, EditCurrent):
-            obj.setStyleSheet(open(editcurrent_css_path, encoding='utf-8').read())
+            obj.setStyleSheet(open(css_files_dir['QEditCurrent'], encoding='utf-8').read())
         # Statistics / DeckStats
         elif isinstance(obj, DeckStats):
-            obj.setStyleSheet(open(newdeckstats_css_path, encoding='utf-8').read())
+            obj.setStyleSheet(open(css_files_dir['QNewDeckStats'], encoding='utf-8').read())
         # About
         elif isinstance(obj, ClosableQDialog):
-            obj.setStyleSheet(open(about_css_path, encoding='utf-8').read())
+            obj.setStyleSheet(open(css_files_dir['QAbout'], encoding='utf-8').read())
         # Preferences
         ## Haven't found a solution for preferences yet
     mw.setupDialogGC = monkeySetupDialogGC # Should be rare enough for other addons to also use this I hope
+
     # Addons popup
     if attribute_exists(gui_hooks, "addons_dialog_will_show"):
         def on_addons_dialog_will_show(dialog: AddonsDialog):
             logger.debug(dialog)
+            dialog.setStyleSheet(open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
         gui_hooks.addons_dialog_will_show.append(on_addons_dialog_will_show)
     # Browser
     if attribute_exists(gui_hooks, "browser_will_show"):
         def on_browser_will_show(browser: Browser):
             logger.debug(browser)
+            browser.setStyleSheet(open(css_files_dir['QBrowser'], encoding='utf-8').read())
         gui_hooks.browser_will_show.append(on_browser_will_show)
 
