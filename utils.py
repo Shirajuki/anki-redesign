@@ -13,3 +13,6 @@ def module_has_attribute(module_name, attribute):
 
 def attribute_exists(object, attribute):
     return attribute in object.__dict__
+
+def context_name_includes(context, classname):
+    return classname in str(context.__class__)

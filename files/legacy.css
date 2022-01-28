@@ -1,0 +1,18 @@
+button {
+  box-sizing: border-box;
+  color: var(--text-fg, var(--legacy-text-fg));
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  padding: 6px 24px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  background: initial;
+  background-color: var(--frame-bg, var(--legacy-frame-bg));
+  transition: background 0.2s linear, color 0.3s ease-out;
+  box-shadow: rgb(0 0 0 / 20%) 0px 3px 7px -2px,
+    rgb(0 0 0 / 5%) 0px 5px 10px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+}

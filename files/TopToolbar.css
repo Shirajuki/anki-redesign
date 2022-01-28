@@ -18,4 +18,5 @@ body center #header .hitem {
   padding-left: initial;
   padding-right: initial;
   padding: 0 15px;
+  color: var(--text-fg, var(--legacy-text-fg)) !important;
 }

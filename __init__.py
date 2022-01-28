@@ -11,8 +11,9 @@ if module_exists("aqt.browser.browser"):
     from aqt.browser.browser import Browser
 else:
     from aqt.browser import Browser
+# DeckStats import legacy check
 if module_has_attribute("aqt.stats", "NewDeckStats"):
-    from aqt.stats import NewDeckStats
+    from aqt.stats import DeckStats, NewDeckStats
 else:
     from aqt.stats import DeckStats
 from aqt.addcards import AddCards
@@ -22,14 +23,13 @@ from aqt.preferences import Preferences
 from aqt.addons import AddonsDialog
 if module_exists("aqt.filtered_deck"):
     from aqt.filtered_deck import FilteredDeckConfigDialog
-
 # QT page views
 from aqt.toolbar import Toolbar, TopToolbar
 from aqt.deckbrowser import DeckBrowser, DeckBrowserBottomBar
 from aqt.overview import Overview, OverviewBottomBar
 from aqt.editor import Editor
 from aqt.reviewer import Reviewer, ReviewerBottomBar
-from aqt.webview import AnkiWebView, WebContent
+from aqt.webview import WebContent
 import logging
 
 ### Load config data here
@@ -39,6 +39,7 @@ config = mw.addonManager.getConfig(__name__)
 addon_more_overview_stats_fix = config['addon_more_overview_stats'].lower()
 ## Customization
 primary_color = config['primary_color']
+link_color = config['link_color']
 custom_style = """
     <style>
         :root,
@@ -46,9 +47,10 @@ custom_style = """
         :root .isWin,
         :root .isLin {
             --primary-color: %s;
+            --link-color: %s;
         }
     </style>
-    """ % (primary_color)
+    """ % (primary_color, link_color)
 
 ### Init script/file path
 mw.addonManager.setWebExports(__name__, r"files/.*\.(css|svg|gif|png)|user_files/.*\.(css|svg|gif|png)")
@@ -62,11 +64,13 @@ css_files_dir = {
   'DeckBrowser': f"/_addons/{addon_package}/files/DeckBrowser.css",
   'Editor': f"/_addons/{addon_package}/files/Editor.css",
   'global': f"/_addons/{addon_package}/files/global.css",
+  'legacy': f"/_addons/{addon_package}/files/legacy.css",
   'Overview': f"/_addons/{addon_package}/files/Overview.css", 
   'QAbout': os.path.join(files_dir, 'QAbout.css'),
   'QAddCards': os.path.join(files_dir, 'QAddCards.css'),
   'QAddonsDialog': os.path.join(files_dir, 'QAddonsDialog.css'),
   'QBrowser': os.path.join(files_dir, 'QBrowser.css'),
+  'QFilteredDeckConfigDialog': os.path.join(files_dir, 'QFilteredDeckConfigDialog.css'),
   'QEditCurrent': os.path.join(files_dir, 'QEditCurrent.css'),
   'QNewDeckStats': os.path.join(files_dir, 'QNewDeckStats.css'),
   'QPreferences': os.path.join(files_dir, 'QPreferences.css'),
@@ -74,6 +78,7 @@ css_files_dir = {
   'ReviewerBottomBar': f"/_addons/{addon_package}/files/ReviewerBottomBar.css",
   'TopToolbar': f"/_addons/{addon_package}/files/TopToolbar.css",
 }
+# Replace pathing for user customised styled files
 for file in os.listdir(user_files_dir):
   file = file.replace(".css", "")
   if css_files_dir.get(file, "") != "":
@@ -100,14 +105,14 @@ if 'ANKI_REDESIGN_DEBUG_LOGGING' in os.environ:
     logger.debug("Initialized anki")
 else:
     logger = EmptyLogger()
-
 logger.debug(css_files_dir)
+
+### CSS injections
 ## Adds styling on the different webview contents, before the content is set
 def on_webview_will_set_content(web_content: WebContent, context: Optional[Any]) -> None:
     logger.debug(context) # Logs content being loaded, find out the instance
-    # Global css
-    web_content.css.append(css_files_dir['global'])
-    web_content.head += custom_style
+    web_content.css.append(css_files_dir['global']) # Global css
+    web_content.head += custom_style # Custom styling
     # Deckbrowser
     if isinstance(context, DeckBrowser):
         web_content.css.append(css_files_dir['DeckBrowser'])
@@ -135,9 +140,16 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
         web_content.body += "<div style='height: 9px; opacity: 0; pointer-events: none;'></div>"
         web_content.body += "<div id='padFix' style='height: 30px; opacity: 0; pointer-events: none;'><script>const e = document.getElementById('padFix');e.parentElement.removeChild(e);</script></div>"
         mw.bottomWeb.adjustHeightToFit();
+    ## Legacy webviews
+    # ResetRequired on card edit (legacy)
+    elif context_name_includes(context, "aqt.main.ResetRequired"):
+        web_content.css.append(css_files_dir['legacy'])
+    # CardLayout (legacy)
+    elif context_name_includes(context, "aqt.clayout.CardLayout"):
+        pass
 gui_hooks.webview_will_set_content.append(on_webview_will_set_content)
 
-# TopToolbar height change by adding <br> tag
+# TopToolbar styling fix through height change by adding <br> tag
 def redrawToolbar() -> None:
     # Reload the webview content with added <br/> tag, making the bar larger in height
     mw.toolbar.web.setFixedHeight(60)
@@ -145,9 +157,11 @@ def redrawToolbar() -> None:
         const br = document.createElement("br");
         document.body.appendChild(br);
     """)
+    # Auto adjust the height, then redraw the toolbar
     mw.toolbar.web.adjustHeightToFit()
-    mw.toolbar.redraw() # Redraw the toolbar
+    mw.toolbar.redraw()
 def redrawToolbarLegacy(links: List[str], _: Toolbar) -> None:
+    # Utilizing the link hook, we inject <br/> tag through javascript
     inject_br = """
         <script>
             const br = document.createElement("br");
@@ -162,7 +176,6 @@ elif attribute_exists(gui_hooks, "top_toolbar_did_init_links"):
     gui_hooks.top_toolbar_did_init_links.append(redrawToolbarLegacy)
 
 # Dialog window styling
-# TODO: Add CSS styling to different dialog windows
 def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name: str, dialog_instance: QWidget):
     logger.debug(dialog_name)
     # AddCards
@@ -184,7 +197,7 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
     elif dialog_name == "EditCurrent":
         context: EditCurrent = dialog_manager._dialogs[dialog_name][1]
         context.setStyleSheet(open(css_files_dir['QEditCurrent'], encoding='utf-8').read())
-    # FilteredDeckConfigDialog - fix
+    # FilteredDeckConfigDialog
     elif module_exists("aqt.filtered_deck") and dialog_name == "FilteredDeckConfigDialog":
         context: FilteredDeckConfigDialog = dialog_manager._dialogs[dialog_name][1]
         context.setStyleSheet(open(css_files_dir['QFilteredDeckConfigDialog'], encoding='utf-8').read())
@@ -200,14 +213,17 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
     elif dialog_name == "Preferences":
         context: Preferences = dialog_manager._dialogs[dialog_name][1]
         context.setStyleSheet(open(css_files_dir['QPreferences'], encoding='utf-8').read())
-    # sync_log nani kore???
+    # sync_log - kore ha nani desu???
     elif dialog_name == "sync_log":
         pass
 
 if attribute_exists(gui_hooks, "dialog_manager_did_open_dialog"):
     gui_hooks.dialog_manager_did_open_dialog.append(on_dialog_manager_did_open_dialog)
 else:
+    ## Legacy dialog window styling
     # Sad monkey patch, instead of hooks :c
+    # setupDialogGC is being called on almost all dialog windows, utilizing this, the
+    # function is used as a type of hook to inject CSS styling on the QT instances
     def monkeySetupDialogGC(obj: Any) -> None:
         obj.finished.connect(lambda: mw.gcWindow(obj))
         logger.debug(obj)
@@ -225,7 +241,7 @@ else:
             obj.setStyleSheet(open(css_files_dir['QAbout'], encoding='utf-8').read())
         # Preferences
         ## Haven't found a solution for preferences yet
-    mw.setupDialogGC = monkeySetupDialogGC # Should be rare enough for other addons to also use this I hope
+    mw.setupDialogGC = monkeySetupDialogGC # Should be rare enough for other addons to also patch this I hope.
 
     # Addons popup
     if attribute_exists(gui_hooks, "addons_dialog_will_show"):

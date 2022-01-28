@@ -32,7 +32,7 @@ td[align="center"] > span {
   display: block;
   left: 50%;
   transform: translate(-50%, -13px);
-  color: #555;
+  color: var(--text-fg, var(--legacy-text-fg));
 }
 body .stattxt#time {
   transform: translate(-50%, -6px);
