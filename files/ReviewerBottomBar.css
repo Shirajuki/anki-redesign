@@ -31,7 +31,8 @@ td[align="center"] > span {
   position: absolute;
   display: block;
   left: 50%;
-  transform: translate(-50%, -8px);
+  transform: translate(-50%, -13px);
+  color: #555;
 }
 body .stattxt#time {
   transform: translate(-50%, -6px);
