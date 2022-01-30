@@ -35,7 +35,6 @@ a.deck  {
   transition: padding 1s, background-color .5s, margin-right 1s;
   border-radius: 6px;
   margin-right: 5px;
-  /* min-width: auto; */
 }
 body table:first-of-type tr a.deck:hover {
   padding: 5px 10px 5px 10px;
