@@ -2,8 +2,12 @@ import os
 from .utils import *
 from typing import Any, List, Optional
 from PyQt5.QtWidgets import QWidget
+from platform import system, version, release
+from ctypes import WinDLL
+from ctypes import *
 # import the main window object (mw) from aqt
-from aqt import DialogManager, mw
+from aqt import AnkiQt, DialogManager, mw
+from aqt.theme import theme_manager
 from aqt import gui_hooks
 ## QT dialog windows
 # Browser import legacy check (2.1.22)
@@ -29,7 +33,7 @@ from aqt.deckbrowser import DeckBrowser, DeckBrowserBottomBar
 from aqt.overview import Overview, OverviewBottomBar
 from aqt.editor import Editor
 from aqt.reviewer import Reviewer, ReviewerBottomBar
-from aqt.webview import WebContent
+from aqt.webview import AnkiWebView, WebContent, AnkiWebPage
 import logging
 
 ### Load config data here
@@ -40,6 +44,7 @@ addon_more_overview_stats_fix = config['addon_more_overview_stats'].lower()
 ## Customization
 primary_color = config['primary_color']
 link_color = config['link_color']
+font = config['font']
 custom_style = """
     <style>
         :root,
@@ -49,8 +54,11 @@ custom_style = """
             --primary-color: %s;
             --link-color: %s;
         }
+        html {
+            font-family: %s;
+        }
     </style>
-    """ % (primary_color, link_color)
+    """ % (primary_color, link_color, font)
 
 ### Init script/file path
 mw.addonManager.setWebExports(__name__, r"files/.*\.(css|svg|gif|png)|user_files/.*\.(css|svg|gif|png)")
@@ -61,6 +69,7 @@ files_dir = os.path.join(this_script_dir, 'files')
 user_files_dir = os.path.join(this_script_dir, 'user_files')
 css_files_dir = {
   'BottomBar': f"/_addons/{addon_package}/files/BottomBar.css",
+  'CardLayout': f"/_addons/{addon_package}/files/CardLayout.css",
   'DeckBrowser': f"/_addons/{addon_package}/files/DeckBrowser.css",
   'Editor': f"/_addons/{addon_package}/files/Editor.css",
   'global': f"/_addons/{addon_package}/files/global.css",
@@ -107,6 +116,25 @@ else:
     logger = EmptyLogger()
 logger.debug(css_files_dir)
 
+dwmapi = None
+## Darkmode windows titlebar thanks to miere43
+# https://stackoverflow.com/questions/57124243/winforms-dark-title-bar-on-windows-10
+# https://github.com/miere43/anki-dark-titlebar/blob/main/__init__.py
+def set_dark_titlebar(window, dwmapi):
+    handler_window = c_void_p(int(window.winId()))
+    DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = c_int(19)
+    DWMWA_USE_IMMERSIVE_DARK_MODE = c_int(20)
+    windows_version = int(version().split('.')[2])
+    attribute = DWMWA_USE_IMMERSIVE_DARK_MODE if windows_version >= 18985 else DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1
+    if windows_version >= 17763 and int(release()) >= 10:
+        dwmapi.DwmSetWindowAttribute(handler_window, attribute, byref(c_int(1)), c_size_t(4))
+
+if system() == "Windows" and theme_manager.get_night_mode():
+    dwmapi = WinDLL("dwmapi")
+    dwmapi.DwmSetWindowAttribute.argtypes = [c_void_p, c_int, c_void_p, c_size_t]
+    dwmapi.DwmSetWindowAttribute.restype = c_int
+    set_dark_titlebar(mw, dwmapi)
+
 ### CSS injections
 ## Adds styling on the different webview contents, before the content is set
 def on_webview_will_set_content(web_content: WebContent, context: Optional[Any]) -> None:
@@ -140,13 +168,13 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
         web_content.body += "<div style='height: 9px; opacity: 0; pointer-events: none;'></div>"
         web_content.body += "<div id='padFix' style='height: 30px; opacity: 0; pointer-events: none;'><script>const e = document.getElementById('padFix');e.parentElement.removeChild(e);</script></div>"
         mw.bottomWeb.adjustHeightToFit();
+    # CardLayout
+    elif context_name_includes(context, "aqt.clayout.CardLayout"):
+        web_content.css.append(css_files_dir['CardLayout'])
     ## Legacy webviews
     # ResetRequired on card edit (legacy)
     elif context_name_includes(context, "aqt.main.ResetRequired"):
         web_content.css.append(css_files_dir['legacy'])
-    # CardLayout (legacy)
-    elif context_name_includes(context, "aqt.clayout.CardLayout"):
-        pass
 gui_hooks.webview_will_set_content.append(on_webview_will_set_content)
 
 # TopToolbar styling fix through height change by adding <br> tag
@@ -178,11 +206,16 @@ elif attribute_exists(gui_hooks, "top_toolbar_did_init_links"):
 # Dialog window styling
 def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name: str, dialog_instance: QWidget):
     logger.debug(dialog_name)
+    dialog: AnkiQt = dialog_manager._dialogs[dialog_name][1]
+    # If dwmapi found and nightmode is enabled, set dark titlebar to dialog window
+    if dwmapi and theme_manager.get_night_mode():
+        set_dark_titlebar(dialog, dwmapi)
+        # Trick to refresh the titlebar
+        dialog.showFullScreen()
+        dialog.showNormal()
     # AddCards
     if dialog_name == "AddCards":
         context: AddCards = dialog_manager._dialogs[dialog_name][1]
-        logger.debug(context)
-        logger.debug(context.styleSheet())
         context.setStyleSheet(open(css_files_dir['QAddCards'], encoding='utf-8').read())
     # Addons popup
     elif dialog_name == "AddonsDialog":

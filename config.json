@@ -1,5 +1,6 @@
 {
   "addon_more_overview_stats": "false",
   "primary_color": "#0093d0",
-  "link_color": "#77ccff"
+  "link_color": "#77ccff",
+  "font": "Segoe UI"
 }
