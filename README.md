@@ -5,7 +5,7 @@
 Note: This add-on doesn't overwrite the original Anki code views that much, meaning that most add-ons should properly work with Anki-redesign enabled. However, if there is any add-on found to not be working properly, feel free to make an [issue](https://github.com/Shirajuki/anki-redesign/issues) and I'll try to add support for it!
 (List of tested addons and manual fixes for them to work can be seen on the [project github wiki](https://github.com/Shirajuki/anki-redesign/wiki/Compatible-Add-ons-for-Anki-2.1).)
 
-Note2: <b>This addon also works as a theming addon</b> as it enables the possibility of user customization on almost all Anki views/windows through the injection of CSS and QT CSS on the different components. The adding of custom styling can be done by copying over the css files from `./files` to `./user_files` and then editing the styling there. Primary accent and link color, as well as the font of Anki, can be changed in the addon config.
+Note2: <b>This addon also works as a theming addon</b> as it enables the possibility of user customization on almost all Anki views/windows through the injection of CSS and QT CSS on the different components. The adding of custom styling can be done by copying over the css files from `./files` to `./user_files` and then editing the styling there. Primary color of button focus, link color, as well as the font, can be changed in the addon config.
 
 Note3: If the addon is not updating try open anki while holding shift to turn off all addons, then update and restart. :)
 
