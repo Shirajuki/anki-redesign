@@ -1,9 +1,9 @@
 import os
+import logging
 from .utils import *
 from typing import Any, List, Optional
 from PyQt5.QtWidgets import QWidget
 from platform import system, version, release
-from ctypes import WinDLL
 from ctypes import *
 # import the main window object (mw) from aqt
 from aqt import AnkiQt, DialogManager, mw
@@ -25,6 +25,7 @@ from aqt.editcurrent import EditCurrent
 from aqt.about import ClosableQDialog
 from aqt.preferences import Preferences
 from aqt.addons import AddonsDialog
+# FilteredDeckConfigDialog import non-legacy check
 if module_exists("aqt.filtered_deck"):
     from aqt.filtered_deck import FilteredDeckConfigDialog
 # QT page views
@@ -34,13 +35,14 @@ from aqt.overview import Overview, OverviewBottomBar
 from aqt.editor import Editor
 from aqt.reviewer import Reviewer, ReviewerBottomBar
 from aqt.webview import AnkiWebView, WebContent, AnkiWebPage
-import logging
 
 ### Load config data here
 config = mw.addonManager.getConfig(__name__)
+
 ## Addon compatibility fixes
 # More Overview Stats 2.1 addon compatibility fix
-addon_more_overview_stats_fix = config['addon_more_overview_stats'].lower()
+addon_more_overview_stats_fix = True if config['addon_more_overview_stats'].lower() == "true" else False
+
 ## Customization
 primary_color = config['primary_color']
 link_color = config['link_color']
@@ -120,7 +122,7 @@ dwmapi = None
 ## Darkmode windows titlebar thanks to miere43
 # https://stackoverflow.com/questions/57124243/winforms-dark-title-bar-on-windows-10
 # https://github.com/miere43/anki-dark-titlebar/blob/main/__init__.py
-def set_dark_titlebar(window, dwmapi):
+def set_dark_titlebar(window, dwmapi) -> None:
     handler_window = c_void_p(int(window.winId()))
     DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = c_int(19)
     DWMWA_USE_IMMERSIVE_DARK_MODE = c_int(20)
@@ -128,12 +130,19 @@ def set_dark_titlebar(window, dwmapi):
     attribute = DWMWA_USE_IMMERSIVE_DARK_MODE if windows_version >= 18985 else DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1
     if windows_version >= 17763 and int(release()) >= 10:
         dwmapi.DwmSetWindowAttribute(handler_window, attribute, byref(c_int(1)), c_size_t(4))
-
+def set_dark_titlebar_qt(obj, fix=True) -> None:
+    if dwmapi and theme_manager.get_night_mode():
+        set_dark_titlebar(obj, dwmapi)
+        # Trick to refresh the titlebar after dark titlebar is set
+        if fix:
+            obj.showFullScreen()
+            obj.showNormal()
 if system() == "Windows" and theme_manager.get_night_mode():
     dwmapi = WinDLL("dwmapi")
     dwmapi.DwmSetWindowAttribute.argtypes = [c_void_p, c_int, c_void_p, c_size_t]
     dwmapi.DwmSetWindowAttribute.restype = c_int
     set_dark_titlebar(mw, dwmapi)
+logger.debug(dwmapi)
 
 ### CSS injections
 ## Adds styling on the different webview contents, before the content is set
@@ -152,7 +161,7 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
         web_content.css.append(css_files_dir['BottomBar'])
     # Overview
     elif isinstance(context, Overview):
-        if addon_more_overview_stats_fix == "true":
+        if addon_more_overview_stats_fix:
             web_content.head += "<style>center > table tr:first-of-type {display: table-row; flex-direction: unset;}</style>"
         web_content.css.append(css_files_dir['Overview'])
     # Editor
@@ -208,11 +217,7 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
     logger.debug(dialog_name)
     dialog: AnkiQt = dialog_manager._dialogs[dialog_name][1]
     # If dwmapi found and nightmode is enabled, set dark titlebar to dialog window
-    if dwmapi and theme_manager.get_night_mode():
-        set_dark_titlebar(dialog, dwmapi)
-        # Trick to refresh the titlebar
-        dialog.showFullScreen()
-        dialog.showNormal()
+    set_dark_titlebar_qt(dialog)
     # AddCards
     if dialog_name == "AddCards":
         context: AddCards = dialog_manager._dialogs[dialog_name][1]
@@ -260,6 +265,7 @@ else:
     def monkeySetupDialogGC(obj: Any) -> None:
         obj.finished.connect(lambda: mw.gcWindow(obj))
         logger.debug(obj)
+        set_dark_titlebar_qt(obj)
         # AddCards
         if isinstance(obj, AddCards):
             obj.setStyleSheet(open(css_files_dir['QAddCards'], encoding='utf-8').read())
@@ -280,12 +286,13 @@ else:
     if attribute_exists(gui_hooks, "addons_dialog_will_show"):
         def on_addons_dialog_will_show(dialog: AddonsDialog):
             logger.debug(dialog)
+            set_dark_titlebar_qt(dialog)
             dialog.setStyleSheet(open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
         gui_hooks.addons_dialog_will_show.append(on_addons_dialog_will_show)
     # Browser
     if attribute_exists(gui_hooks, "browser_will_show"):
         def on_browser_will_show(browser: Browser):
             logger.debug(browser)
+            set_dark_titlebar_qt(browser)
             browser.setStyleSheet(open(css_files_dir['QBrowser'], encoding='utf-8').read())
         gui_hooks.browser_will_show.append(on_browser_will_show)
-

@@ -42,9 +42,10 @@ The concept of this add-on was inspired by the following add-on and designs:
 - [miere43's dark titlebar Anki Add-on](https://github.com/miere43/anki-dark-titlebar)
 
 **Changelog:**
-- 30-01-2022: Add customized font support, dark titlebar for windows on dark mode, more minor styling fixes (v0.0.7)
-- 25-01-2022: Add typo and error bugfixes, code cleanup update (v0.0.6)
-- 24-01-2022: Add full user customization styling through the folder user_files. User theming is now possible! (v0.0.5)
+- 31-01-2022: Adds minor bugfixes and some code cleanup (v0.0.8)
+- 30-01-2022: Adds customized font support, dark titlebar for windows on dark mode, more minor styling fixes (v0.0.7)
+- 25-01-2022: Adds typo and error bugfixes, code cleanup update (v0.0.6)
+- 24-01-2022: Adds full user customization styling through the folder user_files. User theming is now possible! (v0.0.5)
 - 21-01-2022: Adds a very small update, removes unfinished styling on AddCard window (v0.0.4)
 - 20-01-2022: Adds styling edits, timer and styling bugfixes, add-on now compatible with legacy versions (v0.0.3)
 - 14-01-2022: Adds second update, more styling fixes (v0.0.2)
