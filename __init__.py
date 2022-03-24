@@ -42,6 +42,7 @@ config = mw.addonManager.getConfig(__name__)
 ## Addon compatibility fixes
 # More Overview Stats 2.1 addon compatibility fix
 addon_more_overview_stats_fix = True if config['addon_more_overview_stats'].lower() == "true" else False
+addon_recolor_fix = True if config['addon_recolor_fix'].lower() == "true" else False
 
 ## Customization
 primary_color = config['primary_color']
@@ -296,3 +297,72 @@ else:
             set_dark_titlebar_qt(browser)
             browser.setStyleSheet(open(css_files_dir['QBrowser'], encoding='utf-8').read())
         gui_hooks.browser_will_show.append(on_browser_will_show)
+
+"""
+TBA
+from aqt.qt import QMainWindow, QDialog
+keys = ["about","addcards","addfield","addmodel","addonconf","addons","browser","browserdisp","browseropts","changemap","changemodel","clayout_top","customstudy","dconf","debug","filtered_deck","editaddon","editcurrent","edithtml","emptycards","exporting","fields","finddupes","findreplace","getaddons","importing","main","modelopts","models","preferences","preview","profiles","progress","reposition","setgroup","setlang","stats","studydeck","synclog","taglimit","template"]
+
+for key in keys:
+    module = "aqt.forms."+key
+    if module_exists(module):
+        mod = __import__(module, fromlist=['Ui_Dialog'])
+        if hasattr(mod,"Ui_Dialog"):
+            try:
+                Ui_Dialog = getattr(mod, 'Ui_Dialog')
+                Ui_Dialog = Ui_Dialog()
+                ui_old = Ui_Dialog.setupUi
+                logger.debug(Ui_Dialog)
+            except:
+                pass
+        # about
+        elif hasattr(mod,"Ui_About"):
+            pass
+        # changemap
+        elif hasattr(mod,"Ui_ChangeMap"):
+            pass
+        # clayout_top, preview, template
+        elif hasattr(mod,"Ui_Form"):
+            pass
+        # exporting
+        elif hasattr(mod,"Ui_ExportDialog"):
+            pass
+        # importing
+        elif hasattr(mod,"Ui_ImportDialog"):
+            pass
+        # preferences
+        elif hasattr(mod,"Ui_Preferences"):
+            pass
+        # profiles
+        elif hasattr(mod,"Ui_MainWindow"):
+            pass
+
+from aqt.forms.browser import Ui_Dialog
+ui_old = Ui_Dialog.setupUi
+def Ui_Dialog_new(self: Ui_Dialog, Dialog, *args, **kwargs) -> None:
+    logger.debug(self)
+    logger.debug(Dialog)
+    return ui_old(self, Dialog, *args, *kwargs)
+Ui_Dialog.setupUi = Ui_Dialog_new
+
+QMainWindow_show_old = None
+def QMainWindow_show_new(self: QMainWindow, *args, **kwargs) -> None:
+    set_dark_titlebar_qt(self, False)
+    logger.debug(self.windowTitle())
+    logger.debug(self.form)
+    logger.debug(self)
+    return QMainWindow_show_old(self, *args, *kwargs)
+QMainWindow_show_old = QMainWindow.show
+QMainWindow.show = QMainWindow_show_new
+
+QDialog_show_old = None
+def QDialog_show_new(self: QDialog, *args, **kwargs) -> None:
+    set_dark_titlebar_qt(self, False)
+    logger.debug(self.windowTitle())
+    logger.debug(self.form)
+    logger.debug(self)
+    #set_dark_titlebar_qt(self)
+    return QDialog_show_old(self, *args, **kwargs)
+QDialog_show_old = QDialog.show
+QDialog.show = QDialog_show_new
+"""
