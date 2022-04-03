@@ -2,6 +2,8 @@
 
 > A new lightweight look for Anki compatible with most (if not all) versions of Anki 2.1.X running QT5. - Specifically tested on Anki 2.1.49
 
+**NOTE: Currently busy with studies :c, will be back with a large update on Easter break :D (Week 14 / 15)**
+
 Note: This add-on doesn't overwrite the original Anki code views that much, meaning that most add-ons should properly work with Anki-redesign enabled. However, if there is any add-on found to not be working properly, feel free to make an [issue](https://github.com/Shirajuki/anki-redesign/issues) and I'll try to add support for it!
 (List of tested addons and manual fixes for them to work can be seen on the [project github wiki](https://github.com/Shirajuki/anki-redesign/wiki/Compatible-Add-ons-for-Anki-2.1).)
 
