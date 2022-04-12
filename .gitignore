@@ -3,3 +3,4 @@ user_files/*.log
 meta.json
 *.ankiaddon
 test.py
+*.swp

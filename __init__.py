@@ -11,7 +11,7 @@ from platform import system, version, release
 from ctypes import *
 # import the main window object (mw) from aqt
 from aqt import AnkiQt, DialogManager, mw
-from aqt.theme import theme_manager
+from aqt.theme import theme_manager, colors
 from aqt import gui_hooks
 ## QT dialog windows
 # Browser import legacy check (2.1.22)
@@ -46,8 +46,6 @@ from .config import config, write_config, get_config
 ## Addon compatibility fixes
 # More Overview Stats 2.1 addon compatibility fix
 addon_more_overview_stats_fix = config['addon_more_overview_stats']
-# ReColor addon compatibility fix
-addon_recolor_fix = config['addon_recolor']
 
 ## Customization
 theme = config['theme']
@@ -246,7 +244,7 @@ else:
         elif isinstance(obj, ClosableQDialog):
             obj.setStyleSheet(open(css_files_dir['QAbout'], encoding='utf-8').read())
         # Preferences
-        ## Haven't found a solution for preferences yet
+        ## Haven't found a solution for preferences yet :c
     mw.setupDialogGC = monkey_setup_dialog_gc # Should be rare enough for other addons to also patch this I hope.
 
     # Addons popup
@@ -381,25 +379,21 @@ class ConfigDialog(QDialog):
         self.interface_font.setCurrentFont(QFont(config["font"]))
         self.settings_layout.addRow(self.interface_font)
 
-        self.size_label = QLabel("Font Size: ")
-        self.size_label.setFixedWidth(100)
         self.font_size = QSpinBox()
         self.font_size.setFixedWidth(200)
         self.font_size.setValue(config["font_size"])
         self.font_size.setSuffix("px")
         self.settings_layout.addRow(self.font_size)
 
-        self.tab_settings.setLayout(self.settings_layout)
+        self.settings_layout.addRow(QLabel())
 
-        # Window BG fix
-        window_bg = "rgba(0, 0, 0, 47)"
-        #window_bg = self.theme_colors.get("WINDOW_BG")[self.color_mode]
-        self.tab_settings.setStyleSheet('QWidget#settings { background-color: %s; border: 1px solid %s; }' % (window_bg, window_bg))
-        self.tab_general.setStyleSheet('QWidget#general { background-color: %s; border: 1px solid %s; }' % (window_bg, window_bg))
-        self.tab_decks.setStyleSheet('QWidget#decks { background-color: %s; border: 1px solid %s; }' % (window_bg, window_bg))
-        self.tab_browse.setStyleSheet('QWidget#browse { background-color: %s; border: 1px solid %s; }' % (window_bg, window_bg))
-        self.tab_extra.setStyleSheet('QWidget#extra { background-color: %s; border: 1px solid %s; }' % (window_bg, window_bg))
-        self.tabs.setStyleSheet('QWidget#tabs { background-color: %s; border: 1px solid %s; }' % (self.theme_colors.get("WINDOW_BG")[color_mode], window_bg))
+        self.fix_label = QLabel("Addon-Compatibility Fixes: ")
+        self.fix_label.setStyleSheet('QLabel { font-size: 14px; font-weight: bold }')
+        self.settings_layout.addRow(self.fix_label)
+        self.addon_more_overview_stats_check = self.checkbox("addon_more_overview_stats")
+        self.settings_layout.addRow("More Overview Stats 21", self.addon_more_overview_stats_check)
+
+        self.tab_settings.setLayout(self.settings_layout)
 
         ## Add tabs
         self.tabs.resize(300,200)
@@ -423,6 +417,19 @@ class ConfigDialog(QDialog):
         self.theme_colors = themes_parsed.get("colors")
         for update in self.updates:
             update()
+
+    def checkbox(self, key: str) -> QCheckBox:
+        checkbox = QCheckBox()
+
+        def update() -> None:
+            value = config[key]
+            logger.debug(value)
+            logger.debug(config)
+            checkbox.setChecked(value)
+
+        self.updates.append(update)
+        update()
+        return checkbox
 
     def radio_button(self, key: str) -> QRadioButton:
         radio = QRadioButton()
@@ -525,6 +532,7 @@ class ConfigDialog(QDialog):
         global config
         config["font"] = self.interface_font.currentFont().family()
         config["font_size"] = self.font_size.value()
+        config['addon_more_overview_stats'] = self.addon_more_overview_stats_check.isChecked()
         config["theme"] = theme
         write_config(config)
         config = get_config()
@@ -541,12 +549,15 @@ class ConfigDialog(QDialog):
 def update_theme() -> None:
         themes_parsed = get_theme(theme)
         theme_colors = themes_parsed.get("colors")
-        colors = {}
+        # Apply theme on colors
+        ncolors = {}
         for color_name in theme_colors:
-            colors[color_name] = theme_colors.get(color_name)[color_mode]
-
-        # Apply theme
-        apply_theme(colors)
+            c = theme_colors.get(color_name)
+            ncolors[color_name] = c[color_mode]
+            if getattr(colors, color_name, False):
+                setattr(colors, color_name, (c[1], c[2]))
+        # Apply theme on palette
+        apply_theme(ncolors)
 
 def apply_theme(colors) -> None:
     # Load palette
