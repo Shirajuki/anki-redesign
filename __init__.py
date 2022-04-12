@@ -423,8 +423,6 @@ class ConfigDialog(QDialog):
 
         def update() -> None:
             value = config[key]
-            logger.debug(value)
-            logger.debug(config)
             checkbox.setChecked(value)
 
         self.updates.append(update)
@@ -616,7 +614,7 @@ def create_menu_action(parent: QWidget, dialog_class: QDialog, dialog_name: str)
 
 # Load in the Anki-redesign menu
 if not hasattr(mw.form, 'anki_redesign'):
-    mw.form.anki_redesign = QMenu("&CAnki-redesign", mw)
+    mw.form.anki_redesign = QMenu("&Anki-redesign", mw)
     mw.form.menubar.insertMenu(mw.form.menuHelp.menuAction(), mw.form.anki_redesign)
 
     mw.form.anki_redesign.addAction(create_menu_action(mw.form.anki_redesign, ConfigDialog, "&Config"))

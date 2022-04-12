@@ -2,7 +2,7 @@
   "colors": {
     "BORDER": [
       "Border",
-      "#D8DEE9",
+      "#aaa",
       "#434c5e",
       "--border"
     ],
@@ -13,26 +13,26 @@
       "--buried-fg"
     ],
     "BUTTON_BG": [
-      "Button Background||",
+      "Button Background",
       "#D8DEE9",
       "#1A1826",
-      ""
+      "--button-bg"
     ],
     "CURRENT_DECK": [
-      "Selected Deck||",
-      "#E5E9F0",
+      "Selected Deck",
+      "#e7e7e7",
       "#1A1826",
       "--current-deck"
     ],
     "DISABLED": [
-      "Disabled||",
-      "#C3BAC6",
+      "Disabled",
+      "#777",
       "#C3BAC6",
       "--disabled"
     ],
     "FAINT_BORDER": [
-      "Faint Border||",
-      "#ECEFF4",
+      "Faint Border",
+      "#e7e7e7",
       "#1A1826",
       "--faint-border"
     ],
@@ -121,50 +121,50 @@
       "--flag7-fg"
     ],
     "FRAME_BG": [
-      "Frame Background||",
-      "#1A1826",
+      "Frame Background",
+      "#white",
       "#1A1826",
       "--frame-bg"
     ],
     "HIGHLIGHT_BG": [
       "Highlighted Background",
-      "#81A1C1",
+      "#77ccff",
       "#81A1C1",
       "--highlight-bg"
     ],
     "HIGHLIGHT_FG": [
       "Highlighted Text",
-      "white",
+      "black",
       "#ECEFF4",
       "--highlight-fg"
     ],
     "LEARN_COUNT": [
       "Learn Count",
-      "#D08770",
+      "#c35617",
       "#D08770",
       "--learn-count"
     ],
     "LINK": [
-      "Hyperlink||",
+      "Hyperlink",
       "#89DCEB",
       "#89DCEB",
       "--link"
     ],
     "MARKED_BG": [
       "Marked Background",
-      "#EBCB8B",
+      "#cce",
       "#ebcb8b",
       "--marked-bg"
     ],
     "MEDIUM_BORDER": [
       "Medium Border",
-      "#E5E9F0",
+      "#b6b6b6",
       "#434C5E",
       "--medium-border"
     ],
     "NEW_COUNT": [
       "New Count",
-      "#5E81AC",
+      "#00a",
       "#5E81AC",
       "--new-count"
     ],
@@ -176,49 +176,49 @@
     ],
     "REVIEW_COUNT": [
       "Review Count",
-      "#A3BE8C",
+      "#0a0",
       "#A3BE8C",
       "--review-count"
     ],
     "SLIGHTLY_GREY_TEXT": [
       "Switch Text",
-      "#3B4252",
+      "#333",
       "#D8DEE9",
       "--slightly-grey-text"
     ],
     "SUSPENDED_BG": [
-      "Suspended Background||",
-      "#88C0D0",
+      "Suspended Background",
+      "#ffffb2",
       "#161320",
       "--suspended-bg"
     ],
     "SUSPENDED_FG": [
       "Suspended Foreground",
-      "#3B4252",
+      "#dd0",
       "#ECEFF4",
       "--suspended-fg"
     ],
     "TEXT_FG": [
-      "Text Foreground||",
-      "#D9E0EE",
+      "Text Foreground",
+      "#black",
       "#d9e0ee",
       "--text-fg"
     ],
     "TOOLTIP_BG": [
       "Tooltip Background",
-      "#D8DEE9",
+      "#fcfcfc",
       "#4C566A",
       "--tooltip-bg"
     ],
     "WINDOW_BG": [
-      "Window Background||",
-      "white",
+      "Window Background",
+      "#fafafa",
       "#1E1E2E",
       "--window-bg"
     ],
     "ZERO_COUNT": [
       "Zero Count",
-      "#D8DEE9",
+      "#ddd",
       "#434C5E",
       "--zero-count"
     ]
