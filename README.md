@@ -17,13 +17,6 @@ Note3: If the addon is not updating try open anki while holding shift to turn of
 
 **(Planned) Updates / todos (as of 13.04.2022):**
 
-- [x] Add minor design fixes for a cleaner design (v0.0.2)
-- [x] Fix light-mode design and better contrasts (v0.0.2)
-- [x] Add a primary color of choice and more lightweight user defined customizations through config file (v0.0.3)
-- [x] Fix bug where deck timer appears on top of the show answer button (v0.0.3)
-- [x] Addon said not be working on Anki version 2.1.22, manually fix this (v0.0.3)
-- [x] Fix problem with darkmode Mac Computers (v0.0.3)
-- [x] Removes unfinished styling on dialog windows - AddCards (v0.0.4)
 - [x] Add user customization on all styling views through the user_files folder (user custom CSS injection) (v0.0.5)
 - [x] Add more lightweight modern styling for other views / qt dialogs (v0.1.0)
 - [x] Add dialog window for configuration and user customizations (will replace config.json for a better ease) (v0.1.0)
