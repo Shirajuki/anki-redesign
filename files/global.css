@@ -9,7 +9,6 @@
 :root body.isWin:not(.nightMode),
 :root body.isMac:not(.nightMode),
 :root body.isLin:not(.nightMode) {
-  /* --window-bg: #fafafa; */
   /* Force variable styling on legacy versions */
   --legacy-text-fg: black;
   --legacy-frame-bg: white;
@@ -50,7 +49,6 @@
 :root body.isWin.nightMode,
 :root body.isMac.nightMode,
 :root body.isLin.nightMode {
-  /* --window-bg: #2f2f31; */
   /* Force variable styling on legacy versions */
   --legacy-text-fg: white;
   --legacy-frame-bg: #3a3a3a;

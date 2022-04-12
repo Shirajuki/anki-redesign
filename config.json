@@ -1,8 +1,5 @@
 {
   "addon_more_overview_stats": "false",
-  "addon_recolor": "false",
-  "primary_color": "#0093d0",
-  "link_color": "#77ccff",
   "font": "Segoe UI",
   "font_size": "12",
   "theme": "Catppuccin"

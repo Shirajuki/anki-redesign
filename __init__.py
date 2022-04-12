@@ -342,9 +342,9 @@ class ConfigDialog(QDialog):
         ## Loads theme color
         self.theme_colors = themes_parsed.get("colors")
         self.updates = []
-        self.theme_general = ["TEXT_FG", "WINDOW_BG", "FRAME_BG", "BUTTON_BG", "BORDER", "MEDIUM_BORDER", "FAINT_BORDER", "HIGHLIGHT_BG", "HIGHLIGHT_FG" , "LINK", "DISABLED", "PRIMARY_COLOR"]
+        self.theme_general = ["TEXT_FG", "WINDOW_BG", "FRAME_BG", "BUTTON_BG", "TOOLTIP_BG", "BORDER", "MEDIUM_BORDER", "FAINT_BORDER", "HIGHLIGHT_BG", "HIGHLIGHT_FG" , "LINK", "DISABLED", "SLIGHTLY_GREY_TEXT", "PRIMARY_COLOR"]
         self.theme_decks = ["CURRENT_DECK", "NEW_COUNT", "LEARN_COUNT", "REVIEW_COUNT", "ZERO_COUNT"]
-        self.theme_browse = ["BURIED_FG", "SUSPENDED_FG", "FLAG1_BG", "FLAG1_FG", "FLAG2_BG", "FLAG2_FG", "FLAG3_BG", "FLAG3_FG", "FLAG4_BG", "FLAG4_FG", "FLAG5_BG", "FLAG5_FG", "FLAG6_BG", "FLAG6_FG", "FLAG7_BG", "FLAG7_FG"]
+        self.theme_browse = ["BURIED_FG", "SUSPENDED_FG", "MARKED_BG", "FLAG1_BG", "FLAG1_FG", "FLAG2_BG", "FLAG2_FG", "FLAG3_BG", "FLAG3_FG", "FLAG4_BG", "FLAG4_FG", "FLAG5_BG", "FLAG5_FG", "FLAG6_BG", "FLAG6_FG", "FLAG7_BG", "FLAG7_FG"]
         self.theme_extra = []
 
         # Root layout
@@ -407,7 +407,7 @@ class ConfigDialog(QDialog):
         self.tabs.addTab(self.tab_general,"General")
         self.tabs.addTab(self.tab_decks,"Decks")
         self.tabs.addTab(self.tab_browse,"Browse")
-        self.tabs.addTab(self.tab_extra,"Extra")
+        #self.tabs.addTab(self.tab_extra,"Extra")
 
         ## Add tabs to widget
         self.layout.addWidget(self.tabs)
@@ -557,7 +557,7 @@ def apply_theme(colors) -> None:
         QPalette.ColorRole.WindowText: "TEXT_FG",
         QPalette.ColorRole.Base: "FRAME_BG",
         QPalette.ColorRole.AlternateBase: "WINDOW_BG",
-        QPalette.ColorRole.ToolTipBase: "FRAME_BG",
+        QPalette.ColorRole.ToolTipBase: "TOOLTIP_BG",
         QPalette.ColorRole.ToolTipText: "TEXT_FG",
         QPalette.ColorRole.Text: "TEXT_FG",
         QPalette.ColorRole.Button: "BUTTON_BG",
@@ -605,7 +605,7 @@ def create_menu_action(parent: QWidget, dialog_class: QDialog, dialog_name: str)
 
 # Load in the Anki-redesign menu
 if not hasattr(mw.form, 'anki_redesign'):
-    mw.form.anki_redesign = QMenu("&CAnki-redesignDEV", mw)
+    mw.form.anki_redesign = QMenu("&CAnki-redesign", mw)
     mw.form.menubar.insertMenu(mw.form.menuHelp.menuAction(), mw.form.anki_redesign)
 
     mw.form.anki_redesign.addAction(create_menu_action(mw.form.anki_redesign, ConfigDialog, "&Config"))
