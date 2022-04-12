@@ -28,7 +28,7 @@ from aqt.addcards import AddCards
 from aqt.editcurrent import EditCurrent
 from aqt.about import ClosableQDialog
 from aqt.preferences import Preferences
-from aqt.addons import AddonsDialog
+from aqt.addons import AddonsDialog, ConfigEditor
 # FilteredDeckConfigDialog import non-legacy check
 if module_exists("aqt.filtered_deck"):
     from aqt.filtered_deck import FilteredDeckConfigDialog
@@ -41,7 +41,7 @@ from aqt.reviewer import Reviewer, ReviewerBottomBar
 from aqt.webview import AnkiWebView, WebContent, AnkiWebPage
 
 ### Load config data here
-from .config import config, write_config
+from .config import config, write_config, get_config
 
 ## Addon compatibility fixes
 # More Overview Stats 2.1 addon compatibility fix
@@ -50,23 +50,17 @@ addon_more_overview_stats_fix = config['addon_more_overview_stats']
 addon_recolor_fix = config['addon_recolor']
 
 ## Customization
-primary_color = config['primary_color']
-link_color = config['link_color']
-font = config['font']
-font_size = config['font_size']
 theme = config['theme']
-
-### Init script/file path
+# Init script/file path
 from .utils.css_files import css_files_dir
-from .utils.themes import themes, write_theme
+from .utils.themes import themes, write_theme, get_theme
 logger.debug(css_files_dir)
 logger.debug(themes)
-themes_parsed = json.loads(open(themes[theme], encoding='utf-8').read())
+themes_parsed = get_theme(theme)
+color_mode = 2 if theme_manager.get_night_mode() else 1 # 1 = light and 2 = dark
 
 dwmapi = None
 ## Darkmode windows titlebar thanks to miere43
-# https://stackoverflow.com/questions/57124243/winforms-dark-title-bar-on-windows-10
-# https://github.com/miere43/anki-dark-titlebar/blob/main/__init__.py
 def set_dark_titlebar(window, dwmapi) -> None:
     if dwmapi:
         handler_window = c_void_p(int(window.winId()))
@@ -94,7 +88,6 @@ logger.debug(dwmapi)
 ### CSS injections
 def load_custom_style():
     theme_colors = ""
-    color_mode = 2 if theme_manager.get_night_mode() else 1 # 1 = light and 2 = dark
     for color_name in themes_parsed.get("colors"):
         color = themes_parsed.get("colors").get(color_name)
         if color[3]:
@@ -107,8 +100,6 @@ def load_custom_style():
     :root .isMac,
     :root .isWin,
     :root .isLin {
-        --primary-color: %s;
-        --link-color: %s;
         %s
     }
     html {
@@ -116,7 +107,7 @@ def load_custom_style():
         font-size: %spx;
     }
 </style>
-    """ % (primary_color, link_color, theme_colors, font, font_size)
+    """ % (theme_colors, config["font"], config["font_size"])
     return custom_style
 
 ## Adds styling on the different webview contents, before the content is set
@@ -273,54 +264,7 @@ else:
             browser.setStyleSheet(open(css_files_dir['QBrowser'], encoding='utf-8').read())
         gui_hooks.browser_will_show.append(on_browser_will_show)
 
-"""
-TBA
-from aqt.qt import QMainWindow, QDialog
-keys = ["about","addcards","addfield","addmodel","addonconf","addons","browser","browserdisp","browseropts","changemap","changemodel","clayout_top","customstudy","dconf","debug","filtered_deck","editaddon","editcurrent","edithtml","emptycards","exporting","fields","finddupes","findreplace","getaddons","importing","main","modelopts","models","preferences","preview","profiles","progress","reposition","setgroup","setlang","stats","studydeck","synclog","taglimit","template"]
-
-for key in keys:
-    module = "aqt.forms."+key
-    if module_exists(module):
-        mod = __import__(module, fromlist=['Ui_Dialog'])
-        if hasattr(mod,"Ui_Dialog"):
-            try:
-                Ui_Dialog = getattr(mod, 'Ui_Dialog')
-                Ui_Dialog = Ui_Dialog()
-                ui_old = Ui_Dialog.setupUi
-                logger.debug(Ui_Dialog)
-            except:
-                pass
-        # about
-        elif hasattr(mod,"Ui_About"):
-            pass
-        # changemap
-        elif hasattr(mod,"Ui_ChangeMap"):
-            pass
-        # clayout_top, preview, template
-        elif hasattr(mod,"Ui_Form"):
-            pass
-        # exporting
-        elif hasattr(mod,"Ui_ExportDialog"):
-            pass
-        # importing
-        elif hasattr(mod,"Ui_ImportDialog"):
-            pass
-        # preferences
-        elif hasattr(mod,"Ui_Preferences"):
-            pass
-        # profiles
-        elif hasattr(mod,"Ui_MainWindow"):
-            pass
-
-from aqt.forms.browser import Ui_Dialog
-ui_old = Ui_Dialog.setupUi
-def Ui_Dialog_new(self: Ui_Dialog, Dialog, *args, **kwargs) -> None:
-    logger.debug(self)
-    logger.debug(Dialog)
-    return ui_old(self, Dialog, *args, *kwargs)
-Ui_Dialog.setupUi = Ui_Dialog_new
-"""
-## CONFIG
+## CONFIG DIALOG
 from typing import List, Tuple
 
 from aqt import mw, gui_hooks
@@ -330,25 +274,78 @@ from aqt.qt import *
 from .config import config
 from aqt.utils import openLink
 from aqt.webview import AnkiWebView
+class ThemeEditor(QDialog):
+    def __init__(self, parent, *args, **kwargs):
+        super().__init__(parent=parent or mw, *args, **kwargs)
+        self.config_editor = parent
+        self.setWindowModality(Qt.ApplicationModal)
+        self.setWindowTitle(f'Anki-redesign Advanced Editor')
+        self.setSizePolicy(self.make_size_policy())
+        self.setMinimumSize(420, 420)
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
+        set_dark_titlebar_qt(self, dwmapi, fix=False)
+        # Root layout
+        self.root_layout = QVBoxLayout(self)
+        # Main layout
+        self.layout = QVBoxLayout()
+        self.textedit = QTextEdit()
+        themes_plaintext = open(themes[theme], encoding='utf-8').read()
+        self.textedit.setPlainText(themes_plaintext)
+        self.layout.addWidget(self.textedit)
+        self.root_layout.addLayout(self.layout)
+        self.root_layout.addLayout(self.make_button_box())
+
+    def save_edit(self) -> None:
+        themes_parsed = json.loads(self.textedit.toPlainText())
+        write_theme(themes[theme], themes_parsed)
+        self.config_editor.update()
+        self.accept()
+
+    def make_button_box(self) -> QWidget:
+        def cancel():
+            button = QPushButton('Cancel')
+            button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+            qconnect(button.clicked, self.accept)
+            return button
+        def save():
+            button = QPushButton('Save')
+            button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+            button.setDefault(True)
+            button.setShortcut("Ctrl+Return")
+            button.clicked.connect(lambda _: self.save_edit())
+            return button
+
+        button_box = QHBoxLayout()
+        button_box.addStretch()
+        button_box.addWidget(cancel())
+        button_box.addWidget(save())
+        return button_box
+
+    def make_size_policy(self) -> QSizePolicy:
+        size_policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        size_policy.setHorizontalStretch(0)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
+        return size_policy
 
 class ConfigDialog(QDialog):
     def __init__(self, parent: QWidget, *args, **kwargs):
         super().__init__(parent=parent or mw, *args, **kwargs)
         self.setWindowModality(Qt.ApplicationModal)
-        self.setWindowTitle(f'Anki-redesign configuration')
+        self.setWindowTitle(f'Anki-redesign Configuration')
         self.setSizePolicy(self.make_size_policy())
-        self.setMinimumSize(420, 520)
+        self.setMinimumSize(420, 580)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         set_dark_titlebar_qt(self, dwmapi, fix=False)
 
         # Color/theme
         ## Loads theme color
         self.theme_colors = themes_parsed.get("colors")
-        self.color_mode = 2 if theme_manager.get_night_mode() else 1 # 1 = light and 2 = dark
         self.updates = []
-        self.theme_general = ["TEXT_FG", "WINDOW_BG", "FRAME_BG", "BUTTON_BG", "BORDER", "MEDIUM_BORDER", "FAINT_BORDER", "HIGHLIGHT_BG", "HIGHLIGHT_FG" , "LINK", "DISABLED"]
+        self.theme_general = ["TEXT_FG", "WINDOW_BG", "FRAME_BG", "BUTTON_BG", "BORDER", "MEDIUM_BORDER", "FAINT_BORDER", "HIGHLIGHT_BG", "HIGHLIGHT_FG" , "LINK", "DISABLED", "PRIMARY_COLOR"]
         self.theme_decks = ["CURRENT_DECK", "NEW_COUNT", "LEARN_COUNT", "REVIEW_COUNT", "ZERO_COUNT"]
         self.theme_browse = ["BURIED_FG", "SUSPENDED_FG", "FLAG1_BG", "FLAG1_FG", "FLAG2_BG", "FLAG2_FG", "FLAG3_BG", "FLAG3_FG", "FLAG4_BG", "FLAG4_FG", "FLAG5_BG", "FLAG5_FG", "FLAG6_BG", "FLAG6_FG", "FLAG7_BG", "FLAG7_FG"]
+        self.theme_extra = []
 
         # Root layout
         self.root_layout = QVBoxLayout(self)
@@ -364,7 +361,7 @@ class ConfigDialog(QDialog):
         self.tab_browse = QWidget(objectName="browse")        
         self.tab_browse.setLayout(self.create_color_picker_layout(self.theme_browse))
         self.tab_extra = QWidget(objectName="extra")        
-        self.tab_extra.setLayout(self.create_color_picker_layout([]))
+        self.tab_extra.setLayout(self.create_color_picker_layout(self.theme_extra))
         
         self.tab_settings = QWidget(objectName="settings")
         self.settings_layout = QFormLayout()
@@ -381,14 +378,14 @@ class ConfigDialog(QDialog):
         self.settings_layout.addRow(self.font_label)
         self.interface_font = QFontComboBox()
         self.interface_font.setFixedWidth(200)
-        self.interface_font.setCurrentFont(QFont(font))
+        self.interface_font.setCurrentFont(QFont(config["font"]))
         self.settings_layout.addRow(self.interface_font)
 
         self.size_label = QLabel("Font Size: ")
         self.size_label.setFixedWidth(100)
         self.font_size = QSpinBox()
         self.font_size.setFixedWidth(200)
-        self.font_size.setValue(font_size)
+        self.font_size.setValue(config["font_size"])
         self.font_size.setSuffix("px")
         self.settings_layout.addRow(self.font_size)
 
@@ -402,7 +399,7 @@ class ConfigDialog(QDialog):
         self.tab_decks.setStyleSheet('QWidget#decks { background-color: %s; border: 1px solid %s; }' % (window_bg, window_bg))
         self.tab_browse.setStyleSheet('QWidget#browse { background-color: %s; border: 1px solid %s; }' % (window_bg, window_bg))
         self.tab_extra.setStyleSheet('QWidget#extra { background-color: %s; border: 1px solid %s; }' % (window_bg, window_bg))
-        self.tabs.setStyleSheet('QWidget#tabs { background-color: %s; border: 1px solid %s; }' % (self.theme_colors.get("WINDOW_BG")[self.color_mode], window_bg))
+        self.tabs.setStyleSheet('QWidget#tabs { background-color: %s; border: 1px solid %s; }' % (self.theme_colors.get("WINDOW_BG")[color_mode], window_bg))
 
         ## Add tabs
         self.tabs.resize(300,200)
@@ -422,7 +419,7 @@ class ConfigDialog(QDialog):
 
     def update(self) -> None:
         global themes_parsed
-        themes_parsed = json.loads(open(themes[theme], encoding='utf-8').read())
+        themes_parsed = get_theme(theme)
         self.theme_colors = themes_parsed.get("colors")
         for update in self.updates:
             update()
@@ -466,12 +463,12 @@ class ConfigDialog(QDialog):
             button.setStyleSheet('QPushButton{ background-color: "%s"; border: none; border-radius: 2px}' % rgb)
 
         def update() -> None:
-            rgb = self.theme_colors.get(key)[self.color_mode]
+            rgb = self.theme_colors.get(key)[color_mode]
             set_color(rgb)
 
         def save(color: QColor) -> None:
             rgb = color.name(QColor.NameFormat.HexRgb)
-            self.theme_colors[key][self.color_mode] = rgb
+            self.theme_colors[key][color_mode] = rgb
             set_color(rgb)
 
         self.updates.append(update)
@@ -479,14 +476,23 @@ class ConfigDialog(QDialog):
         button.clicked.connect(lambda _: color_dialog.exec())
         return button
 
-    def create_color_picker_layout(self, colors):
+    def create_color_picker_layout(self, colors) -> None:
         layout = QFormLayout()
         for key in colors:
             self.test = self.color_input(key)
             layout.addRow(self.theme_colors.get(key)[0], self.test)
         return layout
+    
+    def theme_file_editor(self) -> None:   
+        diag = ThemeEditor(self)
+        diag.show()
 
     def make_button_box(self) -> QWidget:
+        def advanced():
+            button = QPushButton('Advanced')
+            button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+            qconnect(button.clicked, self.theme_file_editor)
+            return button
         def cancel():
             button = QPushButton('Cancel')
             button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
@@ -501,6 +507,7 @@ class ConfigDialog(QDialog):
             return button
 
         button_box = QHBoxLayout()
+        button_box.addWidget(advanced())
         button_box.addStretch()
         button_box.addWidget(cancel())
         button_box.addWidget(save())
@@ -514,78 +521,77 @@ class ConfigDialog(QDialog):
         return size_policy
 
     def save(self) -> None:
-        # Save font
+        # Save settings and update config
         global config
         config["font"] = self.interface_font.currentFont().family()
         config["font_size"] = self.font_size.value()
         config["theme"] = theme
         write_config(config)
+        config = get_config()
 
-        # Update theme
+        # Write and update theme
+        themes_parsed["colors"] = self.theme_colors
+        write_theme(themes[theme], themes_parsed)
+        update_theme()
+
+        # Reload view and hide dialog
+        mw.reset() 
+        self.accept()
+
+def update_theme() -> None:
+        themes_parsed = get_theme(theme)
+        theme_colors = themes_parsed.get("colors")
         colors = {}
-        for color_name in self.theme_colors:
-            colors[color_name] = self.theme_colors.get(color_name)[self.color_mode]
-        logger.debug(colors)
-        #write_theme(themes[theme], self.theme_colors)
+        for color_name in theme_colors:
+            colors[color_name] = theme_colors.get(color_name)[color_mode]
 
         # Apply theme
-        self.apply_theme(colors)
+        apply_theme(colors)
 
-        # Refresh all windows
-        if mw.state == "review":
-            mw.reviewer._initWeb()
-            if mw.reviewer.state == "question":
-                mw.reviewer._showQuestion()
-            else:
-                mw.reviewer._showAnswer()
-        elif mw.state == "overview":
-            mw.overview.refresh()
-        elif mw.state == "deckBrowser":
-            mw.deckBrowser.refresh()
-            mw.reset() 
-        self.hide()
+def apply_theme(colors) -> None:
+    # Load palette
+    palette = QPalette()
+    color_map = {
+        QPalette.ColorRole.Window: "WINDOW_BG",
+        QPalette.ColorRole.Background: "WINDOW_BG",
+        QPalette.ColorRole.WindowText: "TEXT_FG",
+        QPalette.ColorRole.Base: "FRAME_BG",
+        QPalette.ColorRole.AlternateBase: "WINDOW_BG",
+        QPalette.ColorRole.ToolTipBase: "FRAME_BG",
+        QPalette.ColorRole.ToolTipText: "TEXT_FG",
+        QPalette.ColorRole.Text: "TEXT_FG",
+        QPalette.ColorRole.Button: "BUTTON_BG",
+        QPalette.ColorRole.ButtonText: "TEXT_FG",
+        QPalette.ColorRole.BrightText: "HIGHLIGHT_FG",
+        QPalette.ColorRole.HighlightedText: "HIGHLIGHT_FG",
+        QPalette.ColorRole.Link: "LINK",
+        QPalette.ColorRole.NoRole: "WINDOW_BG",
+    }
+    for color_role in color_map:
+        palette.setColor(color_role, QColor(colors[color_map[color_role]]))
 
-    def apply_theme(self, colors) -> None:
-        color_map = {
-            QPalette.ColorRole.WindowText: "TEXT_FG",
-            QPalette.ColorRole.ToolTipText: "TEXT_FG",
-            QPalette.ColorRole.Text: "TEXT_FG",
-            QPalette.ColorRole.ButtonText: "TEXT_FG",
-            QPalette.ColorRole.HighlightedText: "HIGHLIGHT_FG",
-            QPalette.ColorRole.Window: "WINDOW_BG",
-            QPalette.ColorRole.AlternateBase: "WINDOW_BG",
-            QPalette.ColorRole.Button: "BUTTON_BG",
-            QPalette.ColorRole.Base: "FRAME_BG",
-            QPalette.ColorRole.ToolTipBase: "FRAME_BG",
-            QPalette.ColorRole.Link: "LINK",
-        }
-        disabled_roles = [QPalette.ColorRole.Text, QPalette.ColorRole.ButtonText, QPalette.ColorRole.HighlightedText]
+    placeholder_text = QColor(colors["TEXT_FG"])
+    placeholder_text.setAlpha(200)
+    palette.setColor(QPalette.ColorRole.PlaceholderText, placeholder_text)
 
-        # Load palette
-        palette = QPalette()
-        for role in color_map:
-            conf_key = color_map[role]
-            palette.setColor(role, QColor(colors[conf_key]))
+    highlight_bg = QColor(colors["HIGHLIGHT_BG"])
+    if theme_manager.night_mode:
+        highlight_bg.setAlpha(70)
+        palette.setColor(QPalette.ColorRole.BrightText, QColor(colors["TEXT_FG"]))
+    palette.setColor(QPalette.ColorRole.Highlight, highlight_bg)
 
-        hlbg = QColor(colors["HIGHLIGHT_BG"])
-        if theme_manager.night_mode:
-            hlbg.setAlpha(64)
-        palette.setColor(QPalette.ColorRole.Highlight, hlbg)
+    palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.Text, QColor(colors["DISABLED"]))
+    palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.ButtonText, QColor(colors["DISABLED"]))
+    palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.HighlightedText, QColor(colors["DISABLED"]))
 
-        for role in disabled_roles:
-            palette.setColor(QPalette.ColorGroup.Disabled, role, QColor(colors["DISABLED"]))
+    # Update palette
+    mw.app.setPalette(palette)
+    theme_manager.defapalette = palette
+    theme_manager._apply_style(mw.app)
 
-        if theme_manager.night_mode:
-            palette.setColor(QPalette.ColorRole.BrightText, QColor(colors["TEXT_FG"]))
-
-        # Update palette
-        mw.app.setPalette(palette)
-        theme_manager.default_palette = palette
-        theme_manager._apply_style(mw.app)
-
-        # Update webview bg
-        AnkiWebView._getWindowColor = lambda *args: QColor(colors["WINDOW_BG"])
-        AnkiWebView.get_window_bg_color = lambda *args: QColor(colors["WINDOW_BG"])
+    # Update webview bg
+    AnkiWebView._getWindowColor = lambda *args: QColor(colors["WINDOW_BG"])
+    AnkiWebView.get_window_bg_color = lambda *args: QColor(colors["WINDOW_BG"])
 
 # Create menu actions
 def create_menu_action(parent: QWidget, dialog_class: QDialog, dialog_name: str) -> QAction:
@@ -603,4 +609,5 @@ if not hasattr(mw.form, 'anki_redesign'):
     mw.form.menubar.insertMenu(mw.form.menuHelp.menuAction(), mw.form.anki_redesign)
 
     mw.form.anki_redesign.addAction(create_menu_action(mw.form.anki_redesign, ConfigDialog, "&Config"))
+    update_theme()
     #mw.form.anki_redesign.addSeparator()

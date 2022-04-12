@@ -6,10 +6,9 @@ def get_config() -> dict:
     config['addon_more_overview_stats'] = True if config.get('addon_more_overview_stats', "false").lower() == "true" else False
     config['addon_recolor'] = True if config.get('addon_recolor', "false").lower() == "true" else False
     ## Customization
-    config['primary_color'] = config.get('primary_color', "#0093d0")
-    config['link_color'] = config.get('link_color', "#77ccff")
     config['font'] = config.get('font', "Segoe UI")
     config['font_size'] = int(config.get('font_size', "12"))
+    config['theme'] = config.get('theme', 'Anki')
     return config
 
 def write_config(config):

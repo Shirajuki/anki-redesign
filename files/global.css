@@ -94,6 +94,5 @@ html {
   font-size: 12px;
 }
 html body a {
-  color: var(--link-color, var(--link, var(--legacy-link))) !important;
-  /* color: var(--primary-color); */
+  color: var(--link, var(--legacy-link)) !important;
 }
