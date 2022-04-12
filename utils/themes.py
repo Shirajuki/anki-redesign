@@ -10,9 +10,10 @@ def get_themes_dict() -> dict:
     # Replace pathing for theme files (ReColor compatible)
     themes = {}
     for file in os.listdir(themes_dir):
-        file = file.replace(".json", "")
-        if themes.get(file, "") == "":
-            themes[file] = os.path.join(themes_dir, file+'.json')
+        if "json" in file:
+            file = file.replace(".json", "")
+            if themes.get(file, "") == "":
+                themes[file] = os.path.join(themes_dir, file+'.json')
     return themes
     # "link_color": "#77ccff",
     # "primary_color": "#0093d0",

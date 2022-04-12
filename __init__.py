@@ -1,4 +1,3 @@
-import os
 import json
 ### Custom util functions
 from .utils.modules import *
@@ -28,7 +27,7 @@ from aqt.addcards import AddCards
 from aqt.editcurrent import EditCurrent
 from aqt.about import ClosableQDialog
 from aqt.preferences import Preferences
-from aqt.addons import AddonsDialog, ConfigEditor
+from aqt.addons import AddonsDialog
 # FilteredDeckConfigDialog import non-legacy check
 if module_exists("aqt.filtered_deck"):
     from aqt.filtered_deck import FilteredDeckConfigDialog
@@ -38,7 +37,7 @@ from aqt.deckbrowser import DeckBrowser, DeckBrowserBottomBar
 from aqt.overview import Overview, OverviewBottomBar
 from aqt.editor import Editor
 from aqt.reviewer import Reviewer, ReviewerBottomBar
-from aqt.webview import AnkiWebView, WebContent, AnkiWebPage
+from aqt.webview import AnkiWebView, WebContent
 
 ### Load config data here
 from .config import config, write_config, get_config
@@ -263,15 +262,12 @@ else:
         gui_hooks.browser_will_show.append(on_browser_will_show)
 
 ## CONFIG DIALOG
-from typing import List, Tuple
-
 from aqt import mw, gui_hooks
-from aqt.editor import EditorWebView
-
 from aqt.qt import *
 from .config import config
-from aqt.utils import openLink
+from aqt.utils import showInfo, tr
 from aqt.webview import AnkiWebView
+
 class ThemeEditor(QDialog):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(parent=parent or mw, *args, **kwargs)
@@ -462,7 +458,7 @@ class ConfigDialog(QDialog):
             color = QColor()
             color.setNamedColor(rgb)
             if not color.isValid():
-                raise InvalidConfigValueError(key, "rgb hex color string", rgb)
+                return
             # Update color
             color_dialog.setCurrentColor(color)
             button.setStyleSheet('QPushButton{ background-color: "%s"; border: none; border-radius: 2px}' % rgb)
@@ -540,8 +536,9 @@ class ConfigDialog(QDialog):
         write_theme(themes[theme], themes_parsed)
         update_theme()
 
-        # Reload view and hide dialog
-        mw.reset() 
+        # Reload view, show info and hide dialog
+        mw.reset()
+        showInfo(tr.preferences_changes_will_take_effect_when_you())
         self.accept()
 
 def update_theme() -> None:

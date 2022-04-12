@@ -14,7 +14,7 @@
     ],
     "BUTTON_BG": [
       "Button Background",
-      "#D8DEE9",
+      "#e7e7e7",
       "#1A1826",
       "--button-bg"
     ],
@@ -122,7 +122,7 @@
     ],
     "FRAME_BG": [
       "Frame Background",
-      "#white",
+      "white",
       "#1A1826",
       "--frame-bg"
     ],
@@ -200,7 +200,7 @@
     ],
     "TEXT_FG": [
       "Text Foreground",
-      "#black",
+      "black",
       "#d9e0ee",
       "--text-fg"
     ],
