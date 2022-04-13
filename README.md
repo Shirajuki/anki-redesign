@@ -47,6 +47,7 @@ The concept of this add-on was inspired by the following add-on and designs:
 
 **Changelog:**
 
+- 14-04-2022: Adds minor bugfix for showInfo function (v0.1.1)
 - 13-04-2022: Adds major update adding dialog configuration and QT theming as well as some bugfixes and code cleanup (v0.1.0)
 - 31-01-2022: Adds minor bugfixes and some code cleanup (v0.0.8)
 - 30-01-2022: Adds customized font support, dark titlebar for windows on dark mode, more minor styling fixes (v0.0.7)
