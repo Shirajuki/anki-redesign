@@ -592,7 +592,7 @@ def apply_theme(colors) -> None:
 
     # Update palette
     mw.app.setPalette(palette)
-    theme_manager.defapalette = palette
+    theme_manager.default_palette = palette
     theme_manager._apply_style(mw.app)
 
     # Update webview bg
