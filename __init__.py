@@ -265,7 +265,7 @@ else:
 from aqt import mw, gui_hooks
 from aqt.qt import *
 from .config import config
-from aqt.utils import showInfo, tr
+from aqt.utils import showInfo
 from aqt.webview import AnkiWebView
 
 class ThemeEditor(QDialog):
@@ -538,7 +538,9 @@ class ConfigDialog(QDialog):
 
         # Reload view, show info and hide dialog
         mw.reset()
-        showInfo(tr.preferences_changes_will_take_effect_when_you())
+        # ShowInfo for both new and legacy support
+        showInfo(_("Changes will take effect when you restart Anki."))
+        #showInfo(tr.preferences_changes_will_take_effect_when_you())
         self.accept()
 
 def update_theme() -> None:
