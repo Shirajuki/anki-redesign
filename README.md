@@ -23,6 +23,8 @@ Note3: If the addon is not updating try open anki while holding shift to turn of
 - [x] Add dialog window for configuration and user customizations (will replace config.json for a better ease) (v0.1.0)
 - [x] Add styling support for QT6 when it gets released (will do for 2.1.50 beta if requested or the need is there)
 - [x] Manually test for backwards compatibility on older major Anki versions. (2.1.22 &amp; 26 tested)
+- [ ] Add configuration for better ease in adding/resetting custom themes
+- [ ] Optimize the code performance better, making the Add-on more lightweight
 - [ ] Add styling support for strictly QT6 when QT5 gets completely replaced in a future update
 
 <br/>
