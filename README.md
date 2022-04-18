@@ -1,6 +1,6 @@
 # Anki-redesign
 
-> A new lightweight look for Anki compatible with most (if not all) versions of Anki 2.1.X running QT5. - Specifically tested on Anki 2.1.49
+> A new lightweight look for Anki compatible with most (if not all) versions of Anki 2.1.X running QT5 and QT6. - Specifically tested on Anki 2.1.49
 
 Note: This add-on uses hooks and doesn't overwrite the original Anki code views that much, meaning that most add-ons should properly work with Anki-redesign enabled. However, if there is any add-on found to not be working properly, feel free to make an [issue](https://github.com/Shirajuki/anki-redesign/issues) and I'll try to add support for it!
 (List of tested addons and manual fixes for them to work can be seen on the [project github wiki](https://github.com/Shirajuki/anki-redesign/wiki/Compatible-Add-ons-for-Anki-2.1).)
@@ -11,17 +11,19 @@ Note3: If the addon is not updating try open anki while holding shift to turn of
 
 **Manually tested on the following Anki versions:**
 
+- 2.1.50
 - 2.1.49
 - 2.1.26
 - 2.1.22
 
-**(Planned) Updates / todos (as of 13.04.2022):**
+**(Planned) Updates / todos (as of 18.04.2022):**
 
 - [x] Add user customization on all styling views through the user_files folder (user custom CSS injection) (v0.0.5)
 - [x] Add more lightweight modern styling for other views / qt dialogs (v0.1.0)
 - [x] Add dialog window for configuration and user customizations (will replace config.json for a better ease) (v0.1.0)
-- [ ] Add styling support for QT6 when it gets released (will do for 2.1.50 beta if requested or the need is there)
-- [ ] Manually test for backwards compatibility on older major Anki versions. (2.1.22 &amp; 26 tested)
+- [x] Add styling support for QT6 when it gets released (will do for 2.1.50 beta if requested or the need is there)
+- [x] Manually test for backwards compatibility on older major Anki versions. (2.1.22 &amp; 26 tested)
+- [ ] Add styling support for strictly QT6 when QT5 gets completely replaced in a future update
 
 <br/>
 <div><img src="./screenshots/ui-half.png"></div>
@@ -47,6 +49,7 @@ The concept of this add-on was inspired by the following add-on and designs:
 
 **Changelog:**
 
+- 18-04-2022: Anki 2.1.50 not compatible and some minor visual fixes for legacy versions (v0.1.2)
 - 14-04-2022: Adds minor bugfix for showInfo function (v0.1.1)
 - 13-04-2022: Adds major update adding dialog configuration and QT theming as well as some bugfixes and code cleanup (v0.1.0)
 - 31-01-2022: Adds minor bugfixes and some code cleanup (v0.0.8)
