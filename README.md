@@ -51,7 +51,7 @@ The concept of this add-on was inspired by the following add-on and designs:
 
 **Changelog:**
 
-- 18-04-2022: Anki 2.1.50 not compatible and some minor visual fixes for legacy versions (v0.1.2)
+- 18-04-2022: Anki 2.1.50 is now compatible, also added some minor visual fixes for legacy versions (v0.1.2)
 - 14-04-2022: Adds minor bugfix for showInfo function (v0.1.1)
 - 13-04-2022: Adds major update adding dialog configuration and QT theming as well as some bugfixes and code cleanup (v0.1.0)
 - 31-01-2022: Adds minor bugfixes and some code cleanup (v0.0.8)
