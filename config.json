@@ -2,5 +2,6 @@
   "addon_more_overview_stats": "false",
   "font": "Segoe UI",
   "font_size": "12",
-  "theme": "Catppuccin"
+  "theme": "Catppuccin",
+  "theme_reload": "false"
 }

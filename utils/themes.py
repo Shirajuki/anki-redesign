@@ -15,8 +15,6 @@ def get_themes_dict() -> dict:
             if themes.get(file, "") == "":
                 themes[file] = os.path.join(themes_dir, file+'.json')
     return themes
-    # "link_color": "#77ccff",
-    # "primary_color": "#0093d0",
 
 def get_theme(theme: str) -> dict:
     themes_parsed = json.loads(open(themes[theme], encoding='utf-8').read())

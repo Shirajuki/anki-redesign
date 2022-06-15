@@ -156,6 +156,14 @@ def redraw_toolbar() -> None:
         var br = document.createElement("br");
         document.body.appendChild(br);
     """)
+
+    if 'Qt6' in QPalette.ColorRole.__module__:
+        mw.toolbar.web.eval("""
+            var div = document.createElement("div");
+            div.style.width = "5px";
+            div.style.height = "10px";
+            document.body.appendChild(div);
+        """)
     # Auto adjust the height, then redraw the toolbar
     mw.toolbar.web.adjustHeightToFit()
     mw.toolbar.redraw()
@@ -383,9 +391,12 @@ class ConfigDialog(QDialog):
 
         self.settings_layout.addRow(QLabel())
 
+
         self.fix_label = QLabel("Addon-Compatibility Fixes: ")
         self.fix_label.setStyleSheet('QLabel { font-size: 14px; font-weight: bold }')
         self.settings_layout.addRow(self.fix_label)
+        self.reload_theme = self.checkbox("theme_reload")
+        self.settings_layout.addRow("QT6 theme on-start reload fix", self.reload_theme)
         self.addon_more_overview_stats_check = self.checkbox("addon_more_overview_stats")
         self.settings_layout.addRow("More Overview Stats 21", self.addon_more_overview_stats_check)
 
@@ -527,6 +538,7 @@ class ConfigDialog(QDialog):
         config["font"] = self.interface_font.currentFont().family()
         config["font_size"] = self.font_size.value()
         config['addon_more_overview_stats'] = self.addon_more_overview_stats_check.isChecked()
+        config['theme_reload'] = self.reload_theme.isChecked()
         config["theme"] = theme
         write_config(config)
         config = get_config()
@@ -536,8 +548,7 @@ class ConfigDialog(QDialog):
         write_theme(themes[theme], themes_parsed)
         update_theme()
 
-        # Reload view, show info and hide dialog
-        mw.reset()
+        # mw.reset()
         # ShowInfo for both new and legacy support
         showInfo(_("Changes will take effect when you restart Anki."))
         #showInfo(tr.preferences_changes_will_take_effect_when_you())
@@ -633,4 +644,12 @@ if not hasattr(mw.form, 'anki_redesign'):
 
     mw.form.anki_redesign.addAction(create_menu_action(mw.form.anki_redesign, ConfigDialog, "&Config"))
     update_theme()
+    mw.reset()
+
+    # Rereload view to fix theme change on startup
+    if 'Qt6' in QPalette.ColorRole.__module__:
+        logger.debug('QT6 DETECTED....')
+        config = get_config()
+        if config["theme_reload"]:
+            update_theme()
     #mw.form.anki_redesign.addSeparator()
