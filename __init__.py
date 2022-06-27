@@ -135,10 +135,11 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
         web_content.css.append(css_files_dir['Reviewer'])
     elif isinstance(context, ReviewerBottomBar):
         if addon_advanced_review_bottom_bar:
-            web_content.head += "<style>td.stat[align='left']:nth-of-type(2) {position: absolute; z-index: 1;}</style>"
+            #web_content.head += "<style>td.stat[align='left']:nth-of-type(2) {position: absolute; z-index: 1;}</style>"
+            web_content.body += "<script>const center = document.getElementById('outer');center.classList.add('arbb');</script>"
         else:
             web_content.css.append(css_files_dir['BottomBar'])
-            web_content.css.append(css_files_dir['ReviewerBottomBar'])
+        web_content.css.append(css_files_dir['ReviewerBottomBar'])
         # Button padding bottom
         web_content.body += "<div style='height: 9px; opacity: 0; pointer-events: none;'></div>"
         web_content.body += "<div id='padFix' style='height: 30px; opacity: 0; pointer-events: none;'><script>const e = document.getElementById('padFix');e.parentElement.removeChild(e);</script></div>"
