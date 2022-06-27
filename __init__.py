@@ -45,6 +45,7 @@ from .config import config, write_config, get_config
 ## Addon compatibility fixes
 # More Overview Stats 2.1 addon compatibility fix
 addon_more_overview_stats_fix = config['addon_more_overview_stats']
+addon_advanced_review_bottom_bar = config['addon_advanced_review_bottom_bar']
 
 ## Customization
 theme = config['theme']
@@ -133,12 +134,15 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
     elif isinstance(context, Reviewer):
         web_content.css.append(css_files_dir['Reviewer'])
     elif isinstance(context, ReviewerBottomBar):
-        web_content.css.append(css_files_dir['BottomBar'])
-        web_content.css.append(css_files_dir['ReviewerBottomBar'])
+        if addon_advanced_review_bottom_bar:
+            web_content.head += "<style>td.stat[align='left']:nth-of-type(2) {position: absolute; z-index: 1;}</style>"
+        else:
+            web_content.css.append(css_files_dir['BottomBar'])
+            web_content.css.append(css_files_dir['ReviewerBottomBar'])
         # Button padding bottom
         web_content.body += "<div style='height: 9px; opacity: 0; pointer-events: none;'></div>"
         web_content.body += "<div id='padFix' style='height: 30px; opacity: 0; pointer-events: none;'><script>const e = document.getElementById('padFix');e.parentElement.removeChild(e);</script></div>"
-        mw.bottomWeb.adjustHeightToFit();
+        mw.bottomWeb.adjustHeightToFit()
     # CardLayout
     elif context_name_includes(context, "aqt.clayout.CardLayout"):
         web_content.css.append(css_files_dir['CardLayout'])
@@ -399,6 +403,8 @@ class ConfigDialog(QDialog):
         self.settings_layout.addRow("QT6 theme on-start reload fix", self.reload_theme)
         self.addon_more_overview_stats_check = self.checkbox("addon_more_overview_stats")
         self.settings_layout.addRow("More Overview Stats 21", self.addon_more_overview_stats_check)
+        self.addon_advanced_review_bottom_bar_check = self.checkbox("addon_advanced_review_bottom_bar")
+        self.settings_layout.addRow("Advanced Review Bottom Bar", self.addon_advanced_review_bottom_bar_check)
 
         self.tab_settings.setLayout(self.settings_layout)
 
@@ -538,6 +544,7 @@ class ConfigDialog(QDialog):
         config["font"] = self.interface_font.currentFont().family()
         config["font_size"] = self.font_size.value()
         config['addon_more_overview_stats'] = self.addon_more_overview_stats_check.isChecked()
+        config['addon_advanced_review_bottom_bar'] = self.addon_advanced_review_bottom_bar_check.isChecked()
         config['theme_reload'] = self.reload_theme.isChecked()
         config["theme"] = theme
         write_config(config)

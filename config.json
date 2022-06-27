@@ -1,5 +1,6 @@
 {
   "addon_more_overview_stats": "false",
+  "addon_advanced_review_bottom_bar": "false",
   "font": "Segoe UI",
   "font_size": "12",
   "theme": "Catppuccin",
