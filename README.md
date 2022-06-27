@@ -11,6 +11,7 @@ Note3: If the addon is not updating try open anki while holding shift to turn of
 
 **Manually tested on the following Anki versions:**
 
+- 2.1.54
 - 2.1.50
 - 2.1.49
 - 2.1.26
