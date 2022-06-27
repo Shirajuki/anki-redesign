@@ -585,7 +585,7 @@ def apply_theme(colors) -> None:
     # Load palette
     palette = QPalette()
     # QT mappings
-    logger.debug(QPalette.ColorRole.__dict__)
+    #logger.debug(QPalette.ColorRole.__dict__)
     color_map = {
         QPalette.ColorRole.Window: "WINDOW_BG",
         QPalette.ColorRole.WindowText: "TEXT_FG",
@@ -643,6 +643,7 @@ if not hasattr(mw.form, 'anki_redesign'):
     mw.form.menubar.insertMenu(mw.form.menuHelp.menuAction(), mw.form.anki_redesign)
 
     mw.form.anki_redesign.addAction(create_menu_action(mw.form.anki_redesign, ConfigDialog, "&Config"))
+    mw.form.anki_redesign.addSeparator()
     update_theme()
     mw.reset()
 
@@ -652,4 +653,3 @@ if not hasattr(mw.form, 'anki_redesign'):
         config = get_config()
         if config["theme_reload"]:
             update_theme()
-    #mw.form.anki_redesign.addSeparator()

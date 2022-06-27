@@ -29,9 +29,11 @@ body table:first-of-type tr.current td:first-of-type {
 body table:first-of-type tr.current td:last-of-type {
   border-radius: 0 10px 10px 0;
 }
-body table:first-of-type tr a,
-body table:first-of-type tr a.filtered {
+body table:first-of-type tr a {
   color: var(--text-fg, var(--legacy-text-fg)) !important;
+}
+body table:first-of-type tr a.filtered {
+  color: var(--link, var(--legacy-link)) !important;
 }
 a.deck {
   padding: 5px 10px 5px 5px;
