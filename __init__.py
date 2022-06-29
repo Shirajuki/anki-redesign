@@ -569,25 +569,50 @@ def check_legacy_colors() -> None:
         return False
     return True
 
+def refresh_all_windows() -> None:
+    # Redraw top toolbar
+    mw.toolbar.draw()
+    # Redraw main body
+    if mw.state == "review":
+        mw.reviewer._initWeb()
+        if mw.reviewer.state == "question":
+            mw.reviewer._showQuestion()
+        else:
+            mw.reviewer._showAnswer()
+    elif mw.state == "overview":
+        mw.overview.refresh()
+    elif mw.state == "deckBrowser":
+        mw.deckBrowser.show()
+    """
+    # Close Browser if open
+    browser = dialogs._dialogs["Browser"][1]
+    if browser:
+        browser.closeWithCallback(lambda: None)
+    if ankiver_minor >= 45:  # has mw.flags
+        if mw.col is not None:
+            mw.flags._load_flags()
+    """
+
 def update_theme() -> None:
-        themes_parsed = get_theme(theme)
-        theme_colors = themes_parsed.get("colors")
-        # Apply theme on colors
-        ncolors = {}
-        # Legacy color check
-        legacy = check_legacy_colors()
-        for color_name in theme_colors:
-            c = theme_colors.get(color_name)
-            ncolors[color_name] = c[color_mode]
-            if legacy:
-               colors[f"day{c[3].replace('--','-')}"] = c[1]
-               colors[f"night{c[3].replace('--','-')}"] = c[2]
-               # Potentially add fusion fixes too?
-            else:
-                if getattr(colors, color_name, False):
-                    setattr(colors, color_name, (c[1], c[2]))
-        # Apply theme on palette
-        apply_theme(ncolors)
+    themes_parsed = get_theme(theme)
+    theme_colors = themes_parsed.get("colors")
+    # Apply theme on colors
+    ncolors = {}
+    # Legacy color check
+    legacy = check_legacy_colors()
+    for color_name in theme_colors:
+        c = theme_colors.get(color_name)
+        ncolors[color_name] = c[color_mode]
+        if legacy:
+            colors[f"day{c[3].replace('--','-')}"] = c[1]
+            colors[f"night{c[3].replace('--','-')}"] = c[2]
+            # Potentially add fusion fixes too?
+        else:
+            if getattr(colors, color_name, False):
+                setattr(colors, color_name, (c[1], c[2]))
+    # Apply theme on palette
+    apply_theme(ncolors)
+    refresh_all_windows()
 
 def apply_theme(colors) -> None:
     # Load palette
@@ -639,19 +664,21 @@ def apply_theme(colors) -> None:
 def create_menu_action(parent: QWidget, dialog_class: QDialog, dialog_name: str) -> QAction:
     def open_dialog():
         dialog = dialog_class(mw)
-        return dialog.exec_()
+        return dialog.exec()
 
     action = QAction(dialog_name, parent)
-    qconnect(action.triggered, open_dialog)
+    #qconnect(action.triggered, open_dialog)
+    action.triggered.connect(open_dialog)
     return action
 
 # Load in the Anki-redesign menu
-if not hasattr(mw.form, 'anki_redesign'):
-    mw.form.anki_redesign = QMenu("&Anki-redesign", mw)
-    mw.form.menubar.insertMenu(mw.form.menuHelp.menuAction(), mw.form.anki_redesign)
+if not hasattr(mw, 'anki_redesign'):
+    mw.anki_redesign = QMenu("&Anki-redesign", mw)
+    mw.form.menubar.insertMenu(mw.form.menuHelp.menuAction(), mw.anki_redesign)
 
-    mw.form.anki_redesign.addAction(create_menu_action(mw.form.anki_redesign, ConfigDialog, "&Config"))
-    mw.form.anki_redesign.addSeparator()
+    mw.anki_redesign.addAction(create_menu_action(mw.anki_redesign, ConfigDialog, "&Config"))
+    mw.anki_redesign.addSeparator()
+    mw.reset()
     update_theme()
     mw.reset()
 
@@ -661,3 +688,17 @@ if not hasattr(mw.form, 'anki_redesign'):
         config = get_config()
         if config["theme_reload"]:
             update_theme()
+
+def on_theme_did_change() -> None:
+    global color_mode
+    color_mode = 2 if theme_manager.get_night_mode() else 1 # 1 = light and 2 = dark
+    mw.reset()
+    update_theme()
+    logger.debug("THEME CHANGEEEED")
+    refresh_all_windows()
+    mw.reset()
+
+    
+if attribute_exists(gui_hooks, "theme_did_change"):
+    gui_hooks.theme_did_change.append(on_theme_did_change)
+    logger.debug("YEP")
