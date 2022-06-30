@@ -185,9 +185,11 @@ def redraw_toolbar_legacy(links: List[str], _: Toolbar) -> None:
     links.append(inject_br)
 
 if attribute_exists(gui_hooks, "main_window_did_init"):
-    gui_hooks.main_window_did_init.append(redraw_toolbar)
+    pass
+    #gui_hooks.main_window_did_init.append(redraw_toolbar)
 elif attribute_exists(gui_hooks, "top_toolbar_did_init_links"):
     gui_hooks.top_toolbar_did_init_links.append(redraw_toolbar_legacy)
+    pass
 
 # Dialog window styling
 def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name: str, dialog_instance: QWidget) -> None:
@@ -541,7 +543,7 @@ class ConfigDialog(QDialog):
 
     def save(self) -> None:
         # Save settings and update config
-        global config
+        global config, color_mode
         config["font"] = self.interface_font.currentFont().family()
         config["font_size"] = self.font_size.value()
         config['addon_more_overview_stats'] = self.addon_more_overview_stats_check.isChecked()
@@ -552,6 +554,7 @@ class ConfigDialog(QDialog):
         config = get_config()
 
         # Write and update theme
+        color_mode = 2 if theme_manager.get_night_mode() else 1 # 1 = light and 2 = dark
         themes_parsed["colors"] = self.theme_colors
         write_theme(themes[theme], themes_parsed)
         update_theme()
@@ -572,6 +575,9 @@ def check_legacy_colors() -> None:
 def refresh_all_windows() -> None:
     # Redraw top toolbar
     mw.toolbar.draw()
+    if attribute_exists(gui_hooks, "top_toolbar_did_init_links"):
+        gui_hooks.top_toolbar_did_init_links.append(lambda a,b: [redraw_toolbar_legacy(a,b), gui_hooks.top_toolbar_did_init_links.remove(print)])
+    
     # Redraw main body
     if mw.state == "review":
         mw.reviewer._initWeb()
@@ -583,15 +589,9 @@ def refresh_all_windows() -> None:
         mw.overview.refresh()
     elif mw.state == "deckBrowser":
         mw.deckBrowser.show()
-    """
-    # Close Browser if open
-    browser = dialogs._dialogs["Browser"][1]
-    if browser:
-        browser.closeWithCallback(lambda: None)
-    if ankiver_minor >= 45:  # has mw.flags
-        if mw.col is not None:
-            mw.flags._load_flags()
-    """
+
+    if attribute_exists(gui_hooks, "top_toolbar_did_init_links"):
+        gui_hooks.top_toolbar_did_init_links.remove(redraw_toolbar)
 
 def update_theme() -> None:
     themes_parsed = get_theme(theme)
@@ -692,7 +692,6 @@ if not hasattr(mw, 'anki_redesign'):
 def on_theme_did_change() -> None:
     global color_mode
     color_mode = 2 if theme_manager.get_night_mode() else 1 # 1 = light and 2 = dark
-    mw.reset()
     update_theme()
     logger.debug("THEME CHANGEEEED")
     refresh_all_windows()
