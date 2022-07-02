@@ -12,6 +12,7 @@ Note3: If the addon is not updating try open anki while holding shift to turn of
 **Manually tested on the following Anki versions:**
 
 - 2.1.54
+- 2.1.53
 - 2.1.50
 - 2.1.49
 - 2.1.26
@@ -52,6 +53,7 @@ The concept of this add-on was inspired by the following add-on and designs:
 
 **Changelog:**
 
+- 03-07-2022: Anki 2.1.54 is now compatible, also added addon compatibility for ARBb alongside auto dark/light mode switch on themes (v0.1.3)
 - 18-04-2022: Anki 2.1.50 is now compatible, also added some minor visual fixes for legacy versions (v0.1.2)
 - 14-04-2022: Adds minor bugfix for showInfo function (v0.1.1)
 - 13-04-2022: Adds major update adding dialog configuration and QT theming as well as some bugfixes and code cleanup (v0.1.0)
