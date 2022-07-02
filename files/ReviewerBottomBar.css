@@ -47,15 +47,12 @@ body #outer.arbb .stat {
   padding-left: 2px;
   padding-right: 2px;
 }
-body #outer.arbb button#main::before {
-  background: rgba(255, 255, 255, 1);
-}
 body #outer.arbb table#innertable {
   padding: initial;
   width: calc(100% - 10px);
 }
 body #outer.arbb button {
-  color: var(--text-fg, var(--legacy-text-fg));
+  /* color: var(--text-fg, var(--legacy-text-fg)); */
   letter-spacing: 0.02857em;
   text-transform: uppercase;
   margin-left: 2px;

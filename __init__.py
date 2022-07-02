@@ -177,12 +177,15 @@ def redraw_toolbar_legacy(links: List[str], _: Toolbar) -> None:
     # Utilizing the link hook, we inject <br/> tag through javascript
     inject_br = """
         <script>
+            while (document.body.querySelectorAll("br").length > 1)
+                document.body.querySelectorAll("br")[0].remove();
             var br = document.createElement("br");
             document.body.appendChild(br);
         </script>
     """
     mw.toolbar.web.setFixedHeight(60)
     links.append(inject_br)
+    mw.toolbar.web.adjustHeightToFit()
 
 if attribute_exists(gui_hooks, "main_window_did_init"):
     pass
@@ -599,6 +602,7 @@ def update_theme() -> None:
     # Apply theme on colors
     ncolors = {}
     # Legacy color check
+    logger.debug(dir(colors))
     legacy = check_legacy_colors()
     for color_name in theme_colors:
         c = theme_colors.get(color_name)
@@ -608,6 +612,7 @@ def update_theme() -> None:
             colors[f"night{c[3].replace('--','-')}"] = c[2]
             # Potentially add fusion fixes too?
         else:
+            logger.debug(getattr(colors, color_name, False))
             if getattr(colors, color_name, False):
                 setattr(colors, color_name, (c[1], c[2]))
     # Apply theme on palette
@@ -637,19 +642,15 @@ def apply_theme(colors) -> None:
     for color_role in color_map:
         palette.setColor(color_role, QColor(colors[color_map[color_role]]))
 
-    placeholder_text = QColor(colors["TEXT_FG"])
-    placeholder_text.setAlpha(200)
-    palette.setColor(QPalette.ColorRole.PlaceholderText, placeholder_text)
-
     highlight_bg = QColor(colors["HIGHLIGHT_BG"])
-    if theme_manager.night_mode:
-        highlight_bg.setAlpha(70)
-        palette.setColor(QPalette.ColorRole.BrightText, QColor(colors["TEXT_FG"]))
+    highlight_bg.setAlpha(64)
     palette.setColor(QPalette.ColorRole.Highlight, highlight_bg)
 
-    palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.Text, QColor(colors["DISABLED"]))
-    palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.ButtonText, QColor(colors["DISABLED"]))
-    palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.HighlightedText, QColor(colors["DISABLED"]))
+    disabled_color = QColor(colors["DISABLED"])
+    palette.setColor(QPalette.ColorRole.PlaceholderText, disabled_color)
+    palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.Text, disabled_color)
+    palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.ButtonText, disabled_color)
+    palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.HighlightedText, disabled_color)
 
     # Update palette
     mw.app.setPalette(palette)
@@ -696,6 +697,7 @@ def on_theme_did_change() -> None:
     logger.debug("THEME CHANGEEEED")
     refresh_all_windows()
     mw.reset()
+    update_theme()
 
     
 if attribute_exists(gui_hooks, "theme_did_change"):
