@@ -284,7 +284,7 @@ from .config import config
 from aqt.utils import showInfo
 from aqt.webview import AnkiWebView
 
-class ThemeEditor(QDialog):
+class AnkiRedesignThemeEditor(QDialog):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(parent=parent or mw, *args, **kwargs)
         self.config_editor = parent
@@ -338,7 +338,7 @@ class ThemeEditor(QDialog):
         size_policy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         return size_policy
 
-class ConfigDialog(QDialog):
+class AnkiRedesignConfigDialog(QDialog):
     def __init__(self, parent: QWidget, *args, **kwargs):
         super().__init__(parent=parent or mw, *args, **kwargs)
         self.setWindowModality(Qt.ApplicationModal)
@@ -506,7 +506,7 @@ class ConfigDialog(QDialog):
         return layout
     
     def theme_file_editor(self) -> None:   
-        diag = ThemeEditor(self)
+        diag = AnkiRedesignThemeEditor(self)
         diag.show()
 
     def make_button_box(self) -> QWidget:
@@ -608,9 +608,7 @@ def update_theme() -> None:
         if legacy:
             colors[f"day{c[3].replace('--','-')}"] = c[1]
             colors[f"night{c[3].replace('--','-')}"] = c[2]
-            # Potentially add fusion fixes too?
         else:
-            logger.debug(getattr(colors, color_name, False))
             if getattr(colors, color_name, False):
                 setattr(colors, color_name, (c[1], c[2]))
     # Apply theme on palette
@@ -618,10 +616,13 @@ def update_theme() -> None:
     refresh_all_windows()
 
 def apply_theme(colors) -> None:
-    # Load palette
+    # Reset style and palette
+    logger.debug(colors)
+    mw.app.setStyle(QStyleFactory.create(theme_manager._default_style))
+    mw.app.setPalette(theme_manager.default_palette)
+    # Load and apply palette
     palette = QPalette()
     # QT mappings
-    #logger.debug(QPalette.ColorRole.__dict__)
     color_map = {
         QPalette.ColorRole.Window: "WINDOW_BG",
         QPalette.ColorRole.WindowText: "TEXT_FG",
@@ -651,11 +652,11 @@ def apply_theme(colors) -> None:
     palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.HighlightedText, disabled_color)
 
     # Update palette
-    mw.app.setPalette(palette)
-    theme_manager.default_palette = palette
-    theme_manager._apply_style(mw.app)
+    theme_manager._apply_palette(mw.app) # Update palette theme_manager
+    mw.app.setPalette(palette) # Overwrite palette
+    theme_manager._apply_style(mw.app) # Update stylesheet theme_manager
 
-    # Update webview bg
+    # Update webview background
     AnkiWebView._getWindowColor = lambda *args: QColor(colors["WINDOW_BG"])
     AnkiWebView.get_window_bg_color = lambda *args: QColor(colors["WINDOW_BG"])
 
@@ -672,32 +673,22 @@ def create_menu_action(parent: QWidget, dialog_class: QDialog, dialog_name: str)
 
 # Load in the Anki-redesign menu
 if not hasattr(mw, 'anki_redesign'):
+    # Create anki-redesign menu
     mw.anki_redesign = QMenu("&Anki-redesign", mw)
     mw.form.menubar.insertMenu(mw.form.menuHelp.menuAction(), mw.anki_redesign)
 
-    mw.anki_redesign.addAction(create_menu_action(mw.anki_redesign, ConfigDialog, "&Config"))
+    mw.anki_redesign.addAction(create_menu_action(mw.anki_redesign, AnkiRedesignConfigDialog, "&Config"))
     mw.anki_redesign.addSeparator()
+    # Update and apply theme
     mw.reset()
     update_theme()
-    mw.reset()
-
-    # Rereload view to fix theme change on startup
-    if 'Qt6' in QPalette.ColorRole.__module__:
-        logger.debug('QT6 DETECTED....')
-        config = get_config()
-        if config["theme_reload"]:
-            update_theme()
 
 def on_theme_did_change() -> None:
     global color_mode
     color_mode = 2 if theme_manager.get_night_mode() else 1 # 1 = light and 2 = dark
-    update_theme()
-    logger.debug("THEME CHANGEEEED")
-    refresh_all_windows()
+    logger.debug("THEME CHANGED")
     mw.reset()
     update_theme()
-
-    
 if attribute_exists(gui_hooks, "theme_did_change"):
     gui_hooks.theme_did_change.append(on_theme_did_change)
     logger.debug("YEP")
