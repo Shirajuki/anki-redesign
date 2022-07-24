@@ -6,4 +6,3 @@ Use the built-in config at the menu (Anki-redesign > Config) for a better user e
 - font: customize own font here
 - font_size: customize own font size here
 - theme: customize theme here
-- theme_reload: either `true` or `false`

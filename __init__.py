@@ -342,7 +342,7 @@ class AnkiRedesignConfigDialog(QDialog):
     def __init__(self, parent: QWidget, *args, **kwargs):
         super().__init__(parent=parent or mw, *args, **kwargs)
         self.setWindowModality(Qt.ApplicationModal)
-        self.setWindowTitle(f'Anki-redesign Configuration')
+        self.setWindowTitle(f'Anki-redesign configuration')
         self.setSizePolicy(self.make_size_policy())
         self.setMinimumSize(420, 580)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
@@ -370,8 +370,6 @@ class AnkiRedesignConfigDialog(QDialog):
         self.tab_decks.setLayout(self.create_color_picker_layout(self.theme_decks))
         self.tab_browse = QWidget(objectName="browse")        
         self.tab_browse.setLayout(self.create_color_picker_layout(self.theme_browse))
-        self.tab_extra = QWidget(objectName="extra")        
-        self.tab_extra.setLayout(self.create_color_picker_layout(self.theme_extra))
         
         self.tab_settings = QWidget(objectName="settings")
         self.settings_layout = QFormLayout()
@@ -396,15 +394,11 @@ class AnkiRedesignConfigDialog(QDialog):
         self.font_size.setValue(config["font_size"])
         self.font_size.setSuffix("px")
         self.settings_layout.addRow(self.font_size)
-
         self.settings_layout.addRow(QLabel())
 
-
-        self.fix_label = QLabel("Addon-Compatibility Fixes: ")
+        self.fix_label = QLabel("Addon-compatibility fixes: ")
         self.fix_label.setStyleSheet('QLabel { font-size: 14px; font-weight: bold }')
         self.settings_layout.addRow(self.fix_label)
-        self.reload_theme = self.checkbox("theme_reload")
-        self.settings_layout.addRow("QT6 theme on-start reload fix", self.reload_theme)
         self.addon_more_overview_stats_check = self.checkbox("addon_more_overview_stats")
         self.settings_layout.addRow("More Overview Stats 21", self.addon_more_overview_stats_check)
         self.addon_advanced_review_bottom_bar_check = self.checkbox("addon_advanced_review_bottom_bar")
@@ -418,8 +412,6 @@ class AnkiRedesignConfigDialog(QDialog):
         self.tabs.addTab(self.tab_general,"General")
         self.tabs.addTab(self.tab_decks,"Decks")
         self.tabs.addTab(self.tab_browse,"Browse")
-        #self.tabs.addTab(self.tab_extra,"Extra")
-
         ## Add tabs to widget
         self.layout.addWidget(self.tabs)
 
@@ -549,7 +541,6 @@ class AnkiRedesignConfigDialog(QDialog):
         config["font_size"] = self.font_size.value()
         config['addon_more_overview_stats'] = self.addon_more_overview_stats_check.isChecked()
         config['addon_advanced_review_bottom_bar'] = self.addon_advanced_review_bottom_bar_check.isChecked()
-        config['theme_reload'] = self.reload_theme.isChecked()
         config["theme"] = theme
         write_config(config)
         config = get_config()
