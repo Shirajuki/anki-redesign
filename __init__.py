@@ -85,19 +85,30 @@ logger.debug(dwmapi)
 
 ### CSS injections
 def load_custom_style():
-    theme_colors = ""
+    theme_colors_light = ""
+    theme_colors_dark = ""
     for color_name in themes_parsed.get("colors"):
         color = themes_parsed.get("colors").get(color_name)
         if color[3]:
-            theme_colors += f"{color[3]}: {color[color_mode]};\n        "
+            theme_colors_light += f"{color[3]}: {color[1]};\n        "
+            theme_colors_dark += f"{color[3]}: {color[2]};\n        "
         else:
-            theme_colors += f"--{color_name.lower().replace('_','-')}: {color[color_mode]};\n        "
+            theme_colors_light += f"--{color_name.lower().replace('_','-')}: {color[color_mode]};\n        "
+            theme_colors_dark += f"--{color_name.lower().replace('_','-')}: {color[color_mode]};\n        "
     custom_style = """
 <style>
+    /* Light */ 
     :root,
     :root .isMac,
     :root .isWin,
     :root .isLin {
+        %s
+    }
+    /* Dark */
+    :root body.nightMode,
+    :root body.isWin.nightMode,
+    :root body.isMac.nightMode,
+    :root body.isLin.nightMode {
         %s
     }
     html {
@@ -105,7 +116,15 @@ def load_custom_style():
         font-size: %spx;
     }
 </style>
-    """ % (theme_colors, config["font"], config["font_size"])
+    """ % (theme_colors_light, theme_colors_dark, config["font"], config["font_size"])
+    return custom_style
+
+def load_custom_style_wrapper():
+    custom_style = f"""
+    var style = document.createElement("style");
+    style.innerHTML = `{load_custom_style()[8:-13]}`;
+    document.head.appendChild(style);
+    """
     return custom_style
 
 ## Adds styling on the different webview contents, before the content is set
@@ -205,6 +224,7 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
     # Addons popup
     elif dialog_name == "AddonsDialog":
         context: AddonsDialog = dialog_manager._dialogs[dialog_name][1]
+        context.form.web.eval(load_custom_style_wrapper())
         context.setStyleSheet(open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
     # Browser
     elif dialog_name == "Browser":
@@ -214,24 +234,29 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
     # EditCurrent
     elif dialog_name == "EditCurrent":
         context: EditCurrent = dialog_manager._dialogs[dialog_name][1]
+        context.form.web.eval(load_custom_style_wrapper())
         context.setStyleSheet(open(css_files_dir['QEditCurrent'], encoding='utf-8').read())
     # FilteredDeckConfigDialog
     elif module_exists("aqt.filtered_deck") and dialog_name == "FilteredDeckConfigDialog":
         context: FilteredDeckConfigDialog = dialog_manager._dialogs[dialog_name][1]
+        context.form.web.eval(load_custom_style_wrapper())
         context.setStyleSheet(open(css_files_dir['QFilteredDeckConfigDialog'], encoding='utf-8').read())
     # Statistics / NewDeckStats
     elif dialog_name == "NewDeckStats":
         context: NewDeckStats = dialog_manager._dialogs[dialog_name][1]
+        context.form.web.eval(load_custom_style_wrapper())
         context.setStyleSheet(open(css_files_dir['QNewDeckStats'], encoding='utf-8').read())
     # About
     elif dialog_name == "About":
         context: ClosableQDialog = dialog_manager._dialogs[dialog_name][1]
+        context.form.web.eval(load_custom_style_wrapper())
         context.setStyleSheet(open(css_files_dir['QAbout'], encoding='utf-8').read())
     # Preferences
     elif dialog_name == "Preferences":
         context: Preferences = dialog_manager._dialogs[dialog_name][1]
+        context.form.web.eval(load_custom_style_wrapper())
         context.setStyleSheet(open(css_files_dir['QPreferences'], encoding='utf-8').read())
-    # sync_log - kore ha nani desu???
+    # sync_log - 这是什么？？？
     elif dialog_name == "sync_log":
         pass
 
@@ -246,6 +271,7 @@ else:
         obj.finished.connect(lambda: mw.gcWindow(obj))
         logger.debug(obj)
         set_dark_titlebar_qt(obj, dwmapi)
+        obj.form.web.eval(load_custom_style_wrapper())
         # AddCards
         if isinstance(obj, AddCards):
             obj.setStyleSheet(open(css_files_dir['QAddCards'], encoding='utf-8').read())
@@ -259,7 +285,7 @@ else:
         elif isinstance(obj, ClosableQDialog):
             obj.setStyleSheet(open(css_files_dir['QAbout'], encoding='utf-8').read())
         # Preferences
-        ## Haven't found a solution for preferences yet :c
+        ## Haven't found a solution for legacy preferences yet :c
     mw.setupDialogGC = monkey_setup_dialog_gc # Should be rare enough for other addons to also patch this I hope.
 
     # Addons popup
@@ -267,6 +293,7 @@ else:
         def on_addons_dialog_will_show(dialog: AddonsDialog) -> None:
             logger.debug(dialog)
             set_dark_titlebar_qt(dialog, dwmapi)
+            dialog.form.web.eval(load_custom_style_wrapper())
             dialog.setStyleSheet(open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
         gui_hooks.addons_dialog_will_show.append(on_addons_dialog_will_show)
     # Browser
@@ -274,6 +301,7 @@ else:
         def on_browser_will_show(browser: Browser) -> None:
             logger.debug(browser)
             set_dark_titlebar_qt(browser, dwmapi)
+            browser.form.web.eval(load_custom_style_wrapper())
             browser.setStyleSheet(open(css_files_dir['QBrowser'], encoding='utf-8').read())
         gui_hooks.browser_will_show.append(on_browser_will_show)
 
@@ -573,15 +601,16 @@ def refresh_all_windows() -> None:
     # Redraw main body
     if mw.state == "review":
         mw.reviewer._initWeb()
-        if mw.reviewer.state == "question":
-            mw.reviewer._showQuestion()
-        else:
-            mw.reviewer._showAnswer()
+        mw.reviewer._redraw_current_card()
+        mw.fade_in_webview()
     elif mw.state == "overview":
         mw.overview.refresh()
     elif mw.state == "deckBrowser":
         mw.deckBrowser.show()
 
+    # Implemented way to redraw all other windows?
+
+    # Redraw toolbar
     if attribute_exists(gui_hooks, "top_toolbar_did_init_links"):
         gui_hooks.top_toolbar_did_init_links.remove(redraw_toolbar)
 
@@ -609,8 +638,9 @@ def update_theme() -> None:
 def apply_theme(colors) -> None:
     # Reset style and palette
     logger.debug(colors)
-    mw.app.setStyle(QStyleFactory.create(theme_manager._default_style))
-    mw.app.setPalette(theme_manager.default_palette)
+    if getattr(theme_manager, "_default_style", False):
+        mw.app.setStyle(QStyleFactory.create(theme_manager._default_style))
+        mw.app.setPalette(theme_manager.default_palette)
     # Load and apply palette
     palette = QPalette()
     # QT mappings
@@ -673,6 +703,11 @@ if not hasattr(mw, 'anki_redesign'):
     # Update and apply theme
     mw.reset()
     update_theme()
+    # Rereload view to fix the QT6 header size on startup
+    if 'Qt6' in QPalette.ColorRole.__module__:
+        logger.debug('QT6 DETECTED....')
+        mw.reset()
+        update_theme()
 
 def on_theme_did_change() -> None:
     global color_mode
