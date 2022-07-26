@@ -85,19 +85,30 @@ logger.debug(dwmapi)
 
 ### CSS injections
 def load_custom_style():
-    theme_colors = ""
+    theme_colors_light = ""
+    theme_colors_dark = ""
     for color_name in themes_parsed.get("colors"):
         color = themes_parsed.get("colors").get(color_name)
         if color[3]:
-            theme_colors += f"{color[3]}: {color[color_mode]};\n        "
+            theme_colors_light += f"{color[3]}: {color[1]};\n        "
+            theme_colors_dark += f"{color[3]}: {color[2]};\n        "
         else:
-            theme_colors += f"--{color_name.lower().replace('_','-')}: {color[color_mode]};\n        "
+            theme_colors_light += f"--{color_name.lower().replace('_','-')}: {color[color_mode]};\n        "
+            theme_colors_dark += f"--{color_name.lower().replace('_','-')}: {color[color_mode]};\n        "
     custom_style = """
 <style>
+    /* Light */ 
     :root,
     :root .isMac,
     :root .isWin,
     :root .isLin {
+        %s
+    }
+    /* Dark */
+    :root body.nightMode,
+    :root body.isWin.nightMode,
+    :root body.isMac.nightMode,
+    :root body.isLin.nightMode {
         %s
     }
     html {
@@ -105,7 +116,15 @@ def load_custom_style():
         font-size: %spx;
     }
 </style>
-    """ % (theme_colors, config["font"], config["font_size"])
+    """ % (theme_colors_light, theme_colors_dark, config["font"], config["font_size"])
+    return custom_style
+
+def load_custom_style_wrapper():
+    custom_style = f"""
+    var style = document.createElement("style");
+    style.innerHTML = `{load_custom_style()[8:-13]}`;
+    document.head.appendChild(style);
+    """
     return custom_style
 
 ## Adds styling on the different webview contents, before the content is set
@@ -135,8 +154,7 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
         web_content.css.append(css_files_dir['Reviewer'])
     elif isinstance(context, ReviewerBottomBar):
         if addon_advanced_review_bottom_bar:
-            #web_content.head += "<style>td.stat[align='left']:nth-of-type(2) {position: absolute; z-index: 1;}</style>"
-            web_content.body += "<script>const center = document.getElementById('outer');center.classList.add('arbb');</script>"
+            web_content.body += "<script>document.getElementById('outer').classList.add('arbb');</script>"
         else:
             web_content.css.append(css_files_dir['BottomBar'])
         web_content.css.append(css_files_dir['ReviewerBottomBar'])
@@ -158,15 +176,21 @@ def redraw_toolbar() -> None:
     # Reload the webview content with added <br/> tag, making the bar larger in height
     mw.toolbar.web.setFixedHeight(60)
     mw.toolbar.web.eval("""
+        while (document.body.querySelectorAll("br.toolbarFix").length > 1)
+            document.body.querySelectorAll("br.toolbarFix")[0].remove();
         var br = document.createElement("br");
+        br.className = "toolbarFix";
         document.body.appendChild(br);
     """)
 
     if 'Qt6' in QPalette.ColorRole.__module__:
         mw.toolbar.web.eval("""
+            while (document.body.querySelectorAll("div.toolbarFix").length > 1)
+                document.body.querySelectorAll("div.toolbarFix")[0].remove();
             var div = document.createElement("div");
             div.style.width = "5px";
             div.style.height = "10px";
+            div.className = "toolbarFix";
             document.body.appendChild(div);
         """)
     # Auto adjust the height, then redraw the toolbar
@@ -177,9 +201,10 @@ def redraw_toolbar_legacy(links: List[str], _: Toolbar) -> None:
     # Utilizing the link hook, we inject <br/> tag through javascript
     inject_br = """
         <script>
-            while (document.body.querySelectorAll("br").length > 1)
-                document.body.querySelectorAll("br")[0].remove();
+            while (document.body.querySelectorAll("br.toolbarFix").length > 1)
+                document.body.querySelectorAll("br.toolbarFix")[0].remove();
             var br = document.createElement("br");
+            br.className = "toolbarFix";
             document.body.appendChild(br);
         </script>
     """
@@ -188,11 +213,10 @@ def redraw_toolbar_legacy(links: List[str], _: Toolbar) -> None:
     mw.toolbar.web.adjustHeightToFit()
 
 if attribute_exists(gui_hooks, "main_window_did_init"):
-    pass
     #gui_hooks.main_window_did_init.append(redraw_toolbar)
+    pass
 elif attribute_exists(gui_hooks, "top_toolbar_did_init_links"):
     gui_hooks.top_toolbar_did_init_links.append(redraw_toolbar_legacy)
-    pass
 
 # Dialog window styling
 def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name: str, dialog_instance: QWidget) -> None:
@@ -207,6 +231,7 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
     # Addons popup
     elif dialog_name == "AddonsDialog":
         context: AddonsDialog = dialog_manager._dialogs[dialog_name][1]
+        context.form.web.eval(load_custom_style_wrapper())
         context.setStyleSheet(open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
     # Browser
     elif dialog_name == "Browser":
@@ -224,6 +249,7 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
     # Statistics / NewDeckStats
     elif dialog_name == "NewDeckStats":
         context: NewDeckStats = dialog_manager._dialogs[dialog_name][1]
+        context.form.web.eval(load_custom_style_wrapper())
         context.setStyleSheet(open(css_files_dir['QNewDeckStats'], encoding='utf-8').read())
     # About
     elif dialog_name == "About":
@@ -233,7 +259,7 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
     elif dialog_name == "Preferences":
         context: Preferences = dialog_manager._dialogs[dialog_name][1]
         context.setStyleSheet(open(css_files_dir['QPreferences'], encoding='utf-8').read())
-    # sync_log - kore ha nani desu???
+    # sync_log - 这是什么？？？
     elif dialog_name == "sync_log":
         pass
 
@@ -241,7 +267,7 @@ if attribute_exists(gui_hooks, "dialog_manager_did_open_dialog"):
     gui_hooks.dialog_manager_did_open_dialog.append(on_dialog_manager_did_open_dialog)
 else:
     ## Legacy dialog window styling
-    # Sad monkey patch, instead of hooks :c
+    # Implemented by monkey patching, instead of hooks :c
     # setupDialogGC is being called on almost all dialog windows, utilizing this, the
     # function is used as a type of hook to inject CSS styling on the QT instances
     def monkey_setup_dialog_gc(obj: Any) -> None:
@@ -261,7 +287,7 @@ else:
         elif isinstance(obj, ClosableQDialog):
             obj.setStyleSheet(open(css_files_dir['QAbout'], encoding='utf-8').read())
         # Preferences
-        ## Haven't found a solution for preferences yet :c
+        ## Haven't found a solution for legacy preferences yet :c
     mw.setupDialogGC = monkey_setup_dialog_gc # Should be rare enough for other addons to also patch this I hope.
 
     # Addons popup
@@ -269,6 +295,7 @@ else:
         def on_addons_dialog_will_show(dialog: AddonsDialog) -> None:
             logger.debug(dialog)
             set_dark_titlebar_qt(dialog, dwmapi)
+            dialog.form.web.eval(load_custom_style_wrapper())
             dialog.setStyleSheet(open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
         gui_hooks.addons_dialog_will_show.append(on_addons_dialog_will_show)
     # Browser
@@ -276,6 +303,7 @@ else:
         def on_browser_will_show(browser: Browser) -> None:
             logger.debug(browser)
             set_dark_titlebar_qt(browser, dwmapi)
+            browser.form.web.eval(load_custom_style_wrapper())
             browser.setStyleSheet(open(css_files_dir['QBrowser'], encoding='utf-8').read())
         gui_hooks.browser_will_show.append(on_browser_will_show)
 
@@ -286,7 +314,7 @@ from .config import config
 from aqt.utils import showInfo
 from aqt.webview import AnkiWebView
 
-class ThemeEditor(QDialog):
+class AnkiRedesignThemeEditor(QDialog):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(parent=parent or mw, *args, **kwargs)
         self.config_editor = parent
@@ -340,11 +368,11 @@ class ThemeEditor(QDialog):
         size_policy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         return size_policy
 
-class ConfigDialog(QDialog):
+class AnkiRedesignConfigDialog(QDialog):
     def __init__(self, parent: QWidget, *args, **kwargs):
         super().__init__(parent=parent or mw, *args, **kwargs)
         self.setWindowModality(Qt.ApplicationModal)
-        self.setWindowTitle(f'Anki-redesign Configuration')
+        self.setWindowTitle(f'Anki-redesign configuration')
         self.setSizePolicy(self.make_size_policy())
         self.setMinimumSize(420, 580)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
@@ -372,8 +400,6 @@ class ConfigDialog(QDialog):
         self.tab_decks.setLayout(self.create_color_picker_layout(self.theme_decks))
         self.tab_browse = QWidget(objectName="browse")        
         self.tab_browse.setLayout(self.create_color_picker_layout(self.theme_browse))
-        self.tab_extra = QWidget(objectName="extra")        
-        self.tab_extra.setLayout(self.create_color_picker_layout(self.theme_extra))
         
         self.tab_settings = QWidget(objectName="settings")
         self.settings_layout = QFormLayout()
@@ -398,15 +424,11 @@ class ConfigDialog(QDialog):
         self.font_size.setValue(config["font_size"])
         self.font_size.setSuffix("px")
         self.settings_layout.addRow(self.font_size)
-
         self.settings_layout.addRow(QLabel())
 
-
-        self.fix_label = QLabel("Addon-Compatibility Fixes: ")
+        self.fix_label = QLabel("Addon-compatibility fixes: ")
         self.fix_label.setStyleSheet('QLabel { font-size: 14px; font-weight: bold }')
         self.settings_layout.addRow(self.fix_label)
-        self.reload_theme = self.checkbox("theme_reload")
-        self.settings_layout.addRow("QT6 theme on-start reload fix", self.reload_theme)
         self.addon_more_overview_stats_check = self.checkbox("addon_more_overview_stats")
         self.settings_layout.addRow("More Overview Stats 21", self.addon_more_overview_stats_check)
         self.addon_advanced_review_bottom_bar_check = self.checkbox("addon_advanced_review_bottom_bar")
@@ -420,8 +442,6 @@ class ConfigDialog(QDialog):
         self.tabs.addTab(self.tab_general,"General")
         self.tabs.addTab(self.tab_decks,"Decks")
         self.tabs.addTab(self.tab_browse,"Browse")
-        #self.tabs.addTab(self.tab_extra,"Extra")
-
         ## Add tabs to widget
         self.layout.addWidget(self.tabs)
 
@@ -508,7 +528,7 @@ class ConfigDialog(QDialog):
         return layout
     
     def theme_file_editor(self) -> None:   
-        diag = ThemeEditor(self)
+        diag = AnkiRedesignThemeEditor(self)
         diag.show()
 
     def make_button_box(self) -> QWidget:
@@ -551,7 +571,6 @@ class ConfigDialog(QDialog):
         config["font_size"] = self.font_size.value()
         config['addon_more_overview_stats'] = self.addon_more_overview_stats_check.isChecked()
         config['addon_advanced_review_bottom_bar'] = self.addon_advanced_review_bottom_bar_check.isChecked()
-        config['theme_reload'] = self.reload_theme.isChecked()
         config["theme"] = theme
         write_config(config)
         config = get_config()
@@ -562,10 +581,8 @@ class ConfigDialog(QDialog):
         write_theme(themes[theme], themes_parsed)
         update_theme()
 
-        # mw.reset()
         # ShowInfo for both new and legacy support
-        showInfo(_("Changes will take effect when you restart Anki."))
-        #showInfo(tr.preferences_changes_will_take_effect_when_you())
+        showInfo(_("Some changes will take effect when you restart Anki."))
         self.accept()
 
 def check_legacy_colors() -> None:
@@ -584,15 +601,16 @@ def refresh_all_windows() -> None:
     # Redraw main body
     if mw.state == "review":
         mw.reviewer._initWeb()
-        if mw.reviewer.state == "question":
-            mw.reviewer._showQuestion()
-        else:
-            mw.reviewer._showAnswer()
+        # Legacy check
+        if getattr(mw.reviewer, "_redraw_current_card", False):
+            mw.reviewer._redraw_current_card()
+            mw.fade_in_webview()
     elif mw.state == "overview":
         mw.overview.refresh()
     elif mw.state == "deckBrowser":
         mw.deckBrowser.show()
-
+    
+    # Redraw toolbar
     if attribute_exists(gui_hooks, "top_toolbar_did_init_links"):
         gui_hooks.top_toolbar_did_init_links.remove(redraw_toolbar)
 
@@ -610,9 +628,7 @@ def update_theme() -> None:
         if legacy:
             colors[f"day{c[3].replace('--','-')}"] = c[1]
             colors[f"night{c[3].replace('--','-')}"] = c[2]
-            # Potentially add fusion fixes too?
         else:
-            logger.debug(getattr(colors, color_name, False))
             if getattr(colors, color_name, False):
                 setattr(colors, color_name, (c[1], c[2]))
     # Apply theme on palette
@@ -620,10 +636,14 @@ def update_theme() -> None:
     refresh_all_windows()
 
 def apply_theme(colors) -> None:
-    # Load palette
+    # Reset style and palette
+    logger.debug(colors)
+    if getattr(theme_manager, "_default_style", False):
+        mw.app.setStyle(QStyleFactory.create(theme_manager._default_style))
+        mw.app.setPalette(theme_manager.default_palette)
+    # Load and apply palette
     palette = QPalette()
     # QT mappings
-    #logger.debug(QPalette.ColorRole.__dict__)
     color_map = {
         QPalette.ColorRole.Window: "WINDOW_BG",
         QPalette.ColorRole.WindowText: "TEXT_FG",
@@ -653,11 +673,11 @@ def apply_theme(colors) -> None:
     palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.HighlightedText, disabled_color)
 
     # Update palette
-    mw.app.setPalette(palette)
-    theme_manager.default_palette = palette
-    theme_manager._apply_style(mw.app)
+    theme_manager._apply_palette(mw.app) # Update palette theme_manager
+    mw.app.setPalette(palette) # Overwrite palette
+    theme_manager._apply_style(mw.app) # Update stylesheet theme_manager
 
-    # Update webview bg
+    # Update webview background
     AnkiWebView._getWindowColor = lambda *args: QColor(colors["WINDOW_BG"])
     AnkiWebView.get_window_bg_color = lambda *args: QColor(colors["WINDOW_BG"])
 
@@ -674,32 +694,26 @@ def create_menu_action(parent: QWidget, dialog_class: QDialog, dialog_name: str)
 
 # Load in the Anki-redesign menu
 if not hasattr(mw, 'anki_redesign'):
+    # Create anki-redesign menu
     mw.anki_redesign = QMenu("&Anki-redesign", mw)
     mw.form.menubar.insertMenu(mw.form.menuHelp.menuAction(), mw.anki_redesign)
 
-    mw.anki_redesign.addAction(create_menu_action(mw.anki_redesign, ConfigDialog, "&Config"))
+    mw.anki_redesign.addAction(create_menu_action(mw.anki_redesign, AnkiRedesignConfigDialog, "&Config"))
     mw.anki_redesign.addSeparator()
+    # Update and apply theme
     mw.reset()
     update_theme()
-    mw.reset()
-
-    # Rereload view to fix theme change on startup
+    # Rereload view to fix the QT6 header size on startup
     if 'Qt6' in QPalette.ColorRole.__module__:
-        logger.debug('QT6 DETECTED....')
-        config = get_config()
-        if config["theme_reload"]:
-            update_theme()
+        logger.debug('QT6 detected...')
+        mw.reset()
+        update_theme()
 
 def on_theme_did_change() -> None:
     global color_mode
     color_mode = 2 if theme_manager.get_night_mode() else 1 # 1 = light and 2 = dark
-    update_theme()
-    logger.debug("THEME CHANGEEEED")
-    refresh_all_windows()
+    logger.debug("Theme changed")
     mw.reset()
     update_theme()
-
-    
 if attribute_exists(gui_hooks, "theme_did_change"):
     gui_hooks.theme_did_change.append(on_theme_did_change)
-    logger.debug("YEP")

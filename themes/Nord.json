@@ -120,6 +120,12 @@
       "#9f63d3",
       "--flag7-fg"
     ],
+    "FOCUS_SHADOW": [
+      "Focus Shadow",
+      "#ff93d0",
+      "#0093d0",
+      "--focus-shadow-color"
+    ],
     "FRAME_BG": [
       "Frame Background",
       "#E5E9F0",

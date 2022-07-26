@@ -3,6 +3,5 @@
   "addon_advanced_review_bottom_bar": "false",
   "font": "Segoe UI",
   "font_size": "12",
-  "theme": "Catppuccin",
-  "theme_reload": "false"
+  "theme": "Catppuccin"
 }
