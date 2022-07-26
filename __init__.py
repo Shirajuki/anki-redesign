@@ -231,7 +231,6 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
     # Addons popup
     elif dialog_name == "AddonsDialog":
         context: AddonsDialog = dialog_manager._dialogs[dialog_name][1]
-        context.form.web.eval(load_custom_style_wrapper())
         context.setStyleSheet(open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
     # Browser
     elif dialog_name == "Browser":
