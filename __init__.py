@@ -176,15 +176,21 @@ def redraw_toolbar() -> None:
     # Reload the webview content with added <br/> tag, making the bar larger in height
     mw.toolbar.web.setFixedHeight(60)
     mw.toolbar.web.eval("""
+        while (document.body.querySelectorAll("br.toolbarFix").length > 1)
+            document.body.querySelectorAll("br.toolbarFix")[0].remove();
         var br = document.createElement("br");
+        br.className = "toolbarFix";
         document.body.appendChild(br);
     """)
 
     if 'Qt6' in QPalette.ColorRole.__module__:
         mw.toolbar.web.eval("""
+            while (document.body.querySelectorAll("div.toolbarFix").length > 1)
+                document.body.querySelectorAll("div.toolbarFix")[0].remove();
             var div = document.createElement("div");
             div.style.width = "5px";
             div.style.height = "10px";
+            div.className = "toolbarFix";
             document.body.appendChild(div);
         """)
     # Auto adjust the height, then redraw the toolbar
@@ -195,9 +201,10 @@ def redraw_toolbar_legacy(links: List[str], _: Toolbar) -> None:
     # Utilizing the link hook, we inject <br/> tag through javascript
     inject_br = """
         <script>
-            while (document.body.querySelectorAll("br").length > 1)
-                document.body.querySelectorAll("br")[0].remove();
+            while (document.body.querySelectorAll("br.toolbarFix").length > 1)
+                document.body.querySelectorAll("br.toolbarFix")[0].remove();
             var br = document.createElement("br");
+            br.className = "toolbarFix";
             document.body.appendChild(br);
         </script>
     """
@@ -234,12 +241,10 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
     # EditCurrent
     elif dialog_name == "EditCurrent":
         context: EditCurrent = dialog_manager._dialogs[dialog_name][1]
-        context.form.web.eval(load_custom_style_wrapper())
         context.setStyleSheet(open(css_files_dir['QEditCurrent'], encoding='utf-8').read())
     # FilteredDeckConfigDialog
     elif module_exists("aqt.filtered_deck") and dialog_name == "FilteredDeckConfigDialog":
         context: FilteredDeckConfigDialog = dialog_manager._dialogs[dialog_name][1]
-        context.form.web.eval(load_custom_style_wrapper())
         context.setStyleSheet(open(css_files_dir['QFilteredDeckConfigDialog'], encoding='utf-8').read())
     # Statistics / NewDeckStats
     elif dialog_name == "NewDeckStats":
@@ -249,12 +254,10 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
     # About
     elif dialog_name == "About":
         context: ClosableQDialog = dialog_manager._dialogs[dialog_name][1]
-        context.form.web.eval(load_custom_style_wrapper())
         context.setStyleSheet(open(css_files_dir['QAbout'], encoding='utf-8').read())
     # Preferences
     elif dialog_name == "Preferences":
         context: Preferences = dialog_manager._dialogs[dialog_name][1]
-        context.form.web.eval(load_custom_style_wrapper())
         context.setStyleSheet(open(css_files_dir['QPreferences'], encoding='utf-8').read())
     # sync_log - 这是什么？？？
     elif dialog_name == "sync_log":
@@ -271,7 +274,6 @@ else:
         obj.finished.connect(lambda: mw.gcWindow(obj))
         logger.debug(obj)
         set_dark_titlebar_qt(obj, dwmapi)
-        obj.form.web.eval(load_custom_style_wrapper())
         # AddCards
         if isinstance(obj, AddCards):
             obj.setStyleSheet(open(css_files_dir['QAddCards'], encoding='utf-8').read())
@@ -579,10 +581,8 @@ class AnkiRedesignConfigDialog(QDialog):
         write_theme(themes[theme], themes_parsed)
         update_theme()
 
-        # mw.reset()
         # ShowInfo for both new and legacy support
-        showInfo(_("Changes will take effect when you restart Anki."))
-        #showInfo(tr.preferences_changes_will_take_effect_when_you())
+        showInfo(_("Some changes will take effect when you restart Anki."))
         self.accept()
 
 def check_legacy_colors() -> None:
@@ -601,15 +601,15 @@ def refresh_all_windows() -> None:
     # Redraw main body
     if mw.state == "review":
         mw.reviewer._initWeb()
-        mw.reviewer._redraw_current_card()
-        mw.fade_in_webview()
+        # Legacy check
+        if getattr(mw.reviewer, "_redraw_current_card", False):
+            mw.reviewer._redraw_current_card()
+            mw.fade_in_webview()
     elif mw.state == "overview":
         mw.overview.refresh()
     elif mw.state == "deckBrowser":
         mw.deckBrowser.show()
-
-    # Implemented way to redraw all other windows?
-
+    
     # Redraw toolbar
     if attribute_exists(gui_hooks, "top_toolbar_did_init_links"):
         gui_hooks.top_toolbar_did_init_links.remove(redraw_toolbar)
@@ -705,16 +705,15 @@ if not hasattr(mw, 'anki_redesign'):
     update_theme()
     # Rereload view to fix the QT6 header size on startup
     if 'Qt6' in QPalette.ColorRole.__module__:
-        logger.debug('QT6 DETECTED....')
+        logger.debug('QT6 detected...')
         mw.reset()
         update_theme()
 
 def on_theme_did_change() -> None:
     global color_mode
     color_mode = 2 if theme_manager.get_night_mode() else 1 # 1 = light and 2 = dark
-    logger.debug("THEME CHANGED")
+    logger.debug("Theme changed")
     mw.reset()
     update_theme()
 if attribute_exists(gui_hooks, "theme_did_change"):
     gui_hooks.theme_did_change.append(on_theme_did_change)
-    logger.debug("YEP")
