@@ -12,20 +12,19 @@ Note3: If the addon is not updating try open anki while holding shift to turn of
 **Manually tested on the following Anki versions:**
 
 - 2.1.54
-- 2.1.53
 - 2.1.50
 - 2.1.49
 - 2.1.26
 - 2.1.22
 
-**(Planned) Updates / todos (as of 18.04.2022):**
+**(Planned) Updates / todos (as of 26.07.2022):**
 
-- [x] Add user customization on all styling views through the user_files folder (user custom CSS injection) (v0.0.5)
-- [x] Add more lightweight modern styling for other views / qt dialogs (v0.1.0)
-- [x] Add dialog window for configuration and user customizations (will replace config.json for a better ease) (v0.1.0)
-- [x] Add styling support for QT6 when it gets released (will do for 2.1.50 beta if requested or the need is there)
-- [x] Manually test for backwards compatibility on older major Anki versions. (2.1.22 &amp; 26 tested)
-- [ ] Add configuration for better ease in adding/resetting custom themes
+- [x] "Advanced Review Button" add-on compatibility
+- [ ] "Full screen" add-on compatibility
+- [ ] Fix correct color switches on theming
+- [ ] Add configuration for better ease in adding/resetting custom themes as well as have them persisted after updates
+- [ ] Add translation support so that the community can help with the translation
+- [ ] Add a public theme sharing site where users can upload their themes and possibly have them preinstalled alongside the add-on
 - [ ] Optimize the code performance better, making the Add-on more lightweight
 - [ ] Add styling support for strictly QT6 when QT5 gets completely replaced in a future update
 
@@ -53,6 +52,7 @@ The concept of this add-on was inspired by the following add-on and designs:
 
 **Changelog:**
 
+- 26-07-2022: Automatic dark/light mode switch on themes is now correctly implemented, hopefully Mac toolbar bug is also fixed (v0.1.4)
 - 03-07-2022: Anki 2.1.54 is now compatible, also added addon compatibility for ARBb alongside auto dark/light mode switch on themes (v0.1.3)
 - 18-04-2022: Anki 2.1.50 is now compatible, also added some minor visual fixes for legacy versions (v0.1.2)
 - 14-04-2022: Adds minor bugfix for showInfo function (v0.1.1)
