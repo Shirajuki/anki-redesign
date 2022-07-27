@@ -51,7 +51,7 @@ addon_advanced_review_bottom_bar = config['addon_advanced_review_bottom_bar']
 theme = config['theme']
 # Init script/file path
 from .utils.css_files import css_files_dir
-from .utils.themes import themes, write_theme, get_theme
+from .utils.themes import system_themes, themes, write_theme, get_theme
 logger.debug(css_files_dir)
 logger.debug(themes)
 themes_parsed = get_theme(theme)
@@ -411,7 +411,7 @@ class AnkiRedesignConfigDialog(QDialog):
         self.theme_label.setStyleSheet('QLabel { font-size: 14px; font-weight: bold }')
         self.settings_layout.addRow(self.theme_label)
         for key in themes:
-            self.radio = self.radio_button(key)
+            self.radio = self.theme_button(key, not key in system_themes)
             self.settings_layout.addRow(key, self.radio)
         self.settings_layout.addRow(QLabel())
 
@@ -471,6 +471,71 @@ class AnkiRedesignConfigDialog(QDialog):
         self.updates.append(update)
         update()
         return checkbox
+
+    def theme_button(self, key: str, custom = False):
+        layout = QGridLayout()
+        radio = self.radio_button(key)
+        clone_button = QPushButton('Clone')
+        clone_button .setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        clone_button .clicked.connect(lambda _: self.clone_theme(key))
+        layout.addWidget(radio, 0, 0)
+        if custom:
+            delete_button= QPushButton('Delete')
+            delete_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+            delete_button.clicked.connect(lambda _: self.delete_theme(key))
+            layout.addWidget(delete_button, 0, 1)
+        else:
+            sync_button = QPushButton('Sync')
+            sync_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+            sync_button.clicked.connect(lambda _: self.sync_theme(key))
+            layout.addWidget(sync_button, 0, 1)
+        layout.addWidget(clone_button, 0, 2)
+        layout.addWidget(QLabel(), 0, 3)
+        layout.addWidget(QLabel(), 0, 4)
+        return layout
+
+    def clone_theme(self, key):
+        logger.debug("Clone: " + key)
+        popup = QMessageBox()
+        popup.setIcon(QMessageBox.Information)
+        popup.setText(f"Are you sure you want to clone the selected theme: {key}")
+        popup.setWindowTitle(f"Clone theme {key}")
+        popup.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        if popup.exec() == QMessageBox.Yes:
+            showInfo(_(f"Successfully cloned theme {key}"))
+            self.restart()
+
+    # https://doc.qt.io/qt-6/qmessagebox.html#StandardButton-enum
+    def delete_theme(self, key):
+        logger.debug("Delete: " + key)
+        popup = QMessageBox()
+        popup.setIcon(QMessageBox.Information)
+        popup.setText(f"Are you sure you want to delete the selected theme: {key}")
+        popup.setWindowTitle(f"Delete theme {key}")
+        popup.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        if popup.exec() == QMessageBox.Yes:
+            showInfo(_(f"Successfully deleted theme {key}"))
+            self.restart()
+
+
+    def sync_theme(self, key):
+        logger.debug("Sync: " + key)
+        popup = QMessageBox()
+        popup.setIcon(QMessageBox.Information)
+        popup.setText(f"Are you sure you want to sync the selected theme: {key}")
+        popup.setWindowTitle(f"Sync theme {key}")
+        popup.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        if popup.exec() == QMessageBox.Yes:
+            showInfo(_(f"Successfully synced system theme {key}"))
+            self.restart()
+    
+    def restart(self):
+        # Close window
+        self.accept()
+        self.close()
+        # Open window again
+        mw.anki_redesign_cache = AnkiRedesignConfigDialog(mw)
+        mw.anki_redesign_cache.exec()
 
     def radio_button(self, key: str) -> QRadioButton:
         radio = QRadioButton()
