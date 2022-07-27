@@ -85,6 +85,7 @@ logger.debug(dwmapi)
 
 ### CSS injections
 def load_custom_style():
+    # Theme config
     theme_colors_light = ""
     theme_colors_dark = ""
     for color_name in themes_parsed.get("colors"):
@@ -95,6 +96,10 @@ def load_custom_style():
         else:
             theme_colors_light += f"--{color_name.lower().replace('_','-')}: {color[color_mode]};\n        "
             theme_colors_dark += f"--{color_name.lower().replace('_','-')}: {color[color_mode]};\n        "
+    # Font config
+    font = config["font"]
+    if config["fallbackFonts"]:
+        font = f"{config['font']}, {config['fallbackFonts']}"
     custom_style = """
 <style>
     /* Light */ 
@@ -116,7 +121,7 @@ def load_custom_style():
         font-size: %spx;
     }
 </style>
-    """ % (theme_colors_light, theme_colors_dark, config["font"], config["font_size"])
+    """ % (theme_colors_light, theme_colors_dark, font, config["font_size"])
     return custom_style
 
 def load_custom_style_wrapper():
@@ -318,7 +323,7 @@ class AnkiRedesignThemeEditor(QDialog):
         super().__init__(parent=parent or mw, *args, **kwargs)
         self.config_editor = parent
         self.setWindowModality(Qt.ApplicationModal)
-        self.setWindowTitle(f'Anki-redesign Advanced Editor')
+        self.setWindowTitle(f'Anki-redesign advanced editor')
         self.setSizePolicy(self.make_size_policy())
         self.setMinimumSize(420, 420)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)

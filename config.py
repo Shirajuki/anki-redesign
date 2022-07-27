@@ -7,6 +7,7 @@ def get_config() -> dict:
     config['addon_advanced_review_bottom_bar'] = True if config.get('addon_advanced_review_bottom_bar', "false").lower() == "true" else False
     ## Customization
     config['font'] = config.get('font', "Segoe UI")
+    config['fallbackFonts'] = config.get('fallbackFonts', "sans-serif")
     config['font_size'] = int(config.get('font_size', "12"))
     config['theme'] = config.get('theme', 'Anki')
 
