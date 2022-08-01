@@ -51,7 +51,7 @@ addon_advanced_review_bottom_bar = config['addon_advanced_review_bottom_bar']
 theme = config['theme']
 # Init script/file path
 from .utils.css_files import css_files_dir
-from .utils.themes import system_themes, themes, write_theme, get_theme
+from .utils.themes import system_themes, themes, write_theme, get_theme, get_themes_dict, sync_theme, clone_theme, delete_theme
 logger.debug(css_files_dir)
 logger.debug(themes)
 themes_parsed = get_theme(theme)
@@ -299,7 +299,6 @@ else:
         def on_addons_dialog_will_show(dialog: AddonsDialog) -> None:
             logger.debug(dialog)
             set_dark_titlebar_qt(dialog, dwmapi)
-            dialog.form.web.eval(load_custom_style_wrapper())
             dialog.setStyleSheet(open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
         gui_hooks.addons_dialog_will_show.append(on_addons_dialog_will_show)
     # Browser
@@ -307,7 +306,6 @@ else:
         def on_browser_will_show(browser: Browser) -> None:
             logger.debug(browser)
             set_dark_titlebar_qt(browser, dwmapi)
-            browser.form.web.eval(load_custom_style_wrapper())
             browser.setStyleSheet(open(css_files_dir['QBrowser'], encoding='utf-8').read())
         gui_hooks.browser_will_show.append(on_browser_will_show)
 
@@ -495,6 +493,7 @@ class AnkiRedesignConfigDialog(QDialog):
         return layout
 
     def clone_theme(self, key):
+        global themes
         logger.debug("Clone: " + key)
         popup = QMessageBox()
         popup.setIcon(QMessageBox.Information)
@@ -503,10 +502,11 @@ class AnkiRedesignConfigDialog(QDialog):
         popup.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         if popup.exec() == QMessageBox.Yes:
             showInfo(_(f"Successfully cloned theme {key}"))
+            themes = clone_theme(key, themes)
             self.restart()
 
-    # https://doc.qt.io/qt-6/qmessagebox.html#StandardButton-enum
     def delete_theme(self, key):
+        global themes
         logger.debug("Delete: " + key)
         popup = QMessageBox()
         popup.setIcon(QMessageBox.Information)
@@ -515,10 +515,11 @@ class AnkiRedesignConfigDialog(QDialog):
         popup.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         if popup.exec() == QMessageBox.Yes:
             showInfo(_(f"Successfully deleted theme {key}"))
+            themes = delete_theme(key, themes)
             self.restart()
 
-
     def sync_theme(self, key):
+        global themes
         logger.debug("Sync: " + key)
         popup = QMessageBox()
         popup.setIcon(QMessageBox.Information)
@@ -526,9 +527,10 @@ class AnkiRedesignConfigDialog(QDialog):
         popup.setWindowTitle(f"Sync theme {key}")
         popup.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         if popup.exec() == QMessageBox.Yes:
-            showInfo(_(f"Successfully synced system theme {key}"))
+            showInfo(_(f"Successfully synced system theme {key}.\nClick save to apply the changes on current window."))
+            themes = sync_theme(key, themes)
             self.restart()
-    
+
     def restart(self):
         # Close window
         self.accept()
