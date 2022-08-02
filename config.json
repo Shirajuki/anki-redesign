@@ -1,6 +1,7 @@
 {
   "addon_more_overview_stats": "false",
   "addon_advanced_review_bottom_bar": "false",
+  "addon_no_distractions_full_screen": "false",
   "font": "Segoe UI",
   "fallbackFonts": "sans-serif",
   "font_size": "12",

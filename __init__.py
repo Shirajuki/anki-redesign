@@ -46,6 +46,7 @@ from .config import config, write_config, get_config
 # More Overview Stats 2.1 addon compatibility fix
 addon_more_overview_stats_fix = config['addon_more_overview_stats']
 addon_advanced_review_bottom_bar = config['addon_advanced_review_bottom_bar']
+addon_no_distractions_full_screen = config['addon_no_distractions_full_screen']
 
 ## Customization
 theme = config['theme']
@@ -157,6 +158,23 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
     # Reviewer
     elif isinstance(context, Reviewer):
         web_content.css.append(css_files_dir['Reviewer'])
+        if addon_no_distractions_full_screen:
+            web_content.body += """
+            <script>
+                const timeout = 10, time = 0;
+                let check;
+                check = setInterval(() => {
+                    const outer = document.getElementById('outer');
+                    const iframe = document.querySelector("#bottomiFrame")?.contentDocument?.getElementById('outer');
+                    if (outer && iframe) {
+                        outer.classList.add('ndfs');
+                        iframe.classList.add('ndfs')
+                    }
+                    time++;
+                    if (time >= 10) clearInterval(check);
+                },1000)
+            </script>
+            """
     elif isinstance(context, ReviewerBottomBar):
         if addon_advanced_review_bottom_bar:
             web_content.body += "<script>document.getElementById('outer').classList.add('arbb');</script>"

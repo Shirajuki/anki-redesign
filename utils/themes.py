@@ -1,8 +1,6 @@
 import os
 import json
 
-from .logger import logger
-
 this_script_dir = os.path.join(os.path.dirname(__file__), "..")
 themes_dir = os.path.join(this_script_dir, 'themes')
 user_themes_dir = os.path.join(this_script_dir, 'user_files', 'themes')
@@ -64,9 +62,7 @@ def delete_theme(theme, themes):
 
 def sync_theme(theme, themes):
     # Sync custom theme with system_theme if system_theme exists
-    logger.debug(f'{theme} : {system_themes.get(theme, False)}')
     if system_themes.get(theme, False):
-        logger.debug("yayayay")
         themes_parsed = json.loads(open(os.path.join(themes_dir, theme+".json"), encoding='utf-8').read())
         write_theme(themes[theme], themes_parsed)
     _, themes = get_themes_dict()

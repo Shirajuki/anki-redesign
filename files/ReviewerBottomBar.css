@@ -1,8 +1,13 @@
+html {
+  height: 100%;
+}
 body {
   overflow: hidden;
+  height: 100%;
 }
 body #outer {
   border-top: 1px solid transparent;
+  height: 100%;
 }
 body.nightMode #outer {
   border-top-color: transparent;
@@ -57,4 +62,11 @@ body #outer.arbb button {
   text-transform: uppercase;
   margin-left: 2px;
   margin-right: 2px;
+}
+/* NDFS addon fix */
+body #outer.ndfs table#innertable {
+  transform: translate(-3px, 75px) !important;
+}
+body #outer.ndfs table:noy(#innertable) {
+  position: relative !important;
 }

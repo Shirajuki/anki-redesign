@@ -7,3 +7,15 @@ body.card {
   margin: 20px auto;
   max-width: 1080px;
 }
+
+/* NDFS addon fix */
+body #outer.ndfs .bottomWrapper {
+  height: 90px !important;
+  background: rgba(130, 130, 130, 0.8) !important;
+}
+body #outer.ndfs #bottomiFrame {
+  top: auto !important;
+  bottom: 0;
+  width: 100% !important;
+  background: rgba(130, 130, 130, 0) !important;
+}
