@@ -182,7 +182,7 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
             web_content.css.append(css_files_dir['BottomBar'])
         web_content.css.append(css_files_dir['ReviewerBottomBar'])
         # Button padding bottom
-        web_content.body += "<div style='height: 9px; opacity: 0; pointer-events: none;'></div>"
+        web_content.body += "<div style='height: 12px; opacity: 0; pointer-events: none;'></div>"
         web_content.body += "<div id='padFix' style='height: 30px; opacity: 0; pointer-events: none;'><script>const e = document.getElementById('padFix');e.parentElement.removeChild(e);</script></div>"
         mw.bottomWeb.adjustHeightToFit()
     # CardLayout

@@ -11,11 +11,13 @@ body.card {
 /* NDFS addon fix */
 body #outer.ndfs .bottomWrapper {
   height: 90px !important;
-  background: rgba(130, 130, 130, 0.8) !important;
+  zoom: 1.1 !important;
+  min-width: 190px;
 }
 body #outer.ndfs #bottomiFrame {
   top: auto !important;
   bottom: 0;
   width: 100% !important;
-  background: rgba(130, 130, 130, 0) !important;
+  background: transparent !important;
+  left: -8px !important;
 }

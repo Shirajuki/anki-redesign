@@ -14,7 +14,8 @@ body.nightMode #outer {
 }
 body #outer table#innertable {
   padding: 6px;
-  transform: translateY(8px);
+  box-sizing: border-box;
+  /* transform: translateY(8); */
 }
 body button {
   margin: 0;
@@ -64,9 +65,18 @@ body #outer.arbb button {
   margin-right: 2px;
 }
 /* NDFS addon fix */
-body #outer.ndfs table#innertable {
-  transform: translate(-3px, 75px) !important;
+body #outer.ndfs {
+  background: var(--frame-bg, var(--legacy-frame-bg)) !important;
+  transform: translateX(-8px);
+  border-radius: 10px 10px 0 0;
 }
-body #outer.ndfs table:noy(#innertable) {
+body #outer.ndfs table#innertable {
+  transform: translate(-3px, 20px) !important;
+  background: var(--frame-bg, var(--legacy-frame-bg)) !important;
+}
+body #outer.ndfs table#innertable tbody {
+  transform: translateX(6px);
+}
+body #outer.ndfs table:not(#innertable) {
   position: relative !important;
 }
