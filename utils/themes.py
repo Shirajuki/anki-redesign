@@ -29,13 +29,16 @@ def get_themes_dict() -> dict:
 
 def get_theme(theme: str) -> dict:
     # Open theme and parse it as json
+    _, themes = get_themes_dict()
     themes_parsed = json.loads(open(themes[theme], encoding='utf-8').read())
     theme_colors = themes_parsed.get("colors")
     # Add extra color_keys on theme files if not exist (ReColor compatible)
-    if not theme_colors.get("PRIMARY_COLOR", False):
-        theme_colors["PRIMARY_COLOR"] = ["Primary Color", "#0093d0", "#0093d0", "--primary-color"]
+    if not theme_colors.get("BUTTON_FOCUS_BG", False):
+        theme_colors["BUTTON_FOCUS_BG"] = ["Button Focus Background", "#0093d0", "#0093d0", "--button-focus-bg"]
     if not theme_colors.get("FOCUS_SHADOW", False):
         theme_colors["FOCUS_SHADOW"] = ["Focus Shadow", "#ff93d0", "#0093d0", "--focus-shadow-color"]
+    if theme_colors.get("BUTTON_BG", False):
+        theme_colors["BUTTON_BG"] =  theme_colors["BUTTON_BG"][:-1]+["--button-bg"]
     themes_parsed["colors"] = theme_colors
     return themes_parsed
 

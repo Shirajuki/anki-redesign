@@ -18,6 +18,12 @@
       "#1A1826",
       "--button-bg"
     ],
+    "BUTTON_FOCUS_BG": [
+      "Button Focus Background",
+      "#0093d0",
+      "#0093d0",
+      "--button-focus-bg"
+    ],
     "CURRENT_DECK": [
       "Selected Deck",
       "#e7e7e7",
@@ -173,12 +179,6 @@
       "#00a",
       "#5E81AC",
       "--new-count"
-    ],
-    "PRIMARY_COLOR": [
-      "Primary Color",
-      "#0093d0",
-      "#0093d0",
-      "--primary-color"
     ],
     "REVIEW_COUNT": [
       "Review Count",

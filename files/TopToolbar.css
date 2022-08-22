@@ -12,7 +12,7 @@ body center #header {
     rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 4px 5px 0px;
 }
 body.nightMode center #header {
-  background-color: var(--faint-border, var(--legacy-faint-border));
+  background-color: var(--frame-bg, var(--legacy-frame-bg));
 }
 body center #header .hitem {
   padding-left: initial;

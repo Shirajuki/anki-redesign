@@ -53,7 +53,7 @@ addon_no_distractions_full_screen = config['addon_no_distractions_full_screen']
 theme = config['theme']
 # Init script/file path
 from .utils.css_files import css_files_dir
-from .utils.themes import system_themes, themes, write_theme, get_theme, sync_theme, clone_theme, delete_theme
+from .utils.themes import themes, get_theme
 logger.debug(css_files_dir)
 logger.debug(themes)
 themes_parsed = get_theme(theme)

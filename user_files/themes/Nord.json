@@ -16,7 +16,7 @@
       "Button Background",
       "#D8DEE9",
       "#3B4252",
-      ""
+      "--button-bg"
     ],
     "CURRENT_DECK": [
       "Selected Deck",
