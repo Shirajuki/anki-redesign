@@ -468,11 +468,11 @@ def create_menu_action(parent: QWidget, dialog_class: QDialog, dialog_name: str)
 # Load in the Anki-redesign menu
 if not hasattr(mw, 'anki_redesign'):
     # Create anki-redesign menu
-    mw.anki_redesign = QMenu("&Anki-redesign", mw)
-    mw.form.menubar.insertMenu(mw.form.menuHelp.menuAction(), mw.anki_redesign)
-
-    mw.anki_redesign.addAction(create_menu_action(mw.anki_redesign, AnkiRedesignConfigDialog, "&Config"))
-    mw.anki_redesign.addSeparator()
+    # mw.anki_redesign = QMenu("&Anki-redesign", mw)
+    # mw.form.menubar.insertMenu(mw.form.menuHelp.menuAction(), mw.anki_redesign)
+    # mw.anki_redesign.addAction(create_menu_action(mw.anki_redesign, AnkiRedesignConfigDialog, "&Config"))
+    # mw.anki_redesign.addSeparator()
+    mw.form.menuTools.addAction(create_menu_action(mw, AnkiRedesignConfigDialog, "&Anki-redesign"))
     # Update and apply theme
     mw.reset()
     update_theme()
