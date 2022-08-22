@@ -1,15 +1,22 @@
+html {
+  height: 100%;
+  min-height: 65px;
+}
 body {
   overflow: hidden;
+  height: 100%;
 }
 body #outer {
   border-top: 1px solid transparent;
+  height: 100%;
 }
 body.nightMode #outer {
   border-top-color: transparent;
 }
 body #outer table#innertable {
   padding: 6px;
-  transform: translateY(8px);
+  box-sizing: border-box;
+  /* transform: translateY(8); */
 }
 body button {
   margin: 0;
@@ -31,7 +38,7 @@ td[align="center"] > span {
   position: absolute;
   display: block;
   left: 50%;
-  transform: translate(-50%, -13px);
+  transform: translate(-50%, -10px);
   color: var(--text-fg, var(--legacy-text-fg));
 }
 body .stattxt#time {
@@ -57,4 +64,20 @@ body #outer.arbb button {
   text-transform: uppercase;
   margin-left: 2px;
   margin-right: 2px;
+}
+/* NDFS addon fix */
+body #outer.ndfs {
+  background: var(--frame-bg, var(--legacy-frame-bg)) !important;
+  transform: translateX(-8px);
+  border-radius: 10px 10px 0 0;
+}
+body #outer.ndfs table#innertable {
+  transform: translate(-3px, 20px) !important;
+  background: var(--frame-bg, var(--legacy-frame-bg)) !important;
+}
+body #outer.ndfs table#innertable tbody {
+  transform: translateX(6px);
+}
+body #outer.ndfs table:not(#innertable) {
+  position: relative !important;
 }

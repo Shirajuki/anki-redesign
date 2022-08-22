@@ -2,8 +2,8 @@
   "colors": {
     "BORDER": [
       "Border",
-      "#aaa",
-      "#434c5e",
+      "#D8DEE9",
+      "#434C5E",
       "--border"
     ],
     "BURIED_FG": [
@@ -14,32 +14,26 @@
     ],
     "BUTTON_BG": [
       "Button Background",
-      "#e7e7e7",
-      "#1A1826",
+      "#D8DEE9",
+      "#3B4252",
       "--button-bg"
-    ],
-    "BUTTON_FOCUS_BG": [
-      "Button Focus Background",
-      "#0093d0",
-      "#0093d0",
-      "--button-focus-bg"
     ],
     "CURRENT_DECK": [
       "Selected Deck",
-      "#e7e7e7",
-      "#1A1826",
+      "#E5E9F0",
+      "#3B4252",
       "--current-deck"
     ],
     "DISABLED": [
       "Disabled",
-      "#777",
-      "#C3BAC6",
+      "#D8DEE9",
+      "#D8DEE9",
       "--disabled"
     ],
     "FAINT_BORDER": [
       "Faint Border",
-      "#e7e7e7",
-      "#1A1826",
+      "#ECEFF4",
+      "#3B4252",
       "--faint-border"
     ],
     "FLAG1_BG": [
@@ -134,97 +128,103 @@
     ],
     "FRAME_BG": [
       "Frame Background",
-      "white",
-      "#1A1826",
+      "#E5E9F0",
+      "#3B4252",
       "--frame-bg"
     ],
     "HIGHLIGHT_BG": [
       "Highlighted Background",
-      "#77ccff",
+      "#81A1C1",
       "#81A1C1",
       "--highlight-bg"
     ],
     "HIGHLIGHT_FG": [
       "Highlighted Text",
-      "black",
+      "white",
       "#ECEFF4",
       "--highlight-fg"
     ],
     "LEARN_COUNT": [
       "Learn Count",
-      "#c35617",
+      "#D08770",
       "#D08770",
       "--learn-count"
     ],
     "LINK": [
       "Hyperlink",
-      "#6e9fda",
-      "#89DCEB",
+      "#8FBCBB",
+      "#8FBCBB",
       "--link"
     ],
     "MARKED_BG": [
       "Marked Background",
-      "#cce",
-      "#ebcb8b",
+      "#EBCB8B",
+      "#EBCB8B",
       "--marked-bg"
     ],
     "MEDIUM_BORDER": [
       "Medium Border",
-      "#b6b6b6",
+      "#E5E9F0",
       "#434C5E",
       "--medium-border"
     ],
     "NEW_COUNT": [
       "New Count",
-      "#00a",
+      "#5E81AC",
       "#5E81AC",
       "--new-count"
     ],
+    "PRIMARY_COLOR": [
+      "Primary Color",
+      "#0093d0",
+      "#0093d0",
+      "--primary-color"
+    ],
     "REVIEW_COUNT": [
       "Review Count",
-      "#0a0",
+      "#A3BE8C",
       "#A3BE8C",
       "--review-count"
     ],
     "SLIGHTLY_GREY_TEXT": [
       "Switch Text",
-      "#333",
+      "#3B4252",
       "#D8DEE9",
       "--slightly-grey-text"
     ],
     "SUSPENDED_BG": [
       "Suspended Background",
-      "#ffffb2",
-      "#161320",
+      "#88C0D0",
+      "#88C0D0",
       "--suspended-bg"
     ],
     "SUSPENDED_FG": [
       "Suspended Foreground",
-      "#dd0",
+      "#3B4252",
       "#ECEFF4",
       "--suspended-fg"
     ],
     "TEXT_FG": [
       "Text Foreground",
-      "black",
-      "#d9e0ee",
+      "#2E3440",
+      "#E5E9F0",
       "--text-fg"
     ],
     "TOOLTIP_BG": [
       "Tooltip Background",
-      "#fcfcfc",
+      "#D8DEE9",
       "#4C566A",
       "--tooltip-bg"
     ],
     "WINDOW_BG": [
       "Window Background",
-      "#fafafa",
-      "#1E1E2E",
+      "white",
+      "#2E3440",
       "--window-bg"
     ],
     "ZERO_COUNT": [
       "Zero Count",
-      "#ddd",
+      "#D8DEE9",
       "#434C5E",
       "--zero-count"
     ]

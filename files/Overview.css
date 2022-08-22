@@ -45,7 +45,10 @@ body.nightMode button#main.but:hover {
 }
 button#study.but:focus,
 button#main.but:focus {
-  background-color: var(--primary-color) !important;
+  background-color: var(
+    --button-focus-bg,
+    var(--legacy-button-focus-bg)
+  ) !important;
   color: var(--frame-bg, var(--legacy-frame-bg));
   outline: none;
 }
@@ -56,4 +59,5 @@ body.nightMode button#main.but:focus {
 button#study.but:hover,
 button#main.but:hover {
   background-color: rgba(0, 0, 0, 0.05);
+  color: var(--text-fg);
 }

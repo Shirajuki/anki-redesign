@@ -7,5 +7,5 @@ Qt CSS, which is in it's core quite similar to the usual CSS.
 Documentation here: 
 - https://doc.qt.io/qt-5/stylesheet-syntax.html
 
-User edited themes should that is also customized will be saved
+User edited themes that is also customized will be saved
 in this folder.

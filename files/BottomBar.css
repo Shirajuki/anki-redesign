@@ -18,12 +18,12 @@ body #outer button {
 }
 body.nightMode #outer button {
   background: initial;
-  background-color: var(--frame-bg, var(--legacy-frame-bg));
+  background-color: var(--button-bg, var(--legacy-button-bg));
 }
 
 body #outer button:focus,
 body #outer button.focus {
-  background-color: var(--primary-color);
+  background-color: var(--button-focus-bg, var(--legacy-button-focus-bg));
   color: var(--frame-bg, var(--legacy-frame-bg));
   outline: none;
 }

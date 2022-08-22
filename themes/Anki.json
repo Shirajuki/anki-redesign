@@ -16,7 +16,7 @@
       "Button Background",
       "#eff0f1",
       "#454545",
-      ""
+      "--button-bg"
     ],
     "CURRENT_DECK": [
       "Selected Deck",
@@ -173,12 +173,6 @@
       "#00a",
       "#77ccff",
       "--new-count"
-    ],
-    "PRIMARY_COLOR": [
-      "Primary Color",
-      "#0093d0",
-      "#0093d0",
-      "--primary-color"
     ],
     "REVIEW_COUNT": [
       "Review Count",

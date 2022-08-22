@@ -1,9 +1,3 @@
-:root,
-:root .isWin,
-:root .isMac,
-:root .isLin {
-  --focus-color: rgba(81, 135, 169, 0.7);
-}
 /* Force LIGHT MODE Background */
 :root body:not(.nightMode),
 :root body.isWin:not(.nightMode),
@@ -83,6 +77,16 @@
   --legacy-suspended-bg: #aaaa33;
   --legacy-marked-bg: #77c;
   --legacy-tooltip-bg: #272727;
+}
+
+:root,
+:root .isWin,
+:root .isMac,
+:root .isLin {
+  --focus-color: rgba(81, 135, 169, 0.7);
+  --legacy-current-deck: var(--legacy-faint-border);
+  --legacy-button-bg: var(--legacy-frame-bg);
+  --legacy-button-focus-bg: #0093d0;
 }
 
 body {

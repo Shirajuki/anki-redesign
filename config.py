@@ -5,8 +5,10 @@ def get_config() -> dict:
     ## Addon fix
     config['addon_more_overview_stats'] = True if config.get('addon_more_overview_stats', "false").lower() == "true" else False
     config['addon_advanced_review_bottom_bar'] = True if config.get('addon_advanced_review_bottom_bar', "false").lower() == "true" else False
+    config['addon_no_distractions_full_screen'] = True if config.get('addon_no_distractions_full_screen', "false").lower() == "true" else False
     ## Customization
     config['font'] = config.get('font', "Segoe UI")
+    config['fallbackFonts'] = config.get('fallbackFonts', "sans-serif")
     config['font_size'] = int(config.get('font_size', "12"))
     config['theme'] = config.get('theme', 'Anki')
 
