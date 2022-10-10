@@ -1,6 +1,5 @@
 user_files/*.css
 user_files/*.log
-user_files/themes
 meta.json
 *.ankiaddon
 test.py
