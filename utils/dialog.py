@@ -343,6 +343,7 @@ class AnkiRedesignConfigDialog(QDialog):
         config["font_size"] = self.font_size.value()
         config['addon_more_overview_stats'] = self.addon_more_overview_stats_check.isChecked()
         config['addon_advanced_review_bottom_bar'] = self.addon_advanced_review_bottom_bar_check.isChecked()
+        config['addon_no_distractions_full_screen'] = self.addon_no_distractions_full_screen_check.isChecked()
         config["theme"] = theme
         write_config(config)
         config = get_config()
