@@ -7,4 +7,4 @@ find -name __pycache__ -type d -exec rm -rf {} +
 rm -f anki-redesign.ankiaddon
 
 # Zip add-on (build)
-zip -r anki-redesign.ankiaddon files/ injections/ themes/ user_files/ utils/ __init__.py config.json config.md config.py manifest.json
+zip -r anki-redesign.ankiaddon files/ injections/ themes/ translation/ user_files/ utils/ __init__.py config.json config.md config.py manifest.json
