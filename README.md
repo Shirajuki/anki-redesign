@@ -17,16 +17,15 @@ Note3: If the addon is not updating try open anki while holding shift to turn of
 - 2.1.26
 - 2.1.22
 
-**(Planned) Updates / todos (as of 22.08.2022):**
+**(Planned) Updates / todos (as of 10.10.2022):**
 
 - [x] "Advanced Review Button" add-on compatibility
 - [x] "Full screen" add-on compatibility
 - [x] Fix correct color switches on theming
 - [x] Add configuration for better ease in adding/resetting custom themes as well as have them persisted after updates
-- [ ] Add translation support so that the community can help with the translation
+- [x] Add translation support so that the community can help with the translation
 - [ ] Add a public theme sharing site where users can upload their themes and possibly have them preinstalled alongside the add-on
-- [x] Optimize the code performance better, making the Add-on more lightweight
-- [ ] Add styling support for strictly QT6 when QT5 gets completely replaced in a future update
+- [ ] Add styling support for Anki 2.1.55
 
 <br/>
 <div><img src="./screenshots/ui-half.png"></div>
@@ -52,6 +51,7 @@ The concept of this add-on was inspired by the following add-on and designs:
 
 **Changelog:**
 
+- 10-10-2022: Adds fix for NDFS compatibility fix and community translation support (v0.1.6)
 - 22-08-2022: Adds refactored theming engine, adding sync, clone and delete of themes more easily, along with some bugfixes. Anki-redesign preferences is also moved to the Tools menubar (v0.1.5)
 - 26-07-2022: Automatic dark/light mode switch on themes is now correctly implemented, hopefully Mac toolbar bug is also fixed (v0.1.4)
 - 03-07-2022: Anki 2.1.54 is now compatible, also added addon compatibility for ARBb alongside auto dark/light mode switch on themes (v0.1.3)
