@@ -2,6 +2,7 @@ import json
 from aqt import mw, gui_hooks
 from aqt.qt import *
 from .modules import *
+from .translation import get_texts
 from ..config import config, write_config, get_config
 from aqt.utils import showInfo
 from aqt.webview import AnkiWebView
@@ -10,17 +11,30 @@ from .logger import logger
 from aqt.theme import theme_manager, colors
 from ..injections.toolbar import redraw_toolbar, redraw_toolbar_legacy
 from .themes import system_themes, themes, write_theme, get_theme, sync_theme, clone_theme, delete_theme
+if module_has_attribute("anki.lang", "current_lang"):
+    from anki.lang import current_lang, lang_to_disk_lang, compatMap
+else:
+    from anki.lang import currentLang as current_lang, lang_to_disk_lang, compatMap
 
 theme = config['theme']
 themes_parsed = get_theme(theme)
 color_mode = 2 if theme_manager.get_night_mode() else 1 # 1 = light and 2 = dark
 
+def get_anki_lang():
+    lang = lang_to_disk_lang(current_lang)
+    if lang in compatMap:
+        lang = compatMap[lang]
+    lang = lang.replace("-", "_")
+    logger.debug(lang)
+    return lang
+
 class AnkiRedesignThemeEditor(QDialog):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(parent=parent or mw, *args, **kwargs)
         self.config_editor = parent
+        self.texts = get_texts(get_anki_lang())
         self.setWindowModality(Qt.ApplicationModal)
-        self.setWindowTitle(f'Anki-redesign advanced editor')
+        self.setWindowTitle(self.texts["theme_editor_window_title"])
         self.setSizePolicy(self.make_size_policy())
         self.setMinimumSize(420, 420)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
@@ -44,12 +58,12 @@ class AnkiRedesignThemeEditor(QDialog):
 
     def make_button_box(self) -> QWidget:
         def cancel():
-            button = QPushButton('Cancel')
+            button = QPushButton(self.texts["cancel_button"])
             button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
             qconnect(button.clicked, self.accept)
             return button
         def save():
-            button = QPushButton('Save')
+            button = QPushButton(self.texts["save_button"])
             button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
             button.setDefault(True)
             button.setShortcut("Ctrl+Return")
@@ -72,8 +86,9 @@ class AnkiRedesignThemeEditor(QDialog):
 class AnkiRedesignConfigDialog(QDialog):
     def __init__(self, parent: QWidget, *args, **kwargs):
         super().__init__(parent=parent or mw, *args, **kwargs)
+        self.texts = get_texts(get_anki_lang())
         self.setWindowModality(Qt.ApplicationModal)
-        self.setWindowTitle(f'Anki-redesign configuration')
+        self.setWindowTitle(self.texts["configuration_window_title"])
         self.setSizePolicy(self.make_size_policy())
         self.setMinimumSize(420, 580)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
@@ -104,7 +119,7 @@ class AnkiRedesignConfigDialog(QDialog):
         
         self.tab_settings = QWidget(objectName="settings")
         self.settings_layout = QFormLayout()
-        self.theme_label = QLabel("Theme:")
+        self.theme_label = QLabel(self.texts["theme_label"])
         self.theme_label.setStyleSheet('QLabel { font-size: 14px; font-weight: bold }')
         self.settings_layout.addRow(self.theme_label)
         for key in themes:
@@ -112,7 +127,7 @@ class AnkiRedesignConfigDialog(QDialog):
             self.settings_layout.addRow(key, self.radio)
         self.settings_layout.addRow(QLabel())
 
-        self.font_label = QLabel("Font:")
+        self.font_label = QLabel(self.texts["font_label"])
         self.font_label.setStyleSheet('QLabel { font-size: 14px; font-weight: bold }')
         self.settings_layout.addRow(self.font_label)
         self.interface_font = QFontComboBox()
@@ -127,7 +142,7 @@ class AnkiRedesignConfigDialog(QDialog):
         self.settings_layout.addRow(self.font_size)
         self.settings_layout.addRow(QLabel())
 
-        self.fix_label = QLabel("Addon-compatibility fixes: ")
+        self.fix_label = QLabel(self.texts["addon_compatibility_fix_label"])
         self.fix_label.setStyleSheet('QLabel { font-size: 14px; font-weight: bold }')
         self.settings_layout.addRow(self.fix_label)
         self.addon_more_overview_stats_check = self.checkbox("addon_more_overview_stats")
@@ -141,10 +156,10 @@ class AnkiRedesignConfigDialog(QDialog):
 
         ## Add tabs
         self.tabs.resize(300,200)
-        self.tabs.addTab(self.tab_settings,"Settings")
-        self.tabs.addTab(self.tab_general,"General")
-        self.tabs.addTab(self.tab_decks,"Decks")
-        self.tabs.addTab(self.tab_browse,"Browse")
+        self.tabs.addTab(self.tab_settings, self.texts["settings_tab"])
+        self.tabs.addTab(self.tab_general, self.texts["general_tab"])
+        self.tabs.addTab(self.tab_decks, self.texts["decks_tab"])
+        self.tabs.addTab(self.tab_browse, self.texts["browse_tab"])
         ## Add tabs to widget
         self.layout.addWidget(self.tabs)
 
@@ -174,17 +189,17 @@ class AnkiRedesignConfigDialog(QDialog):
     def theme_button(self, key: str, custom = False):
         layout = QGridLayout()
         radio = self.radio_button(key)
-        clone_button = QPushButton('Clone')
+        clone_button = QPushButton(self.texts["clone_button"])
         clone_button .setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         clone_button .clicked.connect(lambda _: self.clone_theme(key))
         layout.addWidget(radio, 0, 0)
         if custom:
-            delete_button= QPushButton('Delete')
+            delete_button= QPushButton(self.texts["delete_button"])
             delete_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
             delete_button.clicked.connect(lambda _: self.delete_theme(key))
             layout.addWidget(delete_button, 0, 1)
         else:
-            sync_button = QPushButton('Sync')
+            sync_button = QPushButton(self.texts["sync_button"])
             sync_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
             sync_button.clicked.connect(lambda _: self.sync_theme(key))
             layout.addWidget(sync_button, 0, 1)
@@ -198,11 +213,11 @@ class AnkiRedesignConfigDialog(QDialog):
         logger.debug("Clone: " + key)
         popup = QMessageBox()
         popup.setIcon(QMessageBox.Information)
-        popup.setText(f"Are you sure you want to clone the selected theme: {key}")
-        popup.setWindowTitle(f"Clone theme {key}")
+        popup.setText(self.texts["clone_message"] % key)
+        popup.setWindowTitle(self.texts["clone_window_title"] % key)
         popup.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         if popup.exec() == QMessageBox.Yes:
-            showInfo(_(f"Successfully cloned theme {key}"))
+            showInfo(_(self.texts["clone_success_message"] % key))
             themes = clone_theme(key, themes)
             self.restart()
 
@@ -211,11 +226,11 @@ class AnkiRedesignConfigDialog(QDialog):
         logger.debug("Delete: " + key)
         popup = QMessageBox()
         popup.setIcon(QMessageBox.Information)
-        popup.setText(f"Are you sure you want to delete the selected theme: {key}")
-        popup.setWindowTitle(f"Delete theme {key}")
+        popup.setText(self.texts["delete_message"] % key)
+        popup.setWindowTitle(self.texts["delete_window_title"] % key)
         popup.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         if popup.exec() == QMessageBox.Yes:
-            showInfo(_(f"Successfully deleted theme {key}"))
+            showInfo(_(self.texts["delete_success_message"] % key))
             themes = delete_theme(key, themes)
             self.restart()
 
@@ -224,11 +239,11 @@ class AnkiRedesignConfigDialog(QDialog):
         logger.debug("Sync: " + key)
         popup = QMessageBox()
         popup.setIcon(QMessageBox.Information)
-        popup.setText(f"Are you sure you want to sync the selected theme: {key}")
-        popup.setWindowTitle(f"Sync theme {key}")
+        popup.setText(self.texts["sync_message"] % key)
+        popup.setWindowTitle(self.texts["sync_window_title"] % key)
         popup.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         if popup.exec() == QMessageBox.Yes:
-            showInfo(_(f"Successfully synced system theme {key}.\nClick save to apply the changes on current window."))
+            showInfo(_(self.texts["sync_success_message"] % key))
             themes = sync_theme(key, themes)
             self.restart()
 
@@ -305,17 +320,17 @@ class AnkiRedesignConfigDialog(QDialog):
 
     def make_button_box(self) -> QWidget:
         def advanced():
-            button = QPushButton('Advanced')
+            button = QPushButton(self.texts["advanced_button"])
             button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
             qconnect(button.clicked, self.theme_file_editor)
             return button
         def cancel():
-            button = QPushButton('Cancel')
+            button = QPushButton(self.texts["cancel_button"])
             button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
             qconnect(button.clicked, self.accept)
             return button
         def save():
-            button = QPushButton('Save')
+            button = QPushButton(self.texts["save_button"])
             button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
             button.setDefault(True)
             button.setShortcut("Ctrl+Return")
@@ -355,7 +370,7 @@ class AnkiRedesignConfigDialog(QDialog):
         update_theme()
 
         # ShowInfo for both new and legacy support
-        showInfo(_("Some changes will take effect when you restart Anki."))
+        showInfo(_(self.texts["changes_message"]))
         self.accept()
 
 def check_legacy_colors() -> None:
