@@ -59,10 +59,6 @@ logger.debug(themes)
 themes_parsed = get_theme(theme)
 color_mode = 2 if theme_manager.get_night_mode() else 1 # 1 = light and 2 = dark
 
-from .utils.dark_title_bar import set_dark_titlebar, set_dark_titlebar_qt, dwmapi
-set_dark_titlebar(mw, dwmapi)
-logger.debug(dwmapi)
-
 ### CSS injections
 def load_custom_style():
     # Theme config
@@ -183,8 +179,6 @@ elif attribute_exists(gui_hooks, "top_toolbar_did_init_links"):
 def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name: str, dialog_instance: QWidget) -> None:
     logger.debug(dialog_name)
     dialog: AnkiQt = dialog_manager._dialogs[dialog_name][1]
-    # If dwmapi found and nightmode is enabled, set dark titlebar to dialog window
-    set_dark_titlebar_qt(dialog, dwmapi)
     # AddCards
     if dialog_name == "AddCards":
         context: AddCards = dialog_manager._dialogs[dialog_name][1]
@@ -197,7 +191,6 @@ def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name
     elif dialog_name == "Browser":
         context: Browser = dialog_manager._dialogs[dialog_name][1]
         context.setStyleSheet(open(css_files_dir['QBrowser'], encoding='utf-8').read())
-        pass
     # EditCurrent
     elif dialog_name == "EditCurrent":
         context: EditCurrent = dialog_manager._dialogs[dialog_name][1]
@@ -233,7 +226,6 @@ else:
     def monkey_setup_dialog_gc(obj: Any) -> None:
         obj.finished.connect(lambda: mw.gcWindow(obj))
         logger.debug(obj)
-        set_dark_titlebar_qt(obj, dwmapi)
         # AddCards
         if isinstance(obj, AddCards):
             obj.setStyleSheet(open(css_files_dir['QAddCards'], encoding='utf-8').read())
@@ -254,14 +246,12 @@ else:
     if attribute_exists(gui_hooks, "addons_dialog_will_show"):
         def on_addons_dialog_will_show(dialog: AddonsDialog) -> None:
             logger.debug(dialog)
-            set_dark_titlebar_qt(dialog, dwmapi)
             dialog.setStyleSheet(open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
         gui_hooks.addons_dialog_will_show.append(on_addons_dialog_will_show)
     # Browser
     if attribute_exists(gui_hooks, "browser_will_show"):
         def on_browser_will_show(browser: Browser) -> None:
             logger.debug(browser)
-            set_dark_titlebar_qt(browser, dwmapi)
             browser.setStyleSheet(open(css_files_dir['QBrowser'], encoding='utf-8').read())
         gui_hooks.browser_will_show.append(on_browser_will_show)
 

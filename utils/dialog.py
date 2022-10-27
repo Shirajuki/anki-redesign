@@ -6,7 +6,6 @@ from .translation import get_texts
 from ..config import config, write_config, get_config
 from aqt.utils import showInfo
 from aqt.webview import AnkiWebView
-from .dark_title_bar import set_dark_titlebar_qt, dwmapi
 from .logger import logger
 from aqt.theme import theme_manager, colors
 from ..injections.toolbar import redraw_toolbar, redraw_toolbar_legacy
@@ -38,7 +37,6 @@ class AnkiRedesignThemeEditor(QDialog):
         self.setSizePolicy(self.make_size_policy())
         self.setMinimumSize(420, 420)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
-        set_dark_titlebar_qt(self, dwmapi, fix=False)
         # Root layout
         self.root_layout = QVBoxLayout(self)
         # Main layout
@@ -92,7 +90,6 @@ class AnkiRedesignConfigDialog(QDialog):
         self.setSizePolicy(self.make_size_policy())
         self.setMinimumSize(420, 580)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
-        set_dark_titlebar_qt(self, dwmapi, fix=False)
 
         # Color/theme
         ## Loads theme color

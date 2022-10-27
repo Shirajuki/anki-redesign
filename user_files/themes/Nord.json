@@ -16,7 +16,13 @@
       "Button Background",
       "#D8DEE9",
       "#3B4252",
-      ""
+      "--button-bg"
+    ],
+    "BUTTON_FOCUS_BG": [
+      "Button Focus Background",
+      "#0093d0",
+      "#0093d0",
+      "--button-focus-bg"
     ],
     "CURRENT_DECK": [
       "Selected Deck",
