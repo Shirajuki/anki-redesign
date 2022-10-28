@@ -17,7 +17,7 @@ Note3: If the addon is not updating try open anki while holding shift to turn of
 - 2.1.26
 - 2.1.22
 
-**(Planned) Updates / todos (as of 10.10.2022):**
+**(Planned) Updates / todos (as of 28.10.2022):**
 
 - [x] "Advanced Review Button" add-on compatibility
 - [x] "Full screen" add-on compatibility
@@ -51,6 +51,7 @@ The concept of this add-on was inspired by the following add-on and designs:
 
 **Changelog:**
 
+- 28-10-2022: Adds language translation, fix for Contanki, and some more Catpuccin themes (v0.1.7)
 - 10-10-2022: Adds fix for NDFS compatibility fix and community translation support (v0.1.6)
 - 22-08-2022: Adds refactored theming engine, adding sync, clone and delete of themes more easily, along with some bugfixes. Anki-redesign preferences is also moved to the Tools menubar (v0.1.5)
 - 26-07-2022: Automatic dark/light mode switch on themes is now correctly implemented, hopefully Mac toolbar bug is also fixed (v0.1.4)

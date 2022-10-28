@@ -3,7 +3,7 @@
 	"package": "anki-redesign",
 	"ankiweb_id": "308574457",
 	"author": "Shirajuki",
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"homepage": "https://github.com/shirajuki/anki-redesign",
 	"conflicts": ["308574457", "688199788"],
 	"manifest_version": 2
