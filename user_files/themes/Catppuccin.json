@@ -24,6 +24,18 @@
       "#0093d0",
       "--button-focus-bg"
     ],
+    "CANVAS": [
+      "Window Background",
+      "#fafafa",
+      "#1E1E2E",
+      "--canvas"
+    ],
+    "CANVAS_CODE": [
+      "Frame Background",
+      "white",
+      "#1A1826",
+      "--canvas-code"
+    ],
     "CURRENT_DECK": [
       "Selected Deck",
       "#e7e7e7",
@@ -41,6 +53,30 @@
       "#e7e7e7",
       "#1A1826",
       "--faint-border"
+    ],
+    "FG": [
+      "Text Foreground",
+      "black",
+      "#d9e0ee",
+      "--fg"
+    ],
+    "FG_DISABLED": [
+      "Disabled",
+      "#777",
+      "#C3BAC6",
+      "--fg-disabled"
+    ],
+    "FG_LINK": [
+      "Hyperlink",
+      "#6e9fda",
+      "#89DCEB",
+      "--fg-link"
+    ],
+    "FG_SUBTLE": [
+      "Disabled",
+      "#777",
+      "#C3BAC6",
+      "--fg-subtle"
     ],
     "FLAG1_BG": [
       "Flag1 (Browse Cards List)",

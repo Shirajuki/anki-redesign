@@ -1,7 +1,10 @@
+from .utils import dialog
+from .utils.themes import themes, get_theme
+from .utils.css_files import css_files_dir
 import json
-### Custom util functions
+# Custom util functions
 from .utils.modules import *
-### Logger for debuging
+# Logger for debuging
 from .utils.logger import logger
 
 from typing import Any, Optional
@@ -10,7 +13,7 @@ from PyQt5.QtWidgets import QWidget
 from aqt import AnkiQt, DialogManager, mw
 from aqt.theme import theme_manager
 from aqt import gui_hooks
-## QT dialog windows
+# QT dialog windows
 # Browser import legacy check (2.1.22)
 if module_exists("aqt.browser.browser"):
     from aqt.browser.browser import Browser
@@ -37,29 +40,29 @@ from aqt.editor import Editor
 from aqt.reviewer import Reviewer, ReviewerBottomBar
 from aqt.webview import WebContent
 
-### Load styling injections
+# Load styling injections
 from .injections.toolbar import redraw_toolbar_legacy
 
-### Load config data here
+# Load config data here
 from .config import config, get_config
 
-## Addon compatibility fixes
+# Addon compatibility fixes
 # More Overview Stats 2.1 addon compatibility fix
 addon_more_overview_stats_fix = config['addon_more_overview_stats']
 addon_advanced_review_bottom_bar = config['addon_advanced_review_bottom_bar']
 addon_no_distractions_full_screen = config['addon_no_distractions_full_screen']
 
-## Customization
+# Customization
 theme = config['theme']
 # Init script/file path
-from .utils.css_files import css_files_dir
-from .utils.themes import themes, get_theme
 logger.debug(css_files_dir)
 logger.debug(themes)
 themes_parsed = get_theme(theme)
-color_mode = 2 if theme_manager.get_night_mode() else 1 # 1 = light and 2 = dark
+color_mode = 2 if theme_manager.get_night_mode() else 1  # 1 = light and 2 = dark
 
-### CSS injections
+# CSS injections
+
+
 def load_custom_style():
     # Theme config
     theme_colors_light = ""
@@ -100,6 +103,7 @@ def load_custom_style():
     """ % (theme_colors_light, theme_colors_dark, font, config["font_size"])
     return custom_style
 
+
 def load_custom_style_wrapper():
     custom_style = f"""
     const style = document.createElement("style");
@@ -108,11 +112,13 @@ def load_custom_style_wrapper():
     """
     return custom_style
 
-## Adds styling on the different webview contents, before the content is set
+# Adds styling on the different webview contents, before the content is set
+
+
 def on_webview_will_set_content(web_content: WebContent, context: Optional[Any]) -> None:
-    logger.debug(context) # Logs content being loaded, find out the instance
-    web_content.css.append(css_files_dir['global']) # Global css
-    web_content.head += load_custom_style() # Custom styling
+    logger.debug(context)  # Logs content being loaded, find out the instance
+    web_content.css.append(css_files_dir['global'])  # Global css
+    web_content.head += load_custom_style()  # Custom styling
     # Deckbrowser
     if isinstance(context, DeckBrowser):
         web_content.css.append(css_files_dir['DeckBrowser'])
@@ -163,63 +169,77 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
     # CardLayout
     elif context_name_includes(context, "aqt.clayout.CardLayout"):
         web_content.css.append(css_files_dir['CardLayout'])
-    ## Legacy webviews
+    # Legacy webviews
     # ResetRequired on card edit (legacy)
     elif context_name_includes(context, "aqt.main.ResetRequired"):
         web_content.css.append(css_files_dir['legacy'])
+
+
 gui_hooks.webview_will_set_content.append(on_webview_will_set_content)
 
 if attribute_exists(gui_hooks, "main_window_did_init"):
-    #gui_hooks.main_window_did_init.append(redraw_toolbar)
+    # gui_hooks.main_window_did_init.append(redraw_toolbar)
     pass
 elif attribute_exists(gui_hooks, "top_toolbar_did_init_links"):
     gui_hooks.top_toolbar_did_init_links.append(redraw_toolbar_legacy)
 
 # Dialog window styling
+
+
 def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name: str, dialog_instance: QWidget) -> None:
     logger.debug(dialog_name)
     dialog: AnkiQt = dialog_manager._dialogs[dialog_name][1]
     # AddCards
     if dialog_name == "AddCards":
         context: AddCards = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(open(css_files_dir['QAddCards'], encoding='utf-8').read())
+        context.setStyleSheet(
+            open(css_files_dir['QAddCards'], encoding='utf-8').read())
     # Addons popup
     elif dialog_name == "AddonsDialog":
         context: AddonsDialog = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
+        context.setStyleSheet(
+            open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
     # Browser
     elif dialog_name == "Browser":
         context: Browser = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(open(css_files_dir['QBrowser'], encoding='utf-8').read())
+        context.setStyleSheet(
+            open(css_files_dir['QBrowser'], encoding='utf-8').read())
     # EditCurrent
     elif dialog_name == "EditCurrent":
         context: EditCurrent = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(open(css_files_dir['QEditCurrent'], encoding='utf-8').read())
+        context.setStyleSheet(
+            open(css_files_dir['QEditCurrent'], encoding='utf-8').read())
     # FilteredDeckConfigDialog
     elif module_exists("aqt.filtered_deck") and dialog_name == "FilteredDeckConfigDialog":
         context: FilteredDeckConfigDialog = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(open(css_files_dir['QFilteredDeckConfigDialog'], encoding='utf-8').read())
+        context.setStyleSheet(
+            open(css_files_dir['QFilteredDeckConfigDialog'], encoding='utf-8').read())
     # Statistics / NewDeckStats
     elif dialog_name == "NewDeckStats":
         context: NewDeckStats = dialog_manager._dialogs[dialog_name][1]
         context.form.web.eval(load_custom_style_wrapper())
-        context.setStyleSheet(open(css_files_dir['QNewDeckStats'], encoding='utf-8').read())
+        context.setStyleSheet(
+            open(css_files_dir['QNewDeckStats'], encoding='utf-8').read())
     # About
     elif dialog_name == "About":
         context: ClosableQDialog = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(open(css_files_dir['QAbout'], encoding='utf-8').read())
+        context.setStyleSheet(
+            open(css_files_dir['QAbout'], encoding='utf-8').read())
     # Preferences
     elif dialog_name == "Preferences":
         context: Preferences = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(open(css_files_dir['QPreferences'], encoding='utf-8').read())
+        context.setStyleSheet(
+            open(css_files_dir['QPreferences'], encoding='utf-8').read())
     # sync_log - 这是什么？？？
     elif dialog_name == "sync_log":
         pass
 
+
 if attribute_exists(gui_hooks, "dialog_manager_did_open_dialog"):
-    gui_hooks.dialog_manager_did_open_dialog.append(on_dialog_manager_did_open_dialog)
+    gui_hooks.dialog_manager_did_open_dialog.append(
+        on_dialog_manager_did_open_dialog)
 else:
-    ## Legacy dialog window styling
+    # Legacy dialog window styling
     # Implemented by monkey patching, instead of hooks :c
     # setupDialogGC is being called on almost all dialog windows, utilizing this, the
     # function is used as a type of hook to inject CSS styling on the QT instances
@@ -228,42 +248,59 @@ else:
         logger.debug(obj)
         # AddCards
         if isinstance(obj, AddCards):
-            obj.setStyleSheet(open(css_files_dir['QAddCards'], encoding='utf-8').read())
+            obj.setStyleSheet(
+                open(css_files_dir['QAddCards'], encoding='utf-8').read())
         # EditCurrent
         elif isinstance(obj, EditCurrent):
-            obj.setStyleSheet(open(css_files_dir['QEditCurrent'], encoding='utf-8').read())
+            obj.setStyleSheet(
+                open(css_files_dir['QEditCurrent'], encoding='utf-8').read())
         # Statistics / DeckStats
         elif isinstance(obj, DeckStats):
-            obj.setStyleSheet(open(css_files_dir['QNewDeckStats'], encoding='utf-8').read())
+            obj.setStyleSheet(
+                open(css_files_dir['QNewDeckStats'], encoding='utf-8').read())
         # About
         elif isinstance(obj, ClosableQDialog):
-            obj.setStyleSheet(open(css_files_dir['QAbout'], encoding='utf-8').read())
+            obj.setStyleSheet(
+                open(css_files_dir['QAbout'], encoding='utf-8').read())
         # Preferences
-        ## Haven't found a solution for legacy preferences yet :c
-    mw.setupDialogGC = monkey_setup_dialog_gc # Should be rare enough for other addons to also patch this I hope.
+        # Haven't found a solution for legacy preferences yet :c
+    # Should be rare enough for other addons to also patch this I hope.
+    mw.setupDialogGC = monkey_setup_dialog_gc
 
     # Addons popup
     if attribute_exists(gui_hooks, "addons_dialog_will_show"):
         def on_addons_dialog_will_show(dialog: AddonsDialog) -> None:
             logger.debug(dialog)
-            dialog.setStyleSheet(open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
+            dialog.setStyleSheet(
+                open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
         gui_hooks.addons_dialog_will_show.append(on_addons_dialog_will_show)
     # Browser
     if attribute_exists(gui_hooks, "browser_will_show"):
         def on_browser_will_show(browser: Browser) -> None:
             logger.debug(browser)
-            browser.setStyleSheet(open(css_files_dir['QBrowser'], encoding='utf-8').read())
+            browser.setStyleSheet(
+                open(css_files_dir['QBrowser'], encoding='utf-8').read())
         gui_hooks.browser_will_show.append(on_browser_will_show)
 
+# Test for 2.1.56
+if attribute_exists(gui_hooks, "style_did_init"):
+    logger.debug("helloooo")
+
+    def updateStyle(str):
+        logger.debug("helloooo"+str)
+        return str
+    gui_hooks.style_did_init.append(updateStyle)
+
 # Dialog updates
-from .utils import dialog 
+
 
 def updateTheme(_):
     global theme, themes_parsed, color_mode
     config = get_config()
     theme = config['theme']
     themes_parsed = get_theme(theme)
-    color_mode = 2 if theme_manager.get_night_mode() else 1 # 1 = light and 2 = dark
+    color_mode = 2 if theme_manager.get_night_mode() else 1  # 1 = light and 2 = dark
 
-## Communication through script using rarely used hook (might change to custom hooks in the future)
+
+# Communication through script using rarely used hook (might change to custom hooks in the future)
 gui_hooks.debug_console_will_show.append(updateTheme)
