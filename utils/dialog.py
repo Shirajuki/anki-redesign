@@ -441,13 +441,9 @@ def update_theme() -> None:
     ncolors = {}
     # Legacy color check
     # logger.debug(dir(colors))
-    # for key in dir(colors):
-    #    logger.debug([key, getattr(colors, key, False)])
-    # logger.debug("DONE")
     legacy = check_legacy_colors()
     for color_name in theme_colors:
         c = theme_colors.get(color_name)
-        logger.debug([color_name, c])
         ncolors[color_name] = c[color_mode]
         if legacy:
             colors[f"day{c[3].replace('--','-')}"] = c[light]

@@ -16,7 +16,6 @@ body.nightMode #outer {
 body #outer table#innertable {
   padding: 6px;
   box-sizing: border-box;
-  /* transform: translateY(8); */
 }
 body button {
   margin: 0;
@@ -26,7 +25,8 @@ body .stat {
   padding-top: 0px;
   min-width: 120px;
 }
-body .stat2 {
+body .stat2,
+body #middle td.stat2 {
   padding-top: 0px;
   font-weight: normal;
 }
@@ -38,15 +38,16 @@ td[align="center"] > span {
   position: absolute;
   display: block;
   left: 50%;
+  top: -16px;
   transform: translate(-50%, -10px);
   color: var(--text-fg, var(--legacy-text-fg));
 }
 body .stattxt#time {
-  transform: translate(-50%, -6px);
+  transform: translate(-50%, -8px);
 }
 body #outer button#ansbut,
 body #outer table button {
-  transform: translateY(-4px);
+  transform: translateY(12px);
 }
 /* ARBb addon fix */
 body #outer.arbb .stat {
@@ -59,7 +60,6 @@ body #outer.arbb table#innertable {
   width: calc(100% - 10px);
 }
 body #outer.arbb button {
-  /* color: var(--text-fg, var(--legacy-text-fg)); */
   letter-spacing: 0.02857em;
   text-transform: uppercase;
   margin-left: 2px;

@@ -284,22 +284,18 @@ else:
 
 # Test for 2.1.56
 if attribute_exists(gui_hooks, "style_did_init"):
-    logger.debug("helloooo")
-
     def updateStyle(str):
         logger.debug("helloooo"+str)
         return str
     gui_hooks.style_did_init.append(updateStyle)
 
 # Dialog updates
-
-
 def updateTheme(_):
     global theme, themes_parsed, color_mode
     config = get_config()
     theme = config['theme']
     themes_parsed = get_theme(theme)
-    color_mode = 3 if theme_manager.get_night_mode() else 2  # 1 = light and 2 = dark
+    color_mode = 3 if theme_manager.get_night_mode() else 2  # 2 = light and 3 = dark
 
 
 # Communication through script using rarely used hook (might change to custom hooks in the future)
