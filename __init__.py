@@ -58,7 +58,7 @@ theme = config['theme']
 logger.debug(css_files_dir)
 logger.debug(themes)
 themes_parsed = get_theme(theme)
-color_mode = 2 if theme_manager.get_night_mode() else 1  # 1 = light and 2 = dark
+color_mode = 3 if theme_manager.get_night_mode() else 2  # 2 = light and 3 = dark
 
 # CSS injections
 
@@ -69,9 +69,9 @@ def load_custom_style():
     theme_colors_dark = ""
     for color_name in themes_parsed.get("colors"):
         color = themes_parsed.get("colors").get(color_name)
-        if color[3]:
-            theme_colors_light += f"{color[3]}: {color[1]};\n        "
-            theme_colors_dark += f"{color[3]}: {color[2]};\n        "
+        if color[-1]:
+            theme_colors_light += f"{color[-1]}: {color[2]};\n        "
+            theme_colors_dark += f"{color[-1]}: {color[3]};\n        "
         else:
             theme_colors_light += f"--{color_name.lower().replace('_','-')}: {color[color_mode]};\n        "
             theme_colors_dark += f"--{color_name.lower().replace('_','-')}: {color[color_mode]};\n        "
@@ -299,7 +299,7 @@ def updateTheme(_):
     config = get_config()
     theme = config['theme']
     themes_parsed = get_theme(theme)
-    color_mode = 2 if theme_manager.get_night_mode() else 1  # 1 = light and 2 = dark
+    color_mode = 3 if theme_manager.get_night_mode() else 2  # 1 = light and 2 = dark
 
 
 # Communication through script using rarely used hook (might change to custom hooks in the future)

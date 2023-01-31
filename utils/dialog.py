@@ -19,7 +19,7 @@ anki_version = tuple(int(segment) for segment in appVersion.split("."))
 
 theme = config['theme']
 themes_parsed = get_theme(theme)
-color_mode = 2 if theme_manager.get_night_mode() else 1  # 1 = light and 2 = dark
+color_mode = 3 if theme_manager.get_night_mode() else 2  # 1 = light and 2 = dark
 
 
 def get_anki_lang():
@@ -101,13 +101,13 @@ class AnkiRedesignConfigDialog(QDialog):
         # Loads theme color
         self.theme_colors = themes_parsed.get("colors")
         self.updates = []
-        self.theme_general = ["TEXT_FG", "WINDOW_BG", "FRAME_BG", "BUTTON_BG", "BUTTON_FOCUS_BG", "TOOLTIP_BG", "BORDER",
-                              "MEDIUM_BORDER", "FAINT_BORDER", "HIGHLIGHT_BG", "HIGHLIGHT_FG", "LINK", "DISABLED", "SLIGHTLY_GREY_TEXT", "FOCUS_SHADOW"]
-        self.theme_decks = ["CURRENT_DECK", "NEW_COUNT",
-                            "LEARN_COUNT", "REVIEW_COUNT", "ZERO_COUNT"]
-        self.theme_browse = ["BURIED_FG", "SUSPENDED_FG", "MARKED_BG", "FLAG1_BG", "FLAG1_FG", "FLAG2_BG", "FLAG2_FG",
-                             "FLAG3_BG", "FLAG3_FG", "FLAG4_BG", "FLAG4_FG", "FLAG5_BG", "FLAG5_FG", "FLAG6_BG", "FLAG6_FG", "FLAG7_BG", "FLAG7_FG"]
-        self.theme_extra = []
+        # self.theme_general = ["TEXT_FG", "WINDOW_BG", "FRAME_BG", "BUTTON_BG", "BUTTON_FOCUS_BG", "TOOLTIP_BG", "BORDER", "MEDIUM_BORDER", "FAINT_BORDER", "HIGHLIGHT_BG", "HIGHLIGHT_FG", "LINK", "DISABLED", "SLIGHTLY_GREY_TEXT", "FOCUS_SHADOW"]
+        # self.theme_decks = ["CURRENT_DECK", "NEW_COUNT", "LEARN_COUNT", "REVIEW_COUNT", "ZERO_COUNT"]
+        # self.theme_browse = ["BURIED_FG", "SUSPENDED_FG", "MARKED_BG", "FLAG1_BG", "FLAG1_FG", "FLAG2_BG", "FLAG2_FG", "FLAG3_BG", "FLAG3_FG", "FLAG4_BG", "FLAG4_FG", "FLAG5_BG", "FLAG5_FG", "FLAG6_BG", "FLAG6_FG", "FLAG7_BG", "FLAG7_FG"]
+        self.theme_general = ['FG', 'FG_DISABLED', 'FG_FAINT', 'FG_LINK', 'FG_SUBTLE'] + ['CANVAS', 'CANVAS_CODE', 'CANVAS_ELEVATED', 'CANVAS_INSET', 'CANVAS_OVERLAY']
+        self.theme_decks = ['BORDER', 'BORDER_FOCUS', 'BORDER_STRONG', 'BORDER_SUBTLE'] + ['BUTTON_BG', 'BUTTON_DISABLED', 'BUTTON_GRADIENT_END', 'BUTTON_GRADIENT_START', 'BUTTON_HOVER_BORDER', 'BUTTON_PRIMARY_BG', 'BUTTON_PRIMARY_DISABLED', 'BUTTON_PRIMARY_GRADIENT_END', 'BUTTON_PRIMARY_GRADIENT_START']
+        self.theme_browse = ['ACCENT_CARD', 'ACCENT_DANGER', 'ACCENT_NOTE'] + ['STATE_BURIED', 'STATE_LEARN', 'STATE_MARKED', 'STATE_NEW', 'STATE_REVIEW', 'STATE_SUSPENDED'] + ['FLAG_1', 'FLAG_2', 'FLAG_3', 'FLAG_4', 'FLAG_5', 'FLAG_6', 'FLAG_7']
+        self.theme_extra = ['SCROLLBAR_BG', 'SCROLLBAR_BG_ACTIVE', 'SCROLLBAR_BG_HOVER'] + ['HIGHLIGHT_BG', 'HIGHLIGHT_FG'] + ['SELECTED_BG', 'SELECTED_FG'] + ['SHADOW', 'SHADOW_FOCUS', 'SHADOW_INSET', 'SHADOW_SUBTLE']
 
         # Root layout
         self.root_layout = QVBoxLayout(self)
@@ -125,6 +125,9 @@ class AnkiRedesignConfigDialog(QDialog):
         self.tab_browse = QWidget(objectName="browse")
         self.tab_browse.setLayout(
             self.create_color_picker_layout(self.theme_browse))
+        self.tab_extra = QWidget(objectName="extra")
+        self.tab_extra.setLayout(
+            self.create_color_picker_layout(self.theme_extra))
 
         self.tab_settings = QWidget(objectName="settings")
         self.settings_layout = QFormLayout()
@@ -178,6 +181,7 @@ class AnkiRedesignConfigDialog(QDialog):
         self.tabs.addTab(self.tab_general, self.texts["general_tab"])
         self.tabs.addTab(self.tab_decks, self.texts["decks_tab"])
         self.tabs.addTab(self.tab_browse, self.texts["browse_tab"])
+        self.tabs.addTab(self.tab_extra, "Extra")
         # Add tabs to widget
         self.layout.addWidget(self.tabs)
 
@@ -393,7 +397,7 @@ class AnkiRedesignConfigDialog(QDialog):
         config = get_config()
 
         # Write and update theme
-        color_mode = 2 if theme_manager.get_night_mode() else 1  # 1 = light and 2 = dark
+        color_mode = 3 if theme_manager.get_night_mode() else 2  # 2 = light and 3 = dark
         themes_parsed["colors"] = self.theme_colors
         write_theme(themes[theme], themes_parsed)
         update_theme()
@@ -438,25 +442,30 @@ def refresh_all_windows() -> None:
 def update_theme() -> None:
     themes_parsed = get_theme(theme)
     theme_colors = themes_parsed.get("colors")
-    color_mode = 2 if theme_manager.get_night_mode() else 1  # 1 = light and 2 = dark
+    light = 2
+    dark = 3
+    color_mode = dark if theme_manager.get_night_mode() else light
     # Apply theme on colors
     ncolors = {}
     # Legacy color check
-    logger.debug(dir(colors))
+    # logger.debug(dir(colors))
+    # for key in dir(colors):
+    #    logger.debug([key, getattr(colors, key, False)])
+    # logger.debug("DONE")
     legacy = check_legacy_colors()
     for color_name in theme_colors:
         c = theme_colors.get(color_name)
         logger.debug([color_name, c])
         ncolors[color_name] = c[color_mode]
         if legacy:
-            colors[f"day{c[3].replace('--','-')}"] = c[1]
-            colors[f"night{c[3].replace('--','-')}"] = c[2]
+            colors[f"day{c[3].replace('--','-')}"] = c[light]
+            colors[f"night{c[3].replace('--','-')}"] = c[dark]
         else:
             if getattr(colors, color_name, False):
                 if anki_version >= (2, 1, 56):
-                    setattr(colors, color_name, {"light": c[1], "dark": c[2]})
+                    setattr(colors, color_name, {"light": c[light], "dark": c[dark]})
                 else:
-                    setattr(colors, color_name, (c[1], c[2]))
+                    setattr(colors, color_name, (c[light], c[dark]))
     # Apply theme on palette
     apply_theme(ncolors)
     gui_hooks.debug_console_will_show(mw)
@@ -578,7 +587,7 @@ if not hasattr(mw, 'anki_redesign'):
 
 def on_theme_did_change() -> None:
     global color_mode
-    color_mode = 2 if theme_manager.get_night_mode() else 1  # 1 = light and 2 = dark
+    color_mode = 3 if theme_manager.get_night_mode() else 2  # 2 = light and 3 = dark
     logger.debug("Theme changed")
     mw.reset()
     update_theme()

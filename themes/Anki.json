@@ -1,223 +1,589 @@
 {
   "colors": {
+    "ACCENT_CARD": [
+      "Accent Card",
+      "Accent color for cards",
+      "#60a5fa",
+      "#93c5fd",
+      "--accent-card"
+    ],
+    "ACCENT_DANGER": [
+      "Accent Danger",
+      "Saturated accent color to grab attention",
+      "#ef4444",
+      "#f87171",
+      "--accent-danger"
+    ],
+    "ACCENT_NOTE": [
+      "Accent Note",
+      "Accent color for notes",
+      "#22c55e",
+      "#4ade80",
+      "--accent-note"
+    ],
     "BORDER": [
       "Border",
-      "#aaa",
-      "#777",
+      "Border color with medium contrast against window background",
+      "#c4c4c4",
+      "#202020",
       "--border"
+    ],
+    "BORDER_FOCUS": [
+      "Border Focus",
+      "Border color of focused input elements",
+      "#3b82f6",
+      "#3b82f6",
+      "--border-focus"
+    ],
+    "BORDER_STRONG": [
+      "Border Strong",
+      "Border color with high contrast against window background",
+      "#858585",
+      "#020202",
+      "--border-strong"
+    ],
+    "BORDER_SUBTLE": [
+      "Border Subtle",
+      "Border color with low contrast against window background",
+      "#e4e4e4",
+      "#252525",
+      "--border-subtle"
     ],
     "BURIED_FG": [
       "Buried Foreground",
+      "",
       "#aaaa33",
       "#777733",
       "--buried-fg"
     ],
     "BUTTON_BG": [
       "Button Background",
-      "#eff0f1",
-      "#454545",
+      "Background color of buttons",
+      "#fcfcfc",
+      "#404040",
       "--button-bg"
+    ],
+    "BUTTON_DISABLED": [
+      "Button Disabled",
+      "Background color of disabled button",
+      "rgba(214, 214, 214, 0.5)",
+      "dark': 'rgba(69, 69, 69, 0.5)",
+      "--button-disabled"
+    ],
+    "BUTTON_FOCUS_BG": [
+      "Button Focus Background",
+      "",
+      "#0093d0",
+      "#0093d0",
+      "--button-focus-bg"
+    ],
+    "BUTTON_GRADIENT_END": [
+      "Button Gradient End",
+      "End value of default button gradient",
+      "#fcfcfc",
+      "#404040",
+      "--button-grandient-end"
+    ],
+    "BUTTON_GRADIENT_START": [
+      "Button Gradient Start",
+      "Start value of default button gradient",
+      "white",
+      "#4a4a4a",
+      "--button-gradient-start"
+    ],
+    "BUTTON_HOVER_BORDER": [
+      "Button Hover Border",
+      "Border color of default button in hover state",
+      "#999999",
+      "#141414",
+      "--button-hover-border"
+    ],
+    "BUTTON_PRIMARY_BG": [
+      "Button Primary Background",
+      "Background color of primary button",
+      "#306bec",
+      "#2652cf",
+      "--button-primary-bg"
+    ],
+    "BUTTON_PRIMARY_DISABLED": [
+      "Button Primary Disabled",
+      "Background color of primary button in disabled state",
+      "#93c5fd",
+      "#4484ed",
+      "--button-primary-disabled"
+    ],
+    "BUTTON_PRIMARY_GRADIENT_END": [
+      "Button Primary Gradient End",
+      "End value of primary button gradient",
+      "#306bec",
+      "#2652cf",
+      "--button-primary-gradient-end"
+    ],
+    "BUTTON_PRIMARY_GRADIENT_START": [
+      "Button Primary Gradient Start",
+      "Start value of primary button gradient",
+      "#3b82f6",
+      "#2f67e1",
+      "--button-primary-gradient-start"
+    ],
+    "CANVAS": [
+      "Canvas",
+      "Window background",
+      "#f5f5f5",
+      "#2c2c2c",
+      "--canvas"
+    ],
+    "CANVAS_CODE": [
+      "Canvas code",
+      "Background of code editors",
+      "white",
+      "#252525",
+      "--canvas-code"
+    ],
+    "CANVAS_ELEVATED": [
+      "Canvas Elevated",
+      "Background of containers",
+      "white",
+      "#363636",
+      "--canvas-elevated"
+    ],
+    "CANVAS_INSET": [
+      "Canvas Inset",
+      "Background of inputs inside containers",
+      "white",
+      "#2c2c2c",
+      "--canvas-inset"
+    ],
+    "CANVAS_OVERLAY": [
+      "Canvas Overlay",
+      "Background of floating elements (menus, tooltips)",
+      "#fcfcfc",
+      "#2c2c2c",
+      "--canvas-overlay"
     ],
     "CURRENT_DECK": [
       "Selected Deck",
+      "",
       "#e7e7e7",
       "#29292b",
       "--current-deck"
     ],
     "DISABLED": [
       "Disabled",
+      "",
       "#777",
       "#777",
       "--disabled"
     ],
     "FAINT_BORDER": [
       "Faint Border",
+      "",
       "#e7e7e7",
       "#29292b",
       "--faint-border"
     ],
+    "FG": [
+      "Foreground",
+      "Default text/icon color",
+      "#020202",
+      "#fcfcfc",
+      "--fg"
+    ],
+    "FG_DISABLED": [
+      "Foreground Disabled",
+      "Foreground color of disabled UI elements",
+      "#858585",
+      "#737373",
+      "--fg-disabled"
+    ],
+    "FG_FAINT": [
+      "Foreground Faint",
+      "Foreground color that barely stands out against canvas",
+      "#afafaf",
+      "#545454",
+      "--fg-faint"
+    ],
+    "FG_LINK": [
+      "Foreground Link",
+      "Hyperlink foreground color",
+      "#1d4ed8",
+      "#bfdbfe",
+      "--fg-link"
+    ],
+    "FG_SUBTLE": [
+      "Foreground Subtle",
+      "Placeholder text, icons in idle state",
+      "#737373",
+      "#858585",
+      "--fg-subtle"
+    ],
     "FLAG1_BG": [
       "Flag1 (Browse Cards List)",
+      "",
       "#ff9b9b",
       "#aa5555",
       "--flag1-bg"
     ],
     "FLAG1_FG": [
       "Flag1 (Browse Sidebar)",
+      "",
       "#e25252",
       "#ff7b7b",
       "--flag1-fg"
     ],
     "FLAG2_BG": [
       "Flag2 (Browse Cards List)",
+      "",
       "#ffb347",
       "#ac653a",
       "--flag2-bg"
     ],
     "FLAG2_FG": [
       "Flag2 (Browse Sidebar)",
+      "",
       "#ffb347",
       "#f5aa41",
       "--flag2-fg"
     ],
     "FLAG3_BG": [
       "Flag3 (Browse Cards List)",
+      "",
       "#93e066",
       "#559238",
       "--flag3-bg"
     ],
     "FLAG3_FG": [
       "Flag3 (Browse Sidebar)",
+      "",
       "#54c414",
       "#86ce5d",
       "--flag3-fg"
     ],
     "FLAG4_BG": [
       "Flag4 (Browse Cards List)",
+      "",
       "#9dbcff",
       "#506aa3",
       "--flag4-bg"
     ],
     "FLAG4_FG": [
       "Flag4 (Browse Sidebar)",
+      "",
       "#578cff",
       "#6f9dff",
       "--flag4-fg"
     ],
     "FLAG5_BG": [
       "Flag5 (Browse Cards List)",
+      "",
       "#f5a8eb",
       "#975d8f",
       "--flag5-bg"
     ],
     "FLAG5_FG": [
       "Flag5 (Browse Sidebar)",
+      "",
       "#ff82ee",
       "#f097e4",
       "--flag5-fg"
     ],
     "FLAG6_BG": [
       "Flag6 (Browse Cards List)",
+      "",
       "#7edbd7",
       "#399185",
       "--flag6-bg"
     ],
     "FLAG6_FG": [
       "Flag6 (Browse Sidebar)",
+      "",
       "#00d1b5",
       "#5ccfca",
       "--flag6-fg"
     ],
     "FLAG7_BG": [
       "Flag7 (Browse Cards List)",
+      "",
       "#cca3f1",
       "#624b77",
       "--flag7-bg"
     ],
     "FLAG7_FG": [
       "Flag7 (Browse Sidebar)",
+      "",
       "#9649dd",
       "#9f63d3",
       "--flag7-fg"
     ],
+    "FLAG_1": [
+      "Flag 1 (red)",
+      "",
+      "#ef4444",
+      "#f87171",
+      "--flag-1"
+    ],
+    "FLAG_2": [
+      "Flag 2 (orange)",
+      "",
+      "#fb923c",
+      "#fdba74",
+      "--flag-2"
+    ],
+    "FLAG_3": [
+      "Flag 3 (green)",
+      "",
+      "#4ade80",
+      "#86efac",
+      "--flag-3"
+    ],
+    "FLAG_4": [
+      "Flag 4 (blue)",
+      "",
+      "#3b82f6",
+      "#60a5fa",
+      "--flag-4"
+    ],
+    "FLAG_5": [
+      "Flag 5 (pink)",
+      "",
+      "#e879f9",
+      "#f0abfc",
+      "--flag-5"
+    ],
+    "FLAG_6": [
+      "Flag 6 (turquoise)",
+      "",
+      "#2dd4bf",
+      "#5eead4",
+      "--flag-6"
+    ],
+    "FLAG_7": [
+      "Flag 7 (purple)",
+      "",
+      "#a855f7",
+      "#c084fc",
+      "--flag-7"
+    ],
     "FOCUS_SHADOW": [
       "Focus Shadow",
+      "",
       "#ff93d0",
       "#0093d0",
       "--focus-shadow-color"
     ],
     "FRAME_BG": [
       "Frame Background",
+      "",
       "white",
       "#3a3a3a",
       "--frame-bg"
     ],
     "HIGHLIGHT_BG": [
       "Highlighted Background",
-      "#77ccff",
-      "#77ccff",
+      "Background color of highlighted items",
+      "rgba(37, 99, 235, 0.5)",
+      "rgba(147, 197, 253, 0.5)",
       "--highlight-bg"
     ],
     "HIGHLIGHT_FG": [
       "Highlighted Text",
+      "Foreground color of highlighted items",
       "black",
       "white",
       "--highlight-fg"
     ],
     "LEARN_COUNT": [
       "Learn Count",
+      "",
       "#c35617",
       "#ff935b",
       "--learn-count"
     ],
     "LINK": [
       "Hyperlink",
+      "",
       "#00a",
       "#77ccff",
       "--link"
     ],
     "MARKED_BG": [
       "Marked Background",
+      "",
       "#cce",
       "#77c",
       "--marked-bg"
     ],
     "MEDIUM_BORDER": [
       "Medium Border",
+      "",
       "#b6b6b6",
       "#444",
       "--medium-border"
     ],
     "NEW_COUNT": [
       "New Count",
+      "",
       "#00a",
       "#77ccff",
       "--new-count"
     ],
     "REVIEW_COUNT": [
       "Review Count",
+      "",
       "#0a0",
       "#5ccc00",
       "--review-count"
     ],
+    "SCROLLBAR_BG": [
+      "Scrollbar Background",
+      "Background of scrollbar in idle state (Win/Lin only)",
+      "#d6d6d6",
+      "#454545",
+      "--scrollbar-bg"
+    ],
+    "SCROLLBAR_BG_ACTIVE": [
+      "Scrollbar Background Active",
+      "Background of scrollbar in pressed state (Win/Lin only)",
+      "#afafaf",
+      "#636363",
+      "--scrollbar-bg-active"
+    ],
+    "SCROLLBAR_BG_HOVER": [
+      "Scrollbar Background Hover",
+      "Background of scrollbar in hover state (Win/Lin only)",
+      "#c4c4c4",
+      "#545454",
+      "--scrollbar-bg-hover"
+    ],
+    "SELECTED_BG": [
+      "Selected Background",
+      "Background color of selected text",
+      "rgba(214, 214, 214, 0.5)",
+      "rgba(147, 197, 253, 0.5)",
+      "--selected-bg"
+    ],
+    "SELECTED_FG": [
+      "Selected Foreground",
+      "Foreground color of selected text",
+      "black",
+      "white",
+      "--selected-fg"
+    ],
+    "SHADOW": [
+      "Shadow",
+      "Default box-shadow color",
+      "#c4c4c4",
+      "#141414",
+      "--shadow"
+    ],
+    "SHADOW_FOCUS": [
+      "Shadow Focus",
+      "Box-shadow color for elements in focused state",
+      "#6366f1",
+      "#6366f1",
+      "--shadow-focus"
+    ],
+    "SHADOW_INSET": [
+      "Shadow Inset",
+      "Inset box-shadow color",
+      "#454545",
+      "#202020",
+      "--shadow-inset"
+    ],
+    "SHADOW_SUBTLE": [
+      "Shadow Subtle",
+      "Box-shadow color with lower contrast against window background",
+      "#737373",
+      "#363636",
+      "--shadow-subtle"
+    ],
     "SLIGHTLY_GREY_TEXT": [
       "Switch Text",
+      "",
       "#333",
       "#ccc",
       "--slightly-grey-text"
     ],
+    "STATE_BURIED": [
+      "State Buried",
+      "Accent color for buried cards",
+      "#f59e0b",
+      "#92400e",
+      "--state-buried"
+    ],
+    "STATE_LEARN": [
+      "State Learn",
+      "Accent color for cards in learning state",
+      "#dc2626",
+      "#f87171",
+      "--state-learn"
+    ],
+    "STATE_MARKED": [
+      "State Marked",
+      "Accent color for marked cards",
+      "#6366f1",
+      "#a855f7",
+      "--state-marked"
+    ],
+    "STATE_NEW": [
+      "State New",
+      "Accent color for new cards",
+      "#3b82f6",
+      "#93c5fd",
+      "--state-new"
+    ],
+    "STATE_REVIEW": [
+      "State Review",
+      "Accent color for cards in review state",
+      "#16a34a",
+      "#22c55e",
+      "--state-review"
+    ],
+    "STATE_SUSPENDED": [
+      "State Suspended",
+      "Accent color for suspended cards",
+      "#facc15",
+      "#fef9c3",
+      "--state-suspended"
+    ],
     "SUSPENDED_BG": [
       "Suspended Background",
+      "",
       "#ffffb2",
       "#aaaa33",
       "--suspended-bg"
     ],
     "SUSPENDED_FG": [
       "Suspended Foreground",
+      "",
       "#dd0",
       "#ffffb2",
       "--suspended-fg"
     ],
     "TEXT_FG": [
       "Text Foreground",
+      "",
       "black",
       "white",
       "--text-fg"
     ],
     "TOOLTIP_BG": [
       "Tooltip Background",
+      "",
       "#fcfcfc",
       "#272727",
       "--tooltip-bg"
     ],
     "WINDOW_BG": [
       "Window Background",
+      "",
       "#fafafa",
       "#2f2f31",
       "--window-bg"
     ],
     "ZERO_COUNT": [
       "Zero Count",
+      "",
       "#ddd",
       "#444",
       "--zero-count"
