@@ -11,21 +11,20 @@ Note3: If the addon is not updating try open anki while holding shift to turn of
 
 **Manually tested on the following Anki versions:**
 
+- 2.1.56
 - 2.1.54
 - 2.1.50
 - 2.1.49
 - 2.1.26
 - 2.1.22
 
-**(Planned) Updates / todos (as of 28.10.2022):**
+**(Planned) Updates / todos (as of 01.01.2023):**
 
-- [x] "Advanced Review Button" add-on compatibility
-- [x] "Full screen" add-on compatibility
-- [x] Fix correct color switches on theming
-- [x] Add configuration for better ease in adding/resetting custom themes as well as have them persisted after updates
-- [x] Add translation support so that the community can help with the translation
+- [ ] Recheck "Advanced Review Button" add-on compatibility
+- [ ] Recheck "Full screen" add-on compatibility
+- [ ] Re-add windows dark titlebar
 - [ ] Add a public theme sharing site where users can upload their themes and possibly have them preinstalled alongside the add-on
-- [ ] Add styling support for Anki 2.1.55
+- [ ] Add styling support and fix themes for Anki 2.1.57
 
 <br/>
 <div><img src="./screenshots/ui-half.png"></div>
@@ -51,6 +50,7 @@ The concept of this add-on was inspired by the following add-on and designs:
 
 **Changelog:**
 
+- 01-01-2023: Anki 2.1.56 is now compatible, some themes are however still not correctly styled as it should (v0.1.8)
 - 28-10-2022: Adds language translation, fix for Contanki, and some more Catpuccin themes (v0.1.7)
 - 10-10-2022: Adds fix for NDFS compatibility fix and community translation support (v0.1.6)
 - 22-08-2022: Adds refactored theming engine, adding sync, clone and delete of themes more easily, along with some bugfixes. Anki-redesign preferences is also moved to the Tools menubar (v0.1.5)
