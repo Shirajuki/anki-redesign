@@ -415,8 +415,7 @@ def refresh_all_windows() -> None:
     # Redraw top toolbar
     mw.toolbar.draw()
     if attribute_exists(gui_hooks, "top_toolbar_did_init_links"):
-        gui_hooks.top_toolbar_did_init_links.append(lambda a, b: [redraw_toolbar_legacy(
-            a, b), gui_hooks.top_toolbar_did_init_links.remove(print)])
+        gui_hooks.top_toolbar_did_init_links.append(lambda a, b: [redraw_toolbar_legacy(a, b), gui_hooks.top_toolbar_did_init_links.remove(print)])
 
     # Redraw main body
     if mw.state == "review":
@@ -485,35 +484,35 @@ def apply_theme(colors) -> None:
         palette.setColor(QPalette.ColorRole.ButtonText, text)
 
         hlbg = QColor(colors["HIGHLIGHT_BG"])
-        palette.setColor(
-            QPalette.ColorRole.HighlightedText, QColor(colors["HIGHLIGHT_FG"])
-        )
+        palette.setColor(QPalette.ColorRole.HighlightedText, QColor(colors["HIGHLIGHT_FG"]))
         palette.setColor(QPalette.ColorRole.Highlight, hlbg)
 
         canvas = QColor(colors["CANVAS"])
         palette.setColor(QPalette.ColorRole.Window, canvas)
         palette.setColor(QPalette.ColorRole.AlternateBase, canvas)
 
-        palette.setColor(QPalette.ColorRole.Button,
-                         QColor(colors["BUTTON_BG"]))
+        palette.setColor(QPalette.ColorRole.Button, QColor(colors["BUTTON_BG"]))
 
         input_base = QColor(colors["CANVAS_CODE"])
         palette.setColor(QPalette.ColorRole.Base, input_base)
         palette.setColor(QPalette.ColorRole.ToolTipBase, input_base)
 
-        palette.setColor(QPalette.ColorRole.PlaceholderText,
-                         QColor(colors["FG_SUBTLE"]))
+        palette.setColor(QPalette.ColorRole.PlaceholderText, QColor(colors["FG_SUBTLE"]))
 
         disabled_color = QColor(colors["FG_DISABLED"])
-        palette.setColor(QPalette.ColorGroup.Disabled,
-                         QPalette.ColorRole.Text, disabled_color)
-        palette.setColor(QPalette.ColorGroup.Disabled,
-                         QPalette.ColorRole.ButtonText, disabled_color)
-        palette.setColor(QPalette.ColorGroup.Disabled,
-                         QPalette.ColorRole.HighlightedText, disabled_color)
+        palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.Text, disabled_color)
+        palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.ButtonText, disabled_color)
+        palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.HighlightedText, disabled_color)
         palette.setColor(QPalette.ColorRole.Link, QColor(colors["FG_LINK"]))
         palette.setColor(QPalette.ColorRole.BrightText, Qt.GlobalColor.red)
+
+        # Update webview background
+        AnkiWebView._getWindowColor = lambda *args: QColor(colors["CANVAS"])
+        AnkiWebView.get_window_bg_color = lambda *args: QColor(colors["CANVAS"])
+
+        theme_manager._apply_palette(mw.app)  # Update palette theme_manager
         mw.app.setPalette(palette)  # Overwrite palette
+        theme_manager._apply_style(mw.app)  # Update stylesheet theme_manager
     else:
         # QT mappings
         color_map = {
@@ -540,17 +539,13 @@ def apply_theme(colors) -> None:
 
         disabled_color = QColor(colors["DISABLED"])
         palette.setColor(QPalette.ColorRole.PlaceholderText, disabled_color)
-        palette.setColor(QPalette.ColorGroup.Disabled,
-                         QPalette.ColorRole.Text, disabled_color)
-        palette.setColor(QPalette.ColorGroup.Disabled,
-                         QPalette.ColorRole.ButtonText, disabled_color)
-        palette.setColor(QPalette.ColorGroup.Disabled,
-                         QPalette.ColorRole.HighlightedText, disabled_color)
+        palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.Text, disabled_color)
+        palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.ButtonText, disabled_color)
+        palette.setColor(QPalette.ColorGroup.Disabled, QPalette.ColorRole.HighlightedText, disabled_color)
 
         # Update webview background
         AnkiWebView._getWindowColor = lambda *args: QColor(colors["WINDOW_BG"])
-        AnkiWebView.get_window_bg_color = lambda *args: QColor(
-            colors["WINDOW_BG"])
+        AnkiWebView.get_window_bg_color = lambda *args: QColor(colors["WINDOW_BG"])
 
         theme_manager._apply_palette(mw.app)  # Update palette theme_manager
         mw.app.setPalette(palette)  # Overwrite palette
@@ -569,8 +564,7 @@ def create_menu_action(parent: QWidget, dialog_class: QDialog, dialog_name: str)
 
 # Load in the Anki-redesign menu
 if not hasattr(mw, 'anki_redesign'):
-    mw.form.menuTools.addAction(create_menu_action(
-        mw, AnkiRedesignConfigDialog, "&Anki-redesign"))
+    mw.form.menuTools.addAction(create_menu_action(mw, AnkiRedesignConfigDialog, "&Anki-redesign"))
     # Update and apply theme
     mw.reset()
     update_theme()
