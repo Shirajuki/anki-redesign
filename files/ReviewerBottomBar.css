@@ -16,6 +16,7 @@ body.nightMode #outer {
 body #outer table#innertable {
   padding: 6px;
   box-sizing: border-box;
+  transform: translateY(-14px);
 }
 body button {
   margin: 0;
@@ -24,6 +25,7 @@ body .stat {
   position: relative;
   padding-top: 0px;
   min-width: 120px;
+
 }
 body .stat2,
 body #middle td.stat2 {
@@ -38,10 +40,11 @@ td[align="center"] > span {
   position: absolute;
   display: block;
   left: 50%;
-  top: -16px;
+  top: 18px;
   transform: translate(-50%, -10px);
   color: var(--text-fg, var(--legacy-text-fg));
 }
+
 body .stattxt#time {
   transform: translate(-50%, -8px);
 }
@@ -65,6 +68,16 @@ body #outer.arbb button {
   margin-left: 2px;
   margin-right: 2px;
 }
+
+/* 2.1.56 fix */
+body #outer .new-qt6 #middle td.stat2 .stattxt,
+body #outer .new-qt6 .stattxt#time {
+  top: -16px;
+}
+body #outer table#innertable.new-qt6 {
+  transform: translateY(0);
+}
+
 /* NDFS addon fix */
 body #outer.ndfs {
   background: var(--frame-bg, var(--legacy-frame-bg)) !important;

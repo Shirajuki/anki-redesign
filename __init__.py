@@ -10,7 +10,7 @@ from .utils.logger import logger
 from typing import Any, Optional
 from PyQt5.QtWidgets import QWidget
 # import the main window object (mw) from aqt
-from aqt import AnkiQt, DialogManager, mw
+from aqt import AnkiQt, DialogManager, mw, appVersion
 from aqt.theme import theme_manager
 from aqt import gui_hooks
 # QT dialog windows
@@ -45,6 +45,8 @@ from .injections.toolbar import redraw_toolbar_legacy
 
 # Load config data here
 from .config import config, get_config
+
+anki_version = tuple(int(segment) for segment in appVersion.split("."))
 
 # Addon compatibility fixes
 # More Overview Stats 2.1 addon compatibility fix
@@ -142,18 +144,21 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
         if addon_no_distractions_full_screen:
             web_content.body += """
             <script>
-                const timeout = 10, time = 0;
-                let check;
-                check = setInterval(() => {
-                    const outer = document.getElementById('outer');
-                    const iframe = document.querySelector("#bottomiFrame")?.contentDocument?.getElementById('outer');
-                    if (outer && iframe) {
-                        outer.classList.add('ndfs');
-                        iframe.classList.add('ndfs')
-                    }
-                    time++;
-                    if (time >= 10) clearInterval(check);
-                },1000)
+                (() => {
+                    const timeout = 10, time = 0;
+                    let check;
+                    check = setInterval(() => {
+                        const outer = document.getElementById('outer');
+                        const iframe = document.querySelector("#bottomiFrame")?.contentDocument?.getElementById('outer');
+                        if (outer && iframe) {
+                            outer.classList.add('ndfs');
+                            iframe.classList.add('ndfs')
+                            time += 10;
+                        }
+                        time++;
+                        if (time >= 10) clearInterval(check);
+                    },1000)
+                })()
             </script>
             """
     elif isinstance(context, ReviewerBottomBar):
@@ -165,6 +170,24 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
         # Button padding bottom
         web_content.body += "<div style='height: 14px; opacity: 0; pointer-events: none;'></div>"
         web_content.body += "<div id='padFix' style='height: 30px; opacity: 0; pointer-events: none;'><script>const e = document.getElementById('padFix');e.parentElement.removeChild(e);</script></div>"
+        if anki_version >= (2, 1, 56):
+            web_content.body += """
+            <script>
+                (() => {
+                    const timeout = 10, time = 0;
+                    let check;
+                    check = setInterval(() => {
+                        const table = document.getElementById('innertable');
+                        if (table) {
+                            table.classList.add('new-qt6');
+                            time += 10;
+                        }
+                        time++;
+                        if (time >= 10) clearInterval(check);
+                    },1000)
+                })()
+            </script>
+            """
         mw.bottomWeb.adjustHeightToFit()
     # CardLayout
     elif context_name_includes(context, "aqt.clayout.CardLayout"):
