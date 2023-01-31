@@ -302,6 +302,7 @@ class AnkiRedesignConfigDialog(QDialog):
         button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         button.setFixedWidth(25)
         button.setFixedHeight(25)
+        button.setToolTip(self.theme_colors.get(key)[1])
 
         color_dialog = QColorDialog(self)
 
@@ -337,12 +338,7 @@ class AnkiRedesignConfigDialog(QDialog):
     def create_color_picker_layout(self, colors) -> None:
         layout = QFormLayout()
         for key in colors:
-            self.test = self.color_input(key)
-            # TODO: fix this
-            try:
-                layout.addRow(self.theme_colors.get(key)[0], self.test)
-            except:
-                layout.addRow("???", self.test)
+            layout.addRow(self.theme_colors.get(key)[0], self.color_input(key))
         return layout
 
     def theme_file_editor(self) -> None:

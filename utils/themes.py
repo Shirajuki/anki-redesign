@@ -37,28 +37,8 @@ def get_theme(theme: str) -> dict:
     themes_parsed = json.loads(open(themes[theme], encoding='utf-8').read())
     theme_colors = themes_parsed.get("colors")
 
-    # OLD
-    # NEW
-    ['CANVAS', 'CANVAS_CODE', 'CANVAS_ELEVATED', 'CANVAS_INSET', 'CANVAS_OVERLAY'] # XXX
-    ['FG', 'FG_DISABLED', 'FG_FAINT', 'FG_LINK', 'FG_SUBTLE'] # XXX
-
-    ['BORDER', 'BORDER_FOCUS', 'BORDER_STRONG', 'BORDER_SUBTLE'] # XXX
-    ['BUTTON_BG', 'BUTTON_DISABLED', 'BUTTON_GRADIENT_END', 'BUTTON_GRADIENT_START', 'BUTTON_HOVER_BORDER', 'BUTTON_PRIMARY_BG', 'BUTTON_PRIMARY_DISABLED', 'BUTTON_PRIMARY_GRADIENT_END', 'BUTTON_PRIMARY_GRADIENT_START'] # XXX
-
-    ['SCROLLBAR_BG', 'SCROLLBAR_BG_ACTIVE', 'SCROLLBAR_BG_HOVER'] # XXX
-    ['HIGHLIGHT_BG', 'HIGHLIGHT_FG'] # XXX
-    ['SELECTED_BG', 'SELECTED_FG'] # XXX
-    ['SHADOW', 'SHADOW_FOCUS', 'SHADOW_INSET', 'SHADOW_SUBTLE'] # XXX
-
-    ['ACCENT_CARD', 'ACCENT_DANGER', 'ACCENT_NOTE'] # XXX
-    ['STATE_BURIED', 'STATE_LEARN', 'STATE_MARKED', 'STATE_NEW', 'STATE_REVIEW', 'STATE_SUSPENDED'] # XXX
-    ['FLAG_1', 'FLAG_2', 'FLAG_3', 'FLAG_4', 'FLAG_5', 'FLAG_6', 'FLAG_7'] # XXX
-
-
+    # New color keys
     theme_fixes = [
-        # Extra
-        {"key": "BUTTON_FOCUS_BG", "name": "Button Focus Background", "comment": "", "data": ["Button Focus Background", "#0093d0", "#0093d0", "--button-focus-bg"]},
-        {"key": "FOCUS_SHADOW", "name": "Focus Shadow", "comment": "", "data": ["Focus Shadow","#ff93d0", "#0093d0", "--focus-shadow-color"]},
         # New Accent (Browser)
         {"key": "ACCENT_CARD", "name": "Accent Card", "comment": "Accent color for cards", "data": theme_colors["FLAG1_BG"][:-1] + ["--accent-card"]},
         {"key": "ACCENT_DANGER", "name": "Accent Danger", "comment": "Saturated accent color to grab attention", "data": theme_colors["FLAG2_BG"][:-1] + ["--accent-danger"]},
@@ -120,19 +100,69 @@ def get_theme(theme: str) -> dict:
         {"key": "STATE_NEW", "name": "State New", "comment": "Accent color for new cards", "data": theme_colors["NEW_COUNT"][:-1] + ["--state-new"]},
         {"key": "STATE_REVIEW", "name": "State Review", "comment": "Accent color for cards in review state", "data": theme_colors["REVIEW_COUNT"][:-1] + ["--state-review"]},
         {"key": "STATE_SUSPENDED", "name": "State Suspended", "comment": "Accent color for suspended cards", "data": theme_colors["SUSPENDED_FG"][:-1] + ["--state-suspended"]},
-
     ]
 
     # Add extra color_keys on theme files if not exist, fixing legacy themes pre 2.1.56
+    fixed = []
     for theme_keys in theme_fixes:
-        if not theme_colors.get(theme_keys["key"], False):
+        key = theme_keys["key"]
+        if not theme_colors.get(key, False):
             temp_data = theme_keys["data"]
-            theme_colors[theme_keys["key"]] = [theme_keys["name"], theme_keys["comment"], temp_data[-3], temp_data[-2], temp_data[-1]]
-
+            fixed.append(key)
+            theme_colors[key] = [theme_keys["name"], theme_keys["comment"], temp_data[-3], temp_data[-2], temp_data[-1]]
     for colors in theme_colors:
-        if len(theme_colors[colors]) == 4:
+        if len(theme_colors[colors]) == 4 and colors not in fixed:
             temp_data = theme_colors[colors]
             theme_colors[colors] = [temp_data[0], "", temp_data[-3], temp_data[-2], temp_data[-1]]
+    
+    # Update legacy color keys with new color keys
+    legacy_colors_mapping = [
+        {"old": "WINDOW_BG", "new": "CANVAS"},
+        {"old": "FRAME_BG", "new": "CANVAS_ELEVATED"},
+        {"old": "TOOLTIP_BG", "new": "CANVAS_OVERLAY"},
+        {"old": "CURRENT_DECK", "new": "BUTTON_BG"},
+        {"old": "TEXT_FG", "new": "FG"},
+        {"old": "SLIGHTLY_GREY_TEXT", "new": "FG_FAINT"},
+        {"old": "DISABLED", "new": "FG_DISABLED"},
+        {"old": "LINK", "new": "FG_LINK"},
+
+        {"old": "BORDER", "new": "BORDER"},
+        {"old": "FAINT_BORDER", "new": "BORDER_SUBTLE"},
+        {"old": "MEDIUM_BORDER", "new": "BORDER_STRONG"},
+        {"old": "BUTTON_BG", "new": "BUTTON_BG"},
+        {"old": "BUTTON_FOCUS_BG", "new": "BUTTON_PRIMARY_BG"},
+        {"old": "FOCUS_SHADOW", "new": "SHADOW_FOCUS"},
+        {"old": "HIGHLIGHT_BG", "new": "HIGHLIGHT_BG"},
+        {"old": "HIGHLIGHT_FG", "new": "HIGHLIGHT_FG"},
+
+        {"old": "LEARN_COUNT", "new": "STATE_LEARN"},
+        {"old": "NEW_COUNT", "new": "STATE_NEW"},
+        {"old": "REVIEW_COUNT", "new": "STATE_REVIEW"},
+        {"old": "ZERO_COUNT", "new": "BORDER"},
+        {"old": "SUSPENDED_BG", "new": "STATE_SUSPENDED"},
+        {"old": "SUSPENDED_FG", "new": "STATE_SUSPENDED"},
+        {"old": "BURIED_FG", "new": "STATE_BURIED"},
+        {"old": "MARKED_BG", "new": "STATE_MARKED"},
+        {"old": "FLAG1_BG", "new": "FLAG_1"},
+        {"old": "FLAG1_FG", "new": "FLAG_1"},
+        {"old": "FLAG2_BG", "new": "FLAG_2"},
+        {"old": "FLAG2_FG", "new": "FLAG_2"},
+        {"old": "FLAG3_BG", "new": "FLAG_3"},
+        {"old": "FLAG3_FG", "new": "FLAG_3"},
+        {"old": "FLAG4_BG", "new": "FLAG_4"},
+        {"old": "FLAG4_FG", "new": "FLAG_4"},
+        {"old": "FLAG5_BG", "new": "FLAG_5"},
+        {"old": "FLAG5_FG", "new": "FLAG_5"},
+        {"old": "FLAG6_BG", "new": "FLAG_6"},
+        {"old": "FLAG6_FG", "new": "FLAG_6"},
+        {"old": "FLAG7_BG", "new": "FLAG_7"},
+        {"old": "FLAG7_FG", "new": "FLAG_7"},
+    ]
+    for theme_keys in legacy_colors_mapping:
+        new_data = theme_colors[theme_keys["new"]]
+        old_data = theme_colors[theme_keys["old"]]
+        theme_colors[theme_keys["old"]] = [old_data[0], old_data[1], new_data[-3], new_data[-2], old_data[-1]]
+
 
     themes_parsed["colors"] = theme_colors
     return themes_parsed
