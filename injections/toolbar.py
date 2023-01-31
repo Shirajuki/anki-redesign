@@ -1,4 +1,4 @@
-from aqt import QPalette, mw
+from aqt import QPalette, mw, appVersion
 from aqt.toolbar import Toolbar
 from typing import List
 
@@ -24,6 +24,7 @@ def redraw_toolbar() -> None:
             div.className = "toolbarFix";
             document.body.appendChild(div);
         """)
+
     # Auto adjust the height, then redraw the toolbar
     mw.toolbar.web.adjustHeightToFit()
     mw.toolbar.redraw()

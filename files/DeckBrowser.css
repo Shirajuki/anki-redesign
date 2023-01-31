@@ -21,7 +21,10 @@ body table:first-of-type tr.current {
   background-color: transparent;
 }
 body table:first-of-type tr.current td {
-  background-color: var(--current-deck, var(--legacy-current-deck));
+  background: var(--current-deck, var(--legacy-current-deck));
+}
+body table:first-of-type tr:hover:not(.top-level-drag-row):not(.current) td {
+  background: transparent;
 }
 body table:first-of-type tr.current td:first-of-type {
   border-radius: 10px 0 0 10px;

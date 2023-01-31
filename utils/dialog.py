@@ -21,15 +21,12 @@ theme = config['theme']
 themes_parsed = get_theme(theme)
 color_mode = 3 if theme_manager.get_night_mode() else 2  # 1 = light and 2 = dark
 
-
 def get_anki_lang():
     lang = lang_to_disk_lang(current_lang)
     if lang in compatMap:
         lang = compatMap[lang]
     lang = lang.replace("-", "_")
-    logger.debug(lang)
     return lang
-
 
 class AnkiRedesignThemeEditor(QDialog):
     def __init__(self, parent, *args, **kwargs):

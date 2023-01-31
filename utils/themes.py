@@ -5,7 +5,6 @@ this_script_dir = os.path.join(os.path.dirname(__file__), "..")
 themes_dir = os.path.join(this_script_dir, 'themes')
 user_themes_dir = os.path.join(this_script_dir, 'user_files', 'themes')
 
-
 def get_themes_dict() -> dict:
     # Set and load pathing for theme files (ReColor compatible)
     themes = {}
