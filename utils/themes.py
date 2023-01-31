@@ -159,8 +159,11 @@ def get_theme(theme: str) -> dict:
     ]
     for theme_keys in legacy_colors_mapping:
         new_data = theme_colors[theme_keys["new"]]
-        old_data = theme_colors[theme_keys["old"]]
-        theme_colors[theme_keys["old"]] = [old_data[0], old_data[1], new_data[-3], new_data[-2], old_data[-1]]
+        old_data = theme_colors.get(theme_keys["old"], False)
+        if old_data:
+            theme_colors[theme_keys["old"]] = [old_data[0], old_data[1], new_data[-3], new_data[-2], old_data[-1]]
+        else:
+            theme_colors[theme_keys["old"]] = theme_colors[theme_keys["new"]]
 
 
     themes_parsed["colors"] = theme_colors
