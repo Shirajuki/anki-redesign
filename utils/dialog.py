@@ -465,7 +465,10 @@ def apply_theme(colors) -> None:
     logger.debug(colors)
     if getattr(theme_manager, "_default_style", False):
         mw.app.setStyle(QStyleFactory.create(theme_manager._default_style))
-        mw.app.setPalette(theme_manager.default_palette)
+        if getattr(theme_manager, "default_palette", False):
+            mw.app.setPalette(theme_manager.default_palette)
+        else:
+            theme_manager._apply_palette(mw.app)
     # Load and apply palette
     palette = QPalette()
     # Update palette

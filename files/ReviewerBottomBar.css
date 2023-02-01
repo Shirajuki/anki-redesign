@@ -70,12 +70,16 @@ body #outer.arbb button {
 }
 
 /* 2.1.56 fix */
-body #outer .new-qt6 #middle td.stat2 .stattxt,
-body #outer .new-qt6 .stattxt#time {
+body .new-qt6 ~ #outer #middle td.stat2 .stattxt,
+body .new-qt6 ~ #outer .stattxt#time {
   top: -16px;
 }
-body #outer table#innertable.new-qt6 {
+body .new-qt6 ~ #outer table#innertable {
   transform: translateY(0);
+}
+
+body .new-qt6 ~ #outer  #middle table[cellspacing]  {
+  transform: translateY(-10px);
 }
 
 /* NDFS addon fix */

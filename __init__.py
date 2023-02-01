@@ -171,23 +171,7 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
         web_content.body += "<div style='height: 14px; opacity: 0; pointer-events: none;'></div>"
         web_content.body += "<div id='padFix' style='height: 30px; opacity: 0; pointer-events: none;'><script>const e = document.getElementById('padFix');e.parentElement.removeChild(e);</script></div>"
         if anki_version >= (2, 1, 56):
-            web_content.body += """
-            <script>
-                (() => {
-                    const timeout = 10, time = 0;
-                    let check;
-                    check = setInterval(() => {
-                        const table = document.getElementById('innertable');
-                        if (table) {
-                            table.classList.add('new-qt6');
-                            time += 10;
-                        }
-                        time++;
-                        if (time >= 10) clearInterval(check);
-                    },1000)
-                })()
-            </script>
-            """
+            web_content.body = "<div class='new-qt6' style='display: none;'></div>"+web_content.body
         mw.bottomWeb.adjustHeightToFit()
     # CardLayout
     elif context_name_includes(context, "aqt.clayout.CardLayout"):
