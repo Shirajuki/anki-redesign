@@ -2,22 +2,17 @@ from .logger import logger
 from aqt.theme import theme_manager
 from platform import system, version, release
 from ctypes import *
-from aqt.qt import (
-    Qt,
-)
+from aqt.qt import Qt
+from aqt import mw
 
 dwmapi = None
 ## Darkmode windows titlebar thanks to @miere43
 def set_dark_titlebar(window, dwmapi) -> None:
 	if dwmapi:
-		# Contanki compatibility fix
-		children = window.children()
-		for i,qchild in enumerate([str(x) for x in children]):
-			if "Contanki" in qchild:
-				# Set Contanki window to be on top, making it possible for being transparent
-				children[i].setAttribute(Qt.WidgetAttribute.WA_AlwaysStackOnTop)
-		
+		# Contanki compatibility fix, don't set NatieWindow on any dialogs
+		mw.app.setAttribute(Qt.ApplicationAttribute.AA_DontCreateNativeWidgetSiblings)
 		handler_window = c_void_p(int(window.winId()))
+
 		DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = c_int(19)
 		DWMWA_USE_IMMERSIVE_DARK_MODE = c_int(20)
 		windows_version = int(version().split('.')[2])
