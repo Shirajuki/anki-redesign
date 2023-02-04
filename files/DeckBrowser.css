@@ -40,7 +40,7 @@ body table:first-of-type tr a.filtered {
 }
 a.deck {
   padding: 5px 10px 5px 5px;
-  transition: padding 1s, background-color 0.5s, margin-right 1s;
+  transition: padding 1s, background-color 0.5s, margin-right 1s !important;
   border-radius: 6px;
   margin-right: 5px;
 }

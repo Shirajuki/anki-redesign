@@ -388,6 +388,7 @@ class AnkiRedesignConfigDialog(QDialog):
         config["theme"] = theme
         write_config(config)
         config = get_config()
+        logger.debug(config)
 
         # Write and update theme
         color_mode = 3 if theme_manager.get_night_mode() else 2  # 2 = light and 3 = dark

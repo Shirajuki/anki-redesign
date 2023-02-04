@@ -99,10 +99,11 @@ def load_custom_style():
     }
     html {
         font-family: %s;
-        font-size: %spx;
+        font-size: %spx !important;
+        --font-size: %spx !important;
     }
 </style>
-    """ % (theme_colors_light, theme_colors_dark, font, config["font_size"])
+    """ % (theme_colors_light, theme_colors_dark, font, config["font_size"], config["font_size"])
     return custom_style
 
 
@@ -292,12 +293,13 @@ else:
 # Test for 2.1.56
 if attribute_exists(gui_hooks, "style_did_init"):
     def updateStyle(str):
-        logger.debug("helloooo"+str)
+        # logger.debug("helloooo"+str)
         return str
     gui_hooks.style_did_init.append(updateStyle)
 
 # Dialog updates
 def updateTheme(_):
+    logger.debug("updating theme")
     global theme, themes_parsed, color_mode
     config = get_config()
     theme = config['theme']

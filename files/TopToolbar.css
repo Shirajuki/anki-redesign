@@ -2,7 +2,7 @@ body #outer {
   display: flex;
   justify-content: center;
 }
-body center #header {
+body #header {
   width: auto;
   border-bottom: none;
   border-radius: 0 0 12px 12px;
@@ -20,17 +20,39 @@ body center #header .tdcenter {
   border: initial;
   padding: 0 2px;
 }
-body center #header .hitem {
+body center #header .hitem,
+body .header .toolbar .hitem {
   padding: 4px 15px;
   background: transparent;
   color: var(--text-fg, var(--legacy-text-fg)) !important;
   transition: background 0.3s;
   border-radius: 6px;
 }
-body center #header .hitem:hover {
+body center #header .hitem:hover,
+body .header .toolbar .hitem:hover {
   background: var(--button-bg);
   box-shadow: initial;
 }
-body center #header a#sync {
+body center #header a#sync,
+body .header .toolbar a#sync {
   color: var(--link, var(--legacy-link)) !important;
+}
+
+/* >= 2.1.57 */
+body:not(.fancy) .header {
+  border-bottom: 1px solid transparent !important;
+}
+body .header .toolbar {
+  width: auto;
+  border-bottom: none;
+  border-radius: 0 0 12px 12px;
+  background-color: var(--frame-bg, var(--legacy-frame-bg));
+  height: 34px;
+  padding: 4px 8px 4px 8px;
+  box-shadow: rgb(0 0 0 / 10%) 0px 0px 11px -2px,
+    rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 4px 5px 0px;
+}
+body:not(.fancy) .header .toolbar {
+  height: 30px;
+  padding: 2px 8px 2px 8px;
 }

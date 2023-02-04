@@ -11,6 +11,7 @@ Note3: If the addon is not updating try open anki while holding shift to turn of
 
 **Manually tested on the following Anki versions:**
 
+- 2.1.57
 - 2.1.56
 - 2.1.54
 - 2.1.50
@@ -24,7 +25,8 @@ Note3: If the addon is not updating try open anki while holding shift to turn of
 - [ ] Recheck "Full screen" add-on compatibility
 - [ ] Re-add windows dark titlebar
 - [ ] Add a public theme sharing site where users can upload their themes and possibly have them preinstalled alongside the add-on
-- [ ] Add styling support and fix themes for Anki 2.1.57
+- [ ] Add styling support for Anki 2.1.57
+- [ ] Fix themes to support Anki version post UI changes
 
 <br/>
 <div><img src="./screenshots/ui-half.png"></div>
