@@ -1,5 +1,6 @@
 body .descmid {
   text-align: center;
+  overflow-x: hidden;
 }
 center > table tr:first-of-type {
   display: flex;
