@@ -61,12 +61,27 @@ body #outer.arbb .stat {
 body #outer.arbb table#innertable {
   padding: initial;
   width: calc(100% - 10px);
+  transform: translateY(8px) !important;
+  height: 50px;
+}
+body #outer.arbb table #middle {
+  transform: translateY(10px);
+}
+body #outer.arbb table #time {
+  display: inline-flex;
+  justify-content: center;
+  left: 50%;
+  transform: translate(-50%, calc(-100% - 12px))
+}
+body #outer.arbb table .stattxt {
+  transform: translate(-50%, -16px);
 }
 body #outer.arbb button {
   letter-spacing: 0.02857em;
   text-transform: uppercase;
   margin-left: 2px;
   margin-right: 2px;
+  transform: translateY(-8px);
 }
 
 /* 2.1.56 fix */
