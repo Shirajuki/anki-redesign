@@ -83,7 +83,6 @@ class AnkiRedesignThemeEditor(QDialog):
         size_policy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         return size_policy
 
-
 class AnkiRedesignConfigDialog(QDialog):
     def __init__(self, parent: QWidget, *args, **kwargs):
         super().__init__(parent=parent or mw, *args, **kwargs)
@@ -98,13 +97,15 @@ class AnkiRedesignConfigDialog(QDialog):
         # Loads theme color
         self.theme_colors = themes_parsed.get("colors")
         self.updates = []
-        # self.theme_general = ["TEXT_FG", "WINDOW_BG", "FRAME_BG", "BUTTON_BG", "BUTTON_FOCUS_BG", "TOOLTIP_BG", "BORDER", "MEDIUM_BORDER", "FAINT_BORDER", "HIGHLIGHT_BG", "HIGHLIGHT_FG", "LINK", "DISABLED", "SLIGHTLY_GREY_TEXT", "FOCUS_SHADOW"]
-        # self.theme_decks = ["CURRENT_DECK", "NEW_COUNT", "LEARN_COUNT", "REVIEW_COUNT", "ZERO_COUNT"]
-        # self.theme_browse = ["BURIED_FG", "SUSPENDED_FG", "MARKED_BG", "FLAG1_BG", "FLAG1_FG", "FLAG2_BG", "FLAG2_FG", "FLAG3_BG", "FLAG3_FG", "FLAG4_BG", "FLAG4_FG", "FLAG5_BG", "FLAG5_FG", "FLAG6_BG", "FLAG6_FG", "FLAG7_BG", "FLAG7_FG"]
-        self.theme_general = ['FG', 'FG_DISABLED', 'FG_FAINT', 'FG_LINK', 'FG_SUBTLE'] + ['CANVAS', 'CANVAS_CODE', 'CANVAS_ELEVATED', 'CANVAS_INSET', 'CANVAS_OVERLAY']
-        self.theme_decks = ['BORDER', 'BORDER_FOCUS', 'BORDER_STRONG', 'BORDER_SUBTLE'] + ['BUTTON_BG', 'BUTTON_DISABLED', 'BUTTON_GRADIENT_END', 'BUTTON_GRADIENT_START', 'BUTTON_HOVER_BORDER', 'BUTTON_PRIMARY_BG', 'BUTTON_PRIMARY_DISABLED', 'BUTTON_PRIMARY_GRADIENT_END', 'BUTTON_PRIMARY_GRADIENT_START']
-        self.theme_browse = ['ACCENT_CARD', 'ACCENT_DANGER', 'ACCENT_NOTE'] + ['STATE_BURIED', 'STATE_LEARN', 'STATE_MARKED', 'STATE_NEW', 'STATE_REVIEW', 'STATE_SUSPENDED'] + ['FLAG_1', 'FLAG_2', 'FLAG_3', 'FLAG_4', 'FLAG_5', 'FLAG_6', 'FLAG_7']
-        self.theme_extra = ['SCROLLBAR_BG', 'SCROLLBAR_BG_ACTIVE', 'SCROLLBAR_BG_HOVER'] + ['HIGHLIGHT_BG', 'HIGHLIGHT_FG'] + ['SELECTED_BG', 'SELECTED_FG'] + ['SHADOW', 'SHADOW_FOCUS', 'SHADOW_INSET', 'SHADOW_SUBTLE']
+        self.theme_general = ["TEXT_FG", "WINDOW_BG", "FRAME_BG", "BUTTON_BG", "BUTTON_FOCUS_BG", "TOOLTIP_BG", "BORDER", "MEDIUM_BORDER", "FAINT_BORDER", "HIGHLIGHT_BG", "HIGHLIGHT_FG" , "LINK", "DISABLED", "SLIGHTLY_GREY_TEXT", "FOCUS_SHADOW"]
+        self.theme_decks = ["CURRENT_DECK", "NEW_COUNT", "LEARN_COUNT", "REVIEW_COUNT", "ZERO_COUNT"]
+        self.theme_browse = ["BURIED_FG", "SUSPENDED_FG", "MARKED_BG", "FLAG1_BG", "FLAG1_FG", "FLAG2_BG", "FLAG2_FG", "FLAG3_BG", "FLAG3_FG", "FLAG4_BG", "FLAG4_FG", "FLAG5_BG", "FLAG5_FG", "FLAG6_BG", "FLAG6_FG", "FLAG7_BG", "FLAG7_FG"]
+        self.theme_extra = []
+        if anki_version >= (2, 1, 56):
+            self.theme_general = ['FG', 'FG_DISABLED', 'FG_FAINT', 'FG_LINK', 'FG_SUBTLE'] + ['CANVAS', 'CANVAS_CODE', 'CANVAS_ELEVATED', 'CANVAS_INSET', 'CANVAS_OVERLAY']
+            self.theme_decks = ['BORDER', 'BORDER_FOCUS', 'BORDER_STRONG', 'BORDER_SUBTLE'] + ['BUTTON_BG', 'BUTTON_DISABLED', 'BUTTON_GRADIENT_END', 'BUTTON_GRADIENT_START', 'BUTTON_HOVER_BORDER', 'BUTTON_PRIMARY_BG', 'BUTTON_PRIMARY_DISABLED', 'BUTTON_PRIMARY_GRADIENT_END', 'BUTTON_PRIMARY_GRADIENT_START']
+            self.theme_browse = ['ACCENT_CARD', 'ACCENT_DANGER', 'ACCENT_NOTE'] + ['STATE_BURIED', 'STATE_LEARN', 'STATE_MARKED', 'STATE_NEW', 'STATE_REVIEW', 'STATE_SUSPENDED'] + ['FLAG_1', 'FLAG_2', 'FLAG_3', 'FLAG_4', 'FLAG_5', 'FLAG_6', 'FLAG_7']
+            self.theme_extra = ['SCROLLBAR_BG', 'SCROLLBAR_BG_ACTIVE', 'SCROLLBAR_BG_HOVER'] + ['HIGHLIGHT_BG', 'HIGHLIGHT_FG'] + ['SELECTED_BG', 'SELECTED_FG'] + ['SHADOW', 'SHADOW_FOCUS', 'SHADOW_INSET', 'SHADOW_SUBTLE']
 
         # Root layout
         self.root_layout = QVBoxLayout(self)
