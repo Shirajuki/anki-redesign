@@ -14,7 +14,7 @@ if module_has_attribute("anki.lang", "current_lang"):
     from anki.lang import current_lang, lang_to_disk_lang, compatMap
 else:
     from anki.lang import currentLang as current_lang, lang_to_disk_lang, compatMap
-
+from .dark_title_bar import set_dark_titlebar_qt, dwmapi
 anki_version = tuple(int(segment) for segment in appVersion.split("."))
 
 theme = config['theme']
@@ -38,6 +38,7 @@ class AnkiRedesignThemeEditor(QDialog):
         self.setSizePolicy(self.make_size_policy())
         self.setMinimumSize(420, 420)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
+        set_dark_titlebar_qt(self, dwmapi, fix=False)
         # Root layout
         self.root_layout = QVBoxLayout(self)
         # Main layout
@@ -92,6 +93,7 @@ class AnkiRedesignConfigDialog(QDialog):
         self.setSizePolicy(self.make_size_policy())
         self.setMinimumSize(420, 580)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
+        set_dark_titlebar_qt(self, dwmapi, fix=False)
 
         # Color/theme
         # Loads theme color
