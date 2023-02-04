@@ -93,7 +93,7 @@ body {
   background-color: var(--window-bg) !important;
 }
 html {
-  font-size: var(--font-size, 12px);
+  font-size: var(--font-size, 12px) !important;
 }
 html body a {
   color: var(--link, var(--legacy-link)) !important;

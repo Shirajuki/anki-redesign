@@ -60,7 +60,7 @@
       "Button Background",
       "",
       "#e7e7e7",
-      "#1A1826",
+      "#313244",
       "--button-bg"
     ],
     "BUTTON_DISABLED": [
@@ -137,35 +137,35 @@
       "Canvas code",
       "Background of code editors",
       "white",
-      "#1A1826",
+      "#333442",
       "--canvas-code"
     ],
     "CANVAS_ELEVATED": [
       "Canvas Elevated",
       "Background of containers",
       "white",
-      "#1A1826",
+      "#181825",
       "--canvas-elevated"
     ],
     "CANVAS_INSET": [
       "Canvas Inset",
       "Background of inputs inside containers",
       "white",
-      "#1A1826",
+      "#333442",
       "--canvas-inset"
     ],
     "CANVAS_OVERLAY": [
       "Canvas Overlay",
       "Background of floating elements (menus, tooltips)",
       "#fcfcfc",
-      "#4C566A",
+      "#313244",
       "--canvas-overlay"
     ],
     "CURRENT_DECK": [
       "Selected Deck",
       "",
-      "#e7e7e7",
-      "#1A1826",
+      "white",
+      "#181825",
       "--current-deck"
     ],
     "DISABLED": [
@@ -368,21 +368,21 @@
       "Focus Shadow",
       "",
       "#ff93d0",
-      "#0093d0",
+      "#1e1e2e",
       "--focus-shadow-color"
     ],
     "FRAME_BG": [
       "Frame Background",
       "",
       "white",
-      "#1A1826",
+      "#181825",
       "--frame-bg"
     ],
     "HIGHLIGHT_BG": [
       "Highlighted Background",
       "",
       "#77ccff",
-      "#81A1C1",
+      "#585b70",
       "--highlight-bg"
     ],
     "HIGHLIGHT_FG": [
@@ -459,7 +459,7 @@
       "Selected Background",
       "Background color of selected text",
       "#77ccff",
-      "#81A1C1",
+      "#585b70",
       "--selected-bg"
     ],
     "SELECTED_FG": [
@@ -473,28 +473,28 @@
       "Shadow",
       "Default box-shadow color",
       "#ff93d0",
-      "#0093d0",
+      "#1e1e2e",
       "--shadow"
     ],
     "SHADOW_FOCUS": [
       "Shadow Focus",
       "Box-shadow color for elements in focused state",
       "#ff93d0",
-      "#0093d0",
+      "#181825",
       "--shadow-focus"
     ],
     "SHADOW_INSET": [
       "Shadow Inset",
       "Inset box-shadow color",
       "#ff93d0",
-      "#0093d0",
+      "#002a3b",
       "--shadow-inset"
     ],
     "SHADOW_SUBTLE": [
       "Shadow Subtle",
       "Box-shadow color with lower contrast against window background",
       "#ff93d0",
-      "#0093d0",
+      "#000e14",
       "--shadow-subtle"
     ],
     "SLIGHTLY_GREY_TEXT": [
@@ -571,7 +571,7 @@
       "Tooltip Background",
       "",
       "#fcfcfc",
-      "#4C566A",
+      "#313244",
       "--tooltip-bg"
     ],
     "WINDOW_BG": [

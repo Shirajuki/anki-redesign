@@ -62,9 +62,12 @@ logger.debug(themes)
 themes_parsed = get_theme(theme)
 color_mode = 3 if theme_manager.get_night_mode() else 2  # 2 = light and 3 = dark
 
+# Dark title bar
+from .utils.dark_title_bar import set_dark_titlebar, set_dark_titlebar_qt, dwmapi
+set_dark_titlebar(mw, dwmapi)
+logger.debug(dwmapi)
+
 # CSS injections
-
-
 def load_custom_style():
     # Theme config
     theme_colors_light = ""
@@ -99,10 +102,11 @@ def load_custom_style():
     }
     html {
         font-family: %s;
-        font-size: %spx;
+        font-size: %spx !important;
+        --font-size: %spx !important;
     }
 </style>
-    """ % (theme_colors_light, theme_colors_dark, font, config["font_size"])
+    """ % (theme_colors_light, theme_colors_dark, font, config["font_size"], config["font_size"])
     return custom_style
 
 
@@ -171,23 +175,7 @@ def on_webview_will_set_content(web_content: WebContent, context: Optional[Any])
         web_content.body += "<div style='height: 14px; opacity: 0; pointer-events: none;'></div>"
         web_content.body += "<div id='padFix' style='height: 30px; opacity: 0; pointer-events: none;'><script>const e = document.getElementById('padFix');e.parentElement.removeChild(e);</script></div>"
         if anki_version >= (2, 1, 56):
-            web_content.body += """
-            <script>
-                (() => {
-                    const timeout = 10, time = 0;
-                    let check;
-                    check = setInterval(() => {
-                        const table = document.getElementById('innertable');
-                        if (table) {
-                            table.classList.add('new-qt6');
-                            time += 10;
-                        }
-                        time++;
-                        if (time >= 10) clearInterval(check);
-                    },1000)
-                })()
-            </script>
-            """
+            web_content.body = "<div class='new-qt6' style='display: none;'></div>"+web_content.body
         mw.bottomWeb.adjustHeightToFit()
     # CardLayout
     elif context_name_includes(context, "aqt.clayout.CardLayout"):
@@ -212,47 +200,41 @@ elif attribute_exists(gui_hooks, "top_toolbar_did_init_links"):
 def on_dialog_manager_did_open_dialog(dialog_manager: DialogManager, dialog_name: str, dialog_instance: QWidget) -> None:
     logger.debug(dialog_name)
     dialog: AnkiQt = dialog_manager._dialogs[dialog_name][1]
+    # If dwmapi found and nightmode is enabled, set dark titlebar to dialog window
+    set_dark_titlebar_qt(dialog, dwmapi)
     # AddCards
     if dialog_name == "AddCards":
         context: AddCards = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(
-            open(css_files_dir['QAddCards'], encoding='utf-8').read())
+        context.setStyleSheet(open(css_files_dir['QAddCards'], encoding='utf-8').read())
     # Addons popup
     elif dialog_name == "AddonsDialog":
         context: AddonsDialog = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(
-            open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
+        context.setStyleSheet(open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
     # Browser
     elif dialog_name == "Browser":
         context: Browser = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(
-            open(css_files_dir['QBrowser'], encoding='utf-8').read())
+        context.setStyleSheet(open(css_files_dir['QBrowser'], encoding='utf-8').read())
     # EditCurrent
     elif dialog_name == "EditCurrent":
         context: EditCurrent = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(
-            open(css_files_dir['QEditCurrent'], encoding='utf-8').read())
+        context.setStyleSheet(open(css_files_dir['QEditCurrent'], encoding='utf-8').read())
     # FilteredDeckConfigDialog
     elif module_exists("aqt.filtered_deck") and dialog_name == "FilteredDeckConfigDialog":
         context: FilteredDeckConfigDialog = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(
-            open(css_files_dir['QFilteredDeckConfigDialog'], encoding='utf-8').read())
+        context.setStyleSheet(open(css_files_dir['QFilteredDeckConfigDialog'], encoding='utf-8').read())
     # Statistics / NewDeckStats
     elif dialog_name == "NewDeckStats":
         context: NewDeckStats = dialog_manager._dialogs[dialog_name][1]
         context.form.web.eval(load_custom_style_wrapper())
-        context.setStyleSheet(
-            open(css_files_dir['QNewDeckStats'], encoding='utf-8').read())
+        context.setStyleSheet(open(css_files_dir['QNewDeckStats'], encoding='utf-8').read())
     # About
     elif dialog_name == "About":
         context: ClosableQDialog = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(
-            open(css_files_dir['QAbout'], encoding='utf-8').read())
+        context.setStyleSheet(open(css_files_dir['QAbout'], encoding='utf-8').read())
     # Preferences
     elif dialog_name == "Preferences":
         context: Preferences = dialog_manager._dialogs[dialog_name][1]
-        context.setStyleSheet(
-            open(css_files_dir['QPreferences'], encoding='utf-8').read())
+        context.setStyleSheet(open(css_files_dir['QPreferences'], encoding='utf-8').read())
     # sync_log - 这是什么？？？
     elif dialog_name == "sync_log":
         pass
@@ -269,22 +251,19 @@ else:
     def monkey_setup_dialog_gc(obj: Any) -> None:
         obj.finished.connect(lambda: mw.gcWindow(obj))
         logger.debug(obj)
+        set_dark_titlebar_qt(obj, dwmapi)
         # AddCards
         if isinstance(obj, AddCards):
-            obj.setStyleSheet(
-                open(css_files_dir['QAddCards'], encoding='utf-8').read())
+            obj.setStyleSheet(open(css_files_dir['QAddCards'], encoding='utf-8').read())
         # EditCurrent
         elif isinstance(obj, EditCurrent):
-            obj.setStyleSheet(
-                open(css_files_dir['QEditCurrent'], encoding='utf-8').read())
+            obj.setStyleSheet(open(css_files_dir['QEditCurrent'], encoding='utf-8').read())
         # Statistics / DeckStats
         elif isinstance(obj, DeckStats):
-            obj.setStyleSheet(
-                open(css_files_dir['QNewDeckStats'], encoding='utf-8').read())
+            obj.setStyleSheet(open(css_files_dir['QNewDeckStats'], encoding='utf-8').read())
         # About
         elif isinstance(obj, ClosableQDialog):
-            obj.setStyleSheet(
-                open(css_files_dir['QAbout'], encoding='utf-8').read())
+            obj.setStyleSheet(open(css_files_dir['QAbout'], encoding='utf-8').read())
         # Preferences
         # Haven't found a solution for legacy preferences yet :c
     # Should be rare enough for other addons to also patch this I hope.
@@ -294,26 +273,27 @@ else:
     if attribute_exists(gui_hooks, "addons_dialog_will_show"):
         def on_addons_dialog_will_show(dialog: AddonsDialog) -> None:
             logger.debug(dialog)
-            dialog.setStyleSheet(
-                open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
+            set_dark_titlebar_qt(dialog, dwmapi)
+            dialog.setStyleSheet(open(css_files_dir['QAddonsDialog'], encoding='utf-8').read())
         gui_hooks.addons_dialog_will_show.append(on_addons_dialog_will_show)
     # Browser
     if attribute_exists(gui_hooks, "browser_will_show"):
         def on_browser_will_show(browser: Browser) -> None:
             logger.debug(browser)
-            browser.setStyleSheet(
-                open(css_files_dir['QBrowser'], encoding='utf-8').read())
+            set_dark_titlebar_qt(browser, dwmapi)
+            browser.setStyleSheet(open(css_files_dir['QBrowser'], encoding='utf-8').read())
         gui_hooks.browser_will_show.append(on_browser_will_show)
 
 # Test for 2.1.56
 if attribute_exists(gui_hooks, "style_did_init"):
     def updateStyle(str):
-        logger.debug("helloooo"+str)
+        # logger.debug("helloooo"+str)
         return str
     gui_hooks.style_did_init.append(updateStyle)
 
 # Dialog updates
 def updateTheme(_):
+    logger.debug("updating theme")
     global theme, themes_parsed, color_mode
     config = get_config()
     theme = config['theme']

@@ -36,6 +36,13 @@ def get_theme(theme: str) -> dict:
     themes_parsed = json.loads(open(themes[theme], encoding='utf-8').read())
     theme_colors = themes_parsed.get("colors")
 
+    # Add extra color_keys on theme files if not exist (ReColor compatible)
+    if not theme_colors.get("BUTTON_FOCUS_BG", False):
+        theme_colors["BUTTON_FOCUS_BG"] = ["Button Focus Background", "", "#0093d0", "#0093d0", "--button-focus-bg"]
+    if not theme_colors.get("FOCUS_SHADOW", False):
+        theme_colors["FOCUS_SHADOW"] = ["Focus Shadow", "", "#ff93d0", "#0093d0", "--focus-shadow-color"]
+    if theme_colors.get("BUTTON_BG", False):
+        theme_colors["BUTTON_BG"] =  theme_colors["BUTTON_BG"][:-1]+["--button-bg"]
     # New color keys
     theme_fixes = [
         # New Accent (Browser)
@@ -59,10 +66,10 @@ def get_theme(theme: str) -> dict:
         {"key": "BUTTON_GRADIENT_END", "name": "Button Gradient End", "comment": "End value of default button gradient", "data": theme_colors["BUTTON_BG"][:-1] + ["--button-grandient-end"]},
         {"key": "BUTTON_GRADIENT_START", "name": "Button Gradient Start", "comment": "Start value of default button gradient", "data": theme_colors["BUTTON_BG"][:-1] + ["--button-gradient-start"]},
         {"key": "BUTTON_HOVER_BORDER", "name": "Button Hover Border", "comment": "Border color of default button in hover state", "data": theme_colors["BUTTON_BG"][:-1] + ["--button-hover-border"]},
-        {"key": "BUTTON_PRIMARY_BG", "name": "Button Primary Background", "comment": "Background color of primary button", "data": theme_colors["BUTTON_BG"][:-1] + ["--button-primary-bg"]},
-        {"key": "BUTTON_PRIMARY_DISABLED", "name": "Button Primary Disabled", "comment": "Background color of primary button in disabled state", "data": theme_colors["BUTTON_BG"][:-1] + ["--button-primary-disabled"]},
-        {"key": "BUTTON_PRIMARY_GRADIENT_END", "name": "Button Primary Gradient End", "comment": "End value of primary button gradient", "data": theme_colors["BUTTON_BG"][:-1] + ["--button-primary-gradient-end"]},
-        {"key": "BUTTON_PRIMARY_GRADIENT_START", "name": "Button Primary Gradient Start", "comment": "Start value of primary button gradient", "data": theme_colors["BUTTON_BG"][:-1] + ["--button-primary-gradient-start"]},
+        {"key": "BUTTON_PRIMARY_BG", "name": "Button Primary Background", "comment": "Background color of primary button", "data": theme_colors["BUTTON_FOCUS_BG"][:-1] + ["--button-primary-bg"]},
+        {"key": "BUTTON_PRIMARY_DISABLED", "name": "Button Primary Disabled", "comment": "Background color of primary button in disabled state", "data": theme_colors["BUTTON_FOCUS_BG"][:-1] + ["--button-primary-disabled"]},
+        {"key": "BUTTON_PRIMARY_GRADIENT_END", "name": "Button Primary Gradient End", "comment": "End value of primary button gradient", "data": theme_colors["BUTTON_FOCUS_BG"][:-1] + ["--button-primary-gradient-end"]},
+        {"key": "BUTTON_PRIMARY_GRADIENT_START", "name": "Button Primary Gradient Start", "comment": "Start value of primary button gradient", "data": theme_colors["BUTTON_FOCUS_BG"][:-1] + ["--button-primary-gradient-start"]},
         # New Foreground
         {"key": "FG", "name": "Foreground", "comment": "Default text/icon color", "data": theme_colors["TEXT_FG"][:-1] + ["--fg"]},
         {"key": "FG_DISABLED", "name": "Foreground Disabled", "comment": "Foreground color of disabled UI elements", "data": theme_colors["DISABLED"][:-1] + ["--fg-disabled"]},
@@ -77,16 +84,16 @@ def get_theme(theme: str) -> dict:
         {"key": "FLAG_5", "name": "Flag 5 (pink)", "comment": "", "data": theme_colors["FLAG5_FG"][:-1] + ["--flag-5"]},
         {"key": "FLAG_6", "name": "Flag 6 (turquoise)", "comment": "", "data": theme_colors["FLAG6_FG"][:-1] + ["--flag-6"]},
         {"key": "FLAG_7", "name": "Flag 7 (purple)", "comment": "", "data": theme_colors["FLAG7_FG"][:-1] + ["--flag-7"]},
+        # New Selected
+        {"key": "SELECTED_BG", "name": "Selected Background", "comment": "Background color of selected text", "data": theme_colors["HIGHLIGHT_BG"][:-1] + ["--selected-bg"]},
+        {"key": "SELECTED_FG", "name": "Selected Foreground", "comment": "Foreground color of selected text", "data": theme_colors["HIGHLIGHT_FG"][:-1] + ["--selected-fg"]},
         # New Highlight
-        {"key": "HIGHLIGHT_BG", "name": "Highlight Background", "comment": "Background color of highlighted items", "data": theme_colors["HIGHLIGHT_BG"][:-1] + ["--selected-bg"]},
-        {"key": "HIGHLIGHT_FG", "name": "Highlight Foreground", "comment": "Foreground color of highlighted items", "data": theme_colors["HIGHLIGHT_FG"][:-1] + ["--selected-fg"]},
+        {"key": "HIGHLIGHT_BG", "name": "Highlight Background", "comment": "Background color of highlighted items", "data": theme_colors["HIGHLIGHT_BG"][:-1] + ["--highlighted-bg"]},
+        {"key": "HIGHLIGHT_FG", "name": "Highlight Foreground", "comment": "Foreground color of highlighted items", "data": theme_colors["HIGHLIGHT_FG"][:-1] + ["--highlighted-fg"]},
         # New Scrollbar
         {"key": "SCROLLBAR_BG", "name": "Scrollbar Background", "comment": "Background of scrollbar in idle state (Win/Lin only)", "data": theme_colors["FRAME_BG"][:-1] + ["--scrollbar-bg"]},
         {"key": "SCROLLBAR_BG_ACTIVE", "name": "Scrollbar Background Active", "comment": "Background of scrollbar in pressed state (Win/Lin only)", "data": theme_colors["TOOLTIP_BG"][:-1] + ["--scrollbar-bg-active"]},
         {"key": "SCROLLBAR_BG_HOVER", "name": "Scrollbar Background Hover", "comment": "Background of scrollbar in hover state (Win/Lin only)", "data": theme_colors["BORDER"][:-1] + ["--scrollbar-bg-hover"]},
-        # New Selected
-        {"key": "SELECTED_BG", "name": "Selected Background", "comment": "Background color of selected text", "data": theme_colors["HIGHLIGHT_BG"][:-1] + ["--selected-bg"]},
-        {"key": "SELECTED_FG", "name": "Selected Foreground", "comment": "Foreground color of selected text", "data": theme_colors["HIGHLIGHT_FG"][:-1] + ["--selected-fg"]},
         # New Shadow
         {"key": "SHADOW", "name": "Shadow", "comment": "Default box-shadow color", "data": theme_colors["FOCUS_SHADOW"][:-1] + ["--shadow"]},
         {"key": "SHADOW_FOCUS", "name": "Shadow Focus", "comment": "Box-shadow color for elements in focused state", "data": theme_colors["FOCUS_SHADOW"][:-1] + ["--shadow-focus"]},
@@ -109,6 +116,7 @@ def get_theme(theme: str) -> dict:
             temp_data = theme_keys["data"]
             fixed.append(key)
             theme_colors[key] = [theme_keys["name"], theme_keys["comment"], temp_data[-3], temp_data[-2], temp_data[-1]]
+    # Fix existing colors with new theme_colors format
     for colors in theme_colors:
         if len(theme_colors[colors]) == 4 and colors not in fixed:
             temp_data = theme_colors[colors]
@@ -119,7 +127,7 @@ def get_theme(theme: str) -> dict:
         {"old": "WINDOW_BG", "new": "CANVAS"},
         {"old": "FRAME_BG", "new": "CANVAS_ELEVATED"},
         {"old": "TOOLTIP_BG", "new": "CANVAS_OVERLAY"},
-        {"old": "CURRENT_DECK", "new": "BUTTON_BG"},
+        {"old": "CURRENT_DECK", "new": "CANVAS_ELEVATED"},
         {"old": "TEXT_FG", "new": "FG"},
         {"old": "SLIGHTLY_GREY_TEXT", "new": "FG_FAINT"},
         {"old": "DISABLED", "new": "FG_DISABLED"},
@@ -130,7 +138,7 @@ def get_theme(theme: str) -> dict:
         {"old": "MEDIUM_BORDER", "new": "BORDER_STRONG"},
         {"old": "BUTTON_BG", "new": "BUTTON_BG"},
         {"old": "BUTTON_FOCUS_BG", "new": "BUTTON_PRIMARY_BG"},
-        {"old": "FOCUS_SHADOW", "new": "SHADOW_FOCUS"},
+        {"old": "FOCUS_SHADOW", "new": "SHADOW"},
         {"old": "HIGHLIGHT_BG", "new": "HIGHLIGHT_BG"},
         {"old": "HIGHLIGHT_FG", "new": "HIGHLIGHT_FG"},
 
@@ -164,7 +172,6 @@ def get_theme(theme: str) -> dict:
             theme_colors[theme_keys["old"]] = [old_data[0], old_data[1], new_data[-3], new_data[-2], old_data[-1]]
         else:
             theme_colors[theme_keys["old"]] = theme_colors[theme_keys["new"]]
-
 
     themes_parsed["colors"] = theme_colors
     return themes_parsed

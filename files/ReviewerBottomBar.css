@@ -61,21 +61,46 @@ body #outer.arbb .stat {
 body #outer.arbb table#innertable {
   padding: initial;
   width: calc(100% - 10px);
+  transform: translateY(8px) !important;
+  height: 50px;
 }
-body #outer.arbb button {
+body #outer.arbb table #middle {
+  transform: translateY(0);
+}
+body .new-qt6 #outer.arbb table #middle {
+  transform: translateY(10px);
+}
+body #outer.arbb table #time {
+  display: inline-flex;
+  justify-content: center;
+  left: 50%;
+  transform: translate(-50%, calc(-100% - 12px))
+}
+body #outer.arbb table .stattxt {
+  transform: translate(-50%, -30px);
+}
+body .new-qt6 #outer.arbb table .stattxt {
+  transform: translate(-50%, -16px);
+}
+body #outer.arbb table button {
   letter-spacing: 0.02857em;
   text-transform: uppercase;
   margin-left: 2px;
   margin-right: 2px;
+  transform: translateY(-8px) !important;
 }
 
 /* 2.1.56 fix */
-body #outer .new-qt6 #middle td.stat2 .stattxt,
-body #outer .new-qt6 .stattxt#time {
+body .new-qt6 ~ #outer #middle td.stat2 .stattxt,
+body .new-qt6 ~ #outer .stattxt#time {
   top: -16px;
 }
-body #outer table#innertable.new-qt6 {
+body .new-qt6 ~ #outer table#innertable {
   transform: translateY(0);
+}
+
+body .new-qt6 ~ #outer  #middle table[cellspacing]  {
+  transform: translateY(-10px);
 }
 
 /* NDFS addon fix */

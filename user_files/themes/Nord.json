@@ -61,7 +61,7 @@
       "",
       "#D8DEE9",
       "#3B4252",
-      ""
+      "--button-bg"
     ],
     "BUTTON_DISABLED": [
       "Button Disabled",
@@ -71,11 +71,11 @@
       "--button-disabled"
     ],
     "BUTTON_FOCUS_BG": [
-      "Button Primary Background",
-      "Background color of primary button",
-      "#D8DEE9",
-      "#3B4252",
-      "--button-primary-bg"
+      "Button Focus Background",
+      "",
+      "#0093d0",
+      "#0093d0",
+      "--button-focus-bg"
     ],
     "BUTTON_GRADIENT_END": [
       "Button Gradient End",
@@ -101,29 +101,29 @@
     "BUTTON_PRIMARY_BG": [
       "Button Primary Background",
       "Background color of primary button",
-      "#D8DEE9",
-      "#3B4252",
+      "#0093d0",
+      "#434c5e",
       "--button-primary-bg"
     ],
     "BUTTON_PRIMARY_DISABLED": [
       "Button Primary Disabled",
       "Background color of primary button in disabled state",
-      "#D8DEE9",
-      "#3B4252",
+      "#0093d0",
+      "#434c5e",
       "--button-primary-disabled"
     ],
     "BUTTON_PRIMARY_GRADIENT_END": [
       "Button Primary Gradient End",
       "End value of primary button gradient",
-      "#D8DEE9",
-      "#3B4252",
+      "#0093d0",
+      "#434c5e",
       "--button-primary-gradient-end"
     ],
     "BUTTON_PRIMARY_GRADIENT_START": [
       "Button Primary Gradient Start",
       "Start value of primary button gradient",
-      "#D8DEE9",
-      "#3B4252",
+      "#0093d0",
+      "#434c5e",
       "--button-primary-gradient-start"
     ],
     "CANVAS": [
@@ -137,7 +137,7 @@
       "Canvas code",
       "Background of code editors",
       "#E5E9F0",
-      "#3B4252",
+      "#4c566a",
       "--canvas-code"
     ],
     "CANVAS_ELEVATED": [
@@ -151,7 +151,7 @@
       "Canvas Inset",
       "Background of inputs inside containers",
       "#E5E9F0",
-      "#3B4252",
+      "#4c566a",
       "--canvas-inset"
     ],
     "CANVAS_OVERLAY": [
@@ -164,7 +164,7 @@
     "CURRENT_DECK": [
       "Selected Deck",
       "",
-      "#D8DEE9",
+      "#E5E9F0",
       "#3B4252",
       "--current-deck"
     ],
@@ -368,7 +368,7 @@
       "Focus Shadow",
       "",
       "#ff93d0",
-      "#0093d0",
+      "#2e3440",
       "--focus-shadow-color"
     ],
     "FRAME_BG": [
@@ -480,28 +480,28 @@
       "Shadow",
       "Default box-shadow color",
       "#ff93d0",
-      "#0093d0",
+      "#2e3440",
       "--shadow"
     ],
     "SHADOW_FOCUS": [
       "Shadow Focus",
       "Box-shadow color for elements in focused state",
       "#ff93d0",
-      "#0093d0",
+      "#2e3440",
       "--shadow-focus"
     ],
     "SHADOW_INSET": [
       "Shadow Inset",
       "Inset box-shadow color",
       "#ff93d0",
-      "#0093d0",
+      "#2e3440",
       "--shadow-inset"
     ],
     "SHADOW_SUBTLE": [
       "Shadow Subtle",
       "Box-shadow color with lower contrast against window background",
       "#ff93d0",
-      "#0093d0",
+      "#2e3440",
       "--shadow-subtle"
     ],
     "SLIGHTLY_GREY_TEXT": [
