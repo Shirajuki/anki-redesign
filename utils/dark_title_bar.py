@@ -24,10 +24,10 @@ def set_dark_titlebar(window, dwmapi) -> None:
 def set_dark_titlebar_qt(obj, dwmapi, fix=True) -> None:
 	if dwmapi and theme_manager.get_night_mode():
 		set_dark_titlebar(obj, dwmapi)
-	# Trick to refresh the titlebar after dark titlebar is set
-	if fix:
-		obj.showFullScreen()
-		obj.showNormal()
+		# Trick to refresh the titlebar after dark titlebar is set
+		if fix:
+			obj.showFullScreen()
+			obj.showNormal()
 
 if system() == "Windows" and theme_manager.get_night_mode():
 	dwmapi = WinDLL("dwmapi")
