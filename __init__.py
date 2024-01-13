@@ -8,7 +8,7 @@ from .utils.modules import *
 from .utils.logger import logger
 
 from typing import Any, Optional
-from PyQt5.QtWidgets import QWidget
+from aqt.qt import QWidget
 # import the main window object (mw) from aqt
 from aqt import AnkiQt, DialogManager, mw, appVersion
 from aqt.theme import theme_manager

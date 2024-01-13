@@ -33,7 +33,7 @@ class AnkiRedesignThemeEditor(QDialog):
         super().__init__(parent=parent or mw, *args, **kwargs)
         self.config_editor = parent
         self.texts = get_texts(get_anki_lang())
-        self.setWindowModality(Qt.ApplicationModal)
+        self.setWindowModality(Qt.WindowModality.ApplicationModal)
         self.setWindowTitle(self.texts["theme_editor_window_title"])
         self.setSizePolicy(self.make_size_policy())
         self.setMinimumSize(420, 420)
@@ -78,7 +78,7 @@ class AnkiRedesignThemeEditor(QDialog):
         return button_box
 
     def make_size_policy(self) -> QSizePolicy:
-        size_policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        size_policy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
         size_policy.setHorizontalStretch(0)
         size_policy.setVerticalStretch(0)
         size_policy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
@@ -88,7 +88,7 @@ class AnkiRedesignConfigDialog(QDialog):
     def __init__(self, parent: QWidget, *args, **kwargs):
         super().__init__(parent=parent or mw, *args, **kwargs)
         self.texts = get_texts(get_anki_lang())
-        self.setWindowModality(Qt.ApplicationModal)
+        self.setWindowModality(Qt.WindowModality.ApplicationModal)
         self.setWindowTitle(self.texts["configuration_window_title"])
         self.setSizePolicy(self.make_size_policy())
         self.setMinimumSize(420, 580)
@@ -234,11 +234,11 @@ class AnkiRedesignConfigDialog(QDialog):
         global themes
         logger.debug("Clone: " + key)
         popup = QMessageBox()
-        popup.setIcon(QMessageBox.Information)
+        popup.setIcon(QMessageBox.Icon.Information)
         popup.setText(self.texts["clone_message"] % key)
         popup.setWindowTitle(self.texts["clone_window_title"] % key)
-        popup.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        if popup.exec() == QMessageBox.Yes:
+        popup.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        if popup.exec() == QMessageBox.StandardButton.Yes:
             showInfo(_(self.texts["clone_success_message"] % key))
             themes = clone_theme(key, themes)
             self.restart()
@@ -247,11 +247,11 @@ class AnkiRedesignConfigDialog(QDialog):
         global themes
         logger.debug("Delete: " + key)
         popup = QMessageBox()
-        popup.setIcon(QMessageBox.Information)
+        popup.setIcon(QMessageBox.Icon.Information)
         popup.setText(self.texts["delete_message"] % key)
         popup.setWindowTitle(self.texts["delete_window_title"] % key)
-        popup.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        if popup.exec() == QMessageBox.Yes:
+        popup.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        if popup.exec() == QMessageBox.StandardButton.Yes:
             showInfo(_(self.texts["delete_success_message"] % key))
             themes = delete_theme(key, themes)
             self.restart()
@@ -260,11 +260,11 @@ class AnkiRedesignConfigDialog(QDialog):
         global themes
         logger.debug("Sync: " + key)
         popup = QMessageBox()
-        popup.setIcon(QMessageBox.Information)
+        popup.setIcon(QMessageBox.Icon.Information)
         popup.setText(self.texts["sync_message"] % key)
         popup.setWindowTitle(self.texts["sync_window_title"] % key)
-        popup.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        if popup.exec() == QMessageBox.Yes:
+        popup.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        if popup.exec() == QMessageBox.StandardButton.Yes:
             showInfo(_(self.texts["sync_success_message"] % key))
             themes = sync_theme(key, themes)
             self.restart()
@@ -374,7 +374,7 @@ class AnkiRedesignConfigDialog(QDialog):
         return button_box
 
     def make_size_policy(self) -> QSizePolicy:
-        size_policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        size_policy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
         size_policy.setHorizontalStretch(0)
         size_policy.setVerticalStretch(0)
         size_policy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
